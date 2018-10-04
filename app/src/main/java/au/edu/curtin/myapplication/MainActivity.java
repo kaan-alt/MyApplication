@@ -36,10 +36,10 @@ public class MainActivity extends AppCompatActivity {
         eastButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if ((thePlayer.getRowLocation() + 1) > theGameMap.maxRow) {
+                if ((thePlayer.getColLocation() + 1) > theGameMap.maxCol) {
                     throw new IllegalArgumentException("Cant go anymore east!");
                 } else {
-                    thePlayer.setRowLocation(thePlayer.getRowLocation() + 1);
+                    thePlayer.setColLocation(thePlayer.getColLocation() + 1);
                     updatePlayerHealth(thePlayer);
                     updateUIElements(thePlayer, theGameMap);
                 }
@@ -49,10 +49,10 @@ public class MainActivity extends AppCompatActivity {
         westButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if ((thePlayer.getRowLocation() - 1) < 0) {
+                if ((thePlayer.getColLocation() - 1) < 0) {
                     throw new IllegalArgumentException("Cant go anymore west!");
                 } else {
-                    thePlayer.setRowLocation(thePlayer.getRowLocation() - 1);
+                    thePlayer.setColLocation(thePlayer.getColLocation() - 1);
                     updatePlayerHealth(thePlayer);
                     updateUIElements(thePlayer, theGameMap);
                 }
@@ -62,10 +62,10 @@ public class MainActivity extends AppCompatActivity {
         southButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if ((thePlayer.getColLocation() + 1) > theGameMap.maxCol) {
+                if ((thePlayer.getRowLocation() + 1) > theGameMap.maxRow) {
                     throw new IllegalArgumentException("Cant go anymore south!");
                 } else {
-                    thePlayer.setColLocation(thePlayer.getColLocation() + 1);
+                    thePlayer.setRowLocation(thePlayer.getRowLocation() + 1);
                     updatePlayerHealth(thePlayer);
                     updateUIElements(thePlayer, theGameMap);
                 }
@@ -75,10 +75,10 @@ public class MainActivity extends AppCompatActivity {
         northButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if ((thePlayer.getColLocation() - 1) < 0) {
+                if ((thePlayer.getRowLocation() - 1) < 0) {
                     throw new IllegalArgumentException("Cant go anymore north!");
                 } else {
-                    thePlayer.setColLocation(thePlayer.getColLocation() -1);
+                    thePlayer.setRowLocation(thePlayer.getRowLocation() -1);
                     updatePlayerHealth(thePlayer);
                     updateUIElements(thePlayer, theGameMap);
                 }
@@ -140,10 +140,10 @@ public class MainActivity extends AppCompatActivity {
             eastButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if ((thePlayer.getRowLocation() + 1) > theGameMap.maxRow) {
+                    if ((thePlayer.getColLocation() + 1) > theGameMap.maxCol) {
                         throw new IllegalArgumentException("Cant go anymore east!");
                     } else {
-                        thePlayer.setRowLocation(thePlayer.getRowLocation() + 1);
+                        thePlayer.setColLocation(thePlayer.getColLocation() + 1);
                         updatePlayerHealth(thePlayer);
                         updateUIElements(thePlayer, theGameMap);
                     }
@@ -153,10 +153,10 @@ public class MainActivity extends AppCompatActivity {
             westButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if ((thePlayer.getRowLocation() - 1) < 0) {
+                    if ((thePlayer.getColLocation() - 1) < 0) {
                         throw new IllegalArgumentException("Cant go anymore west!");
                     } else {
-                        thePlayer.setRowLocation(thePlayer.getRowLocation() - 1);
+                        thePlayer.setColLocation(thePlayer.getColLocation() - 1);
                         updatePlayerHealth(thePlayer);
                         updateUIElements(thePlayer, theGameMap);
                     }
@@ -166,10 +166,10 @@ public class MainActivity extends AppCompatActivity {
             southButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if ((thePlayer.getColLocation() + 1) > theGameMap.maxCol) {
+                    if ((thePlayer.getRowLocation() + 1) > theGameMap.maxRow) {
                         throw new IllegalArgumentException("Cant go anymore south!");
                     } else {
-                        thePlayer.setColLocation(thePlayer.getColLocation() + 1);
+                        thePlayer.setRowLocation(thePlayer.getRowLocation() + 1);
                         updatePlayerHealth(thePlayer);
                         updateUIElements(thePlayer, theGameMap);
                     }
@@ -179,10 +179,10 @@ public class MainActivity extends AppCompatActivity {
             northButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if ((thePlayer.getColLocation() - 1) < 0) {
+                    if ((thePlayer.getRowLocation() - 1) < 0) {
                         throw new IllegalArgumentException("Cant go anymore north!");
                     } else {
-                        thePlayer.setColLocation(thePlayer.getColLocation() -1);
+                        thePlayer.setRowLocation(thePlayer.getRowLocation() -1);
                         updatePlayerHealth(thePlayer);
                         updateUIElements(thePlayer, theGameMap);
                     }
@@ -240,10 +240,10 @@ public class MainActivity extends AppCompatActivity {
             eastButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if ((thePlayer.getRowLocation() + 1) > theGameMap.maxRow) {
+                    if ((thePlayer.getColLocation() + 1) > theGameMap.maxCol) {
                         throw new IllegalArgumentException("Cant go anymore east!");
                     } else {
-                        thePlayer.setRowLocation(thePlayer.getRowLocation() + 1);
+                        thePlayer.setColLocation(thePlayer.getColLocation() + 1);
                         updatePlayerHealth(thePlayer);
                         updateUIElements(thePlayer, theGameMap);
                     }
@@ -253,10 +253,10 @@ public class MainActivity extends AppCompatActivity {
             westButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if ((thePlayer.getRowLocation() - 1) < 0) {
+                    if ((thePlayer.getColLocation() - 1) < 0) {
                         throw new IllegalArgumentException("Cant go anymore west!");
                     } else {
-                        thePlayer.setRowLocation(thePlayer.getRowLocation() - 1);
+                        thePlayer.setColLocation(thePlayer.getColLocation() - 1);
                         updatePlayerHealth(thePlayer);
                         updateUIElements(thePlayer, theGameMap);
                     }
@@ -266,10 +266,10 @@ public class MainActivity extends AppCompatActivity {
             southButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if ((thePlayer.getColLocation() + 1) > theGameMap.maxCol) {
+                    if ((thePlayer.getRowLocation() + 1) > theGameMap.maxRow) {
                         throw new IllegalArgumentException("Cant go anymore south!");
                     } else {
-                        thePlayer.setColLocation(thePlayer.getColLocation() + 1);
+                        thePlayer.setRowLocation(thePlayer.getRowLocation() + 1);
                         updatePlayerHealth(thePlayer);
                         updateUIElements(thePlayer, theGameMap);
                     }
@@ -279,10 +279,10 @@ public class MainActivity extends AppCompatActivity {
             northButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if ((thePlayer.getColLocation() - 1) < 0) {
+                    if ((thePlayer.getRowLocation() - 1) < 0) {
                         throw new IllegalArgumentException("Cant go anymore north!");
                     } else {
-                        thePlayer.setColLocation(thePlayer.getColLocation() -1);
+                        thePlayer.setRowLocation(thePlayer.getRowLocation() -1);
                         updatePlayerHealth(thePlayer);
                         updateUIElements(thePlayer, theGameMap);
                     }
@@ -305,7 +305,7 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = MarketActivity.getIntent(MainActivity.this, thePlayer.getRowLocation(), thePlayer.getColLocation(), thePlayer.getCash(), thePlayer.getPlayerHealth(), thePlayer.getEquipmentMass(), thePlayer.getEquipment(), getCurrentLocationItems(thePlayer, theGameMap));
                         startActivityForResult(intent, REQUEST_CODE_MARKET);
                     }
-                    else if(!theGameMap.getGrid()[thePlayer.getRowLocation()][thePlayer.getColLocation()].isTown())
+                    else
                     {
                         Intent intent = WildernessActivity.getIntent(MainActivity.this, thePlayer.getRowLocation(), thePlayer.getColLocation(), thePlayer.getCash(), thePlayer.getPlayerHealth(), thePlayer.getEquipmentMass(), thePlayer.getEquipment(), getCurrentLocationItems(thePlayer, theGameMap));
                         startActivityForResult(intent, REQUEST_CODE_WILDERNESS);
@@ -327,11 +327,11 @@ public class MainActivity extends AppCompatActivity {
         healthDisplay.setText("Health: " + Double.toString(thePlayer.getPlayerHealth()));
         cashDisplay.setText("Cash: " + Integer.toString(thePlayer.getCash()));
         equipmentMassDisplay.setText("Mass: " + Double.toString(thePlayer.getEquipmentMass()));
-        descriptionDisplay.setText(Integer.toString(thePlayer.getColLocation()) + ", " + Integer.toString(thePlayer.getRowLocation()));
+        descriptionDisplay.setText("Col: "+ Integer.toString(thePlayer.getColLocation()) + ", "+ "Row: " + Integer.toString(thePlayer.getRowLocation()));
 
 
 
-        if(theGameMap.grid[thePlayer.getColLocation()][thePlayer.getRowLocation()].isTown())
+        if(theGameMap.grid[thePlayer.getRowLocation()][thePlayer.getColLocation()].isTown())
         {
             townDisplay.setText("Town");
         }

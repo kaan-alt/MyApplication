@@ -51,8 +51,8 @@ public class GameMap {
         grid[1][1] = town5;
         grid[1][2] = town6;
 
-        maxRow = 2;
-        maxCol = 1;
+        maxRow = 1;
+        maxCol = 2;
     }
 
     public Area[][] getGrid() {
