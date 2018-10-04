@@ -4,10 +4,12 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameMap {
+public class GameData {
     Area[][] grid;
-    int maxCol;
-    int maxRow;
+    private int maxCol;
+    private int maxRow;
+    private Player player;
+    private static GameData instance = new GameData();
 
     public int getMaxCol() {
         return maxCol;
@@ -25,14 +27,29 @@ public class GameMap {
         this.maxRow = maxRow;
     }
 
-    public GameMap(Area[][] grid, int maxCol, int maxRow) {
+    public GameData(Area[][] grid, int maxCol, int maxRow) {
         this.grid = grid;
         this.maxCol = maxCol;
         this.maxRow = maxRow;
     }
 
+    public Player getPlayer() {
+        return player;
+    }
 
-    public GameMap() {
+    public static GameData getInstance() {
+        return instance;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public static void setInstance(GameData instance) {
+        GameData.instance = instance;
+    }
+
+    public GameData() {
         this.grid = new Area[2][3];
         ArrayList<Item> equipmentList = new ArrayList<>();
         equipmentList.add(createSampleEquipment());
@@ -66,7 +83,7 @@ public class GameMap {
 
     @Override
     public String toString() {
-        return "GameMap{" +
+        return "GameData{" +
                 "grid=" + Arrays.toString(grid) +
                 '}';
     }

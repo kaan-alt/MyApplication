@@ -1,7 +1,7 @@
 package au.edu.curtin.myapplication;
 
 public class Equipment extends Item{
-    double mass;
+    private double mass;
 
     public Equipment(int value, String description, double mass) {
         super(value, description);
@@ -20,8 +20,6 @@ public class Equipment extends Item{
     public String toString() {
         return "Equipment{" +
                 "mass=" + mass +
-                ", description='" + description + '\'' +
-                ", value=" + value +
                 '}';
     }
 }

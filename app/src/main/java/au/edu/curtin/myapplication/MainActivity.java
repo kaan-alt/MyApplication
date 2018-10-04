@@ -29,19 +29,19 @@ public class MainActivity extends AppCompatActivity {
 
         //Creating player and map
         final Player thePlayer = createNewPlayer();
-        final GameMap theGameMap = new GameMap();
+        final GameData theGameData = new GameData();
 
-        updateUIElements(thePlayer, theGameMap);
+        updateUIElements(thePlayer, theGameData);
 
         eastButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if ((thePlayer.getColLocation() + 1) > theGameMap.maxCol) {
+                if ((thePlayer.getColLocation() + 1) > theGameData.getMaxCol()) {
                     throw new IllegalArgumentException("Cant go anymore east!");
                 } else {
                     thePlayer.setColLocation(thePlayer.getColLocation() + 1);
                     updatePlayerHealth(thePlayer);
-                    updateUIElements(thePlayer, theGameMap);
+                    updateUIElements(thePlayer, theGameData);
                 }
             }
         });
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     thePlayer.setColLocation(thePlayer.getColLocation() - 1);
                     updatePlayerHealth(thePlayer);
-                    updateUIElements(thePlayer, theGameMap);
+                    updateUIElements(thePlayer, theGameData);
                 }
             }
         });
@@ -62,12 +62,12 @@ public class MainActivity extends AppCompatActivity {
         southButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if ((thePlayer.getRowLocation() + 1) > theGameMap.maxRow) {
+                if ((thePlayer.getRowLocation() + 1) > theGameData.getMaxRow()) {
                     throw new IllegalArgumentException("Cant go anymore south!");
                 } else {
                     thePlayer.setRowLocation(thePlayer.getRowLocation() + 1);
                     updatePlayerHealth(thePlayer);
-                    updateUIElements(thePlayer, theGameMap);
+                    updateUIElements(thePlayer, theGameData);
                 }
             }
         });
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     thePlayer.setRowLocation(thePlayer.getRowLocation() -1);
                     updatePlayerHealth(thePlayer);
-                    updateUIElements(thePlayer, theGameMap);
+                    updateUIElements(thePlayer, theGameData);
                 }
             }
         });
@@ -90,20 +90,20 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Player restartPlayer = createNewPlayer();
                 updateAllPlayerFeilds(thePlayer, restartPlayer);
-                updateUIElements(thePlayer, theGameMap);
+                updateUIElements(thePlayer, theGameData);
             }
         });
 
         optionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(theGameMap.getGrid()[thePlayer.getRowLocation()][thePlayer.getColLocation()].isTown()) {
-                    Intent intent = MarketActivity.getIntent(MainActivity.this, thePlayer.getRowLocation(), thePlayer.getColLocation(), thePlayer.getCash(), thePlayer.getPlayerHealth(), thePlayer.getEquipmentMass(), thePlayer.getEquipment(), getCurrentLocationItems(thePlayer, theGameMap));
+                if(theGameData.getGrid()[thePlayer.getRowLocation()][thePlayer.getColLocation()].isTown()) {
+                    Intent intent = MarketActivity.getIntent(MainActivity.this, thePlayer.getRowLocation(), thePlayer.getColLocation(), thePlayer.getCash(), thePlayer.getPlayerHealth(), thePlayer.getEquipmentMass(), thePlayer.getEquipment(), getCurrentLocationItems(thePlayer, theGameData));
                     startActivityForResult(intent, REQUEST_CODE_MARKET);
                 }
                 else
                 {
-                    Intent intent = WildernessActivity.getIntent(MainActivity.this, thePlayer.getRowLocation(), thePlayer.getColLocation(), thePlayer.getCash(), thePlayer.getPlayerHealth(), thePlayer.getEquipmentMass(), thePlayer.getEquipment(), getCurrentLocationItems(thePlayer, theGameMap));
+                    Intent intent = WildernessActivity.getIntent(MainActivity.this, thePlayer.getRowLocation(), thePlayer.getColLocation(), thePlayer.getCash(), thePlayer.getPlayerHealth(), thePlayer.getEquipmentMass(), thePlayer.getEquipment(), getCurrentLocationItems(thePlayer, theGameData));
                     startActivityForResult(intent, REQUEST_CODE_WILDERNESS);
                 }
             }
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
             Button optionButton = (Button) findViewById(R.id.optionButton);
             final Button restartButton = (Button) findViewById(R.id.restartButton);
 
-            final GameMap theGameMap = new GameMap();
+            final GameData theGameData = new GameData();
             final Player thePlayer = createNewPlayer();
             thePlayer.setRowLocation(MarketActivity.getMPlayerRow(returnedData));
             thePlayer.setColLocation(MarketActivity.getMPlayerCol(returnedData));
@@ -134,18 +134,18 @@ public class MainActivity extends AppCompatActivity {
             thePlayer.setEquipmentMass(MarketActivity.getMPlayerMass(returnedData));
             thePlayer.setEquipment(MarketActivity.getMPlayerEquipment(returnedData));
             //!!!Not sure if the area's items are actually persistent
-            theGameMap.getGrid()[thePlayer.getRowLocation()][thePlayer.getColLocation()].setItems(MarketActivity.getMAreaEquipment(returnedData));
-            updateUIElements(thePlayer,theGameMap);
+            theGameData.getGrid()[thePlayer.getRowLocation()][thePlayer.getColLocation()].setItems(MarketActivity.getMAreaEquipment(returnedData));
+            updateUIElements(thePlayer, theGameData);
 
             eastButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if ((thePlayer.getColLocation() + 1) > theGameMap.maxCol) {
+                    if ((thePlayer.getColLocation() + 1) > theGameData.getMaxCol()) {
                         throw new IllegalArgumentException("Cant go anymore east!");
                     } else {
                         thePlayer.setColLocation(thePlayer.getColLocation() + 1);
                         updatePlayerHealth(thePlayer);
-                        updateUIElements(thePlayer, theGameMap);
+                        updateUIElements(thePlayer, theGameData);
                     }
                 }
             });
@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         thePlayer.setColLocation(thePlayer.getColLocation() - 1);
                         updatePlayerHealth(thePlayer);
-                        updateUIElements(thePlayer, theGameMap);
+                        updateUIElements(thePlayer, theGameData);
                     }
                 }
             });
@@ -166,12 +166,12 @@ public class MainActivity extends AppCompatActivity {
             southButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if ((thePlayer.getRowLocation() + 1) > theGameMap.maxRow) {
+                    if ((thePlayer.getRowLocation() + 1) > theGameData.getMaxRow()) {
                         throw new IllegalArgumentException("Cant go anymore south!");
                     } else {
                         thePlayer.setRowLocation(thePlayer.getRowLocation() + 1);
                         updatePlayerHealth(thePlayer);
-                        updateUIElements(thePlayer, theGameMap);
+                        updateUIElements(thePlayer, theGameData);
                     }
                 }
             });
@@ -184,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         thePlayer.setRowLocation(thePlayer.getRowLocation() -1);
                         updatePlayerHealth(thePlayer);
-                        updateUIElements(thePlayer, theGameMap);
+                        updateUIElements(thePlayer, theGameData);
                     }
                 }
             });
@@ -194,20 +194,20 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     Player restartPlayer = createNewPlayer();
                     updateAllPlayerFeilds(thePlayer, restartPlayer);
-                    updateUIElements(thePlayer, theGameMap);
+                    updateUIElements(thePlayer, theGameData);
                 }
             });
 
             optionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(theGameMap.getGrid()[thePlayer.getRowLocation()][thePlayer.getColLocation()].isTown()) {
-                        Intent intent = MarketActivity.getIntent(MainActivity.this, thePlayer.getRowLocation(), thePlayer.getColLocation(), thePlayer.getCash(), thePlayer.getPlayerHealth(), thePlayer.getEquipmentMass(), thePlayer.getEquipment(), getCurrentLocationItems(thePlayer, theGameMap));
+                    if(theGameData.getGrid()[thePlayer.getRowLocation()][thePlayer.getColLocation()].isTown()) {
+                        Intent intent = MarketActivity.getIntent(MainActivity.this, thePlayer.getRowLocation(), thePlayer.getColLocation(), thePlayer.getCash(), thePlayer.getPlayerHealth(), thePlayer.getEquipmentMass(), thePlayer.getEquipment(), getCurrentLocationItems(thePlayer, theGameData));
                         startActivityForResult(intent, REQUEST_CODE_MARKET);
                     }
                     else
                     {
-                        Intent intent = WildernessActivity.getIntent(MainActivity.this, thePlayer.getRowLocation(), thePlayer.getColLocation(), thePlayer.getCash(), thePlayer.getPlayerHealth(), thePlayer.getEquipmentMass(), thePlayer.getEquipment(), getCurrentLocationItems(thePlayer, theGameMap));
+                        Intent intent = WildernessActivity.getIntent(MainActivity.this, thePlayer.getRowLocation(), thePlayer.getColLocation(), thePlayer.getCash(), thePlayer.getPlayerHealth(), thePlayer.getEquipmentMass(), thePlayer.getEquipment(), getCurrentLocationItems(thePlayer, theGameData));
                         startActivityForResult(intent, REQUEST_CODE_WILDERNESS);
                     }
                 }
@@ -225,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
             Button optionButton = (Button) findViewById(R.id.optionButton);
             final Button restartButton = (Button) findViewById(R.id.restartButton);
 
-            final GameMap theGameMap = new GameMap();
+            final GameData theGameData = new GameData();
             final Player thePlayer = createNewPlayer();
             thePlayer.setRowLocation(WildernessActivity.getWPlayerRow(returnedData));
             thePlayer.setColLocation(WildernessActivity.getWPlayerCol(returnedData));
@@ -234,18 +234,18 @@ public class MainActivity extends AppCompatActivity {
             thePlayer.setEquipmentMass(WildernessActivity.getWPlayerMass(returnedData));
             thePlayer.setEquipment(WildernessActivity.getWPlayerEquipment(returnedData));
             //!!!Not sure if the area's items are actually persistent
-            theGameMap.getGrid()[thePlayer.getRowLocation()][thePlayer.getColLocation()].setItems(WildernessActivity.getWAreaEquipment(returnedData));
-            updateUIElements(thePlayer,theGameMap);
+            theGameData.getGrid()[thePlayer.getRowLocation()][thePlayer.getColLocation()].setItems(WildernessActivity.getWAreaEquipment(returnedData));
+            updateUIElements(thePlayer, theGameData);
 
             eastButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if ((thePlayer.getColLocation() + 1) > theGameMap.maxCol) {
+                    if ((thePlayer.getColLocation() + 1) > theGameData.getMaxCol()) {
                         throw new IllegalArgumentException("Cant go anymore east!");
                     } else {
                         thePlayer.setColLocation(thePlayer.getColLocation() + 1);
                         updatePlayerHealth(thePlayer);
-                        updateUIElements(thePlayer, theGameMap);
+                        updateUIElements(thePlayer, theGameData);
                     }
                 }
             });
@@ -258,7 +258,7 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         thePlayer.setColLocation(thePlayer.getColLocation() - 1);
                         updatePlayerHealth(thePlayer);
-                        updateUIElements(thePlayer, theGameMap);
+                        updateUIElements(thePlayer, theGameData);
                     }
                 }
             });
@@ -266,12 +266,12 @@ public class MainActivity extends AppCompatActivity {
             southButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if ((thePlayer.getRowLocation() + 1) > theGameMap.maxRow) {
+                    if ((thePlayer.getRowLocation() + 1) > theGameData.getMaxRow()) {
                         throw new IllegalArgumentException("Cant go anymore south!");
                     } else {
                         thePlayer.setRowLocation(thePlayer.getRowLocation() + 1);
                         updatePlayerHealth(thePlayer);
-                        updateUIElements(thePlayer, theGameMap);
+                        updateUIElements(thePlayer, theGameData);
                     }
                 }
             });
@@ -284,7 +284,7 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         thePlayer.setRowLocation(thePlayer.getRowLocation() -1);
                         updatePlayerHealth(thePlayer);
-                        updateUIElements(thePlayer, theGameMap);
+                        updateUIElements(thePlayer, theGameData);
                     }
                 }
             });
@@ -294,20 +294,20 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     Player restartPlayer = createNewPlayer();
                     updateAllPlayerFeilds(thePlayer, restartPlayer);
-                    updateUIElements(thePlayer, theGameMap);
+                    updateUIElements(thePlayer, theGameData);
                 }
             });
 
             optionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(theGameMap.getGrid()[thePlayer.getRowLocation()][thePlayer.getColLocation()].isTown()) {
-                        Intent intent = MarketActivity.getIntent(MainActivity.this, thePlayer.getRowLocation(), thePlayer.getColLocation(), thePlayer.getCash(), thePlayer.getPlayerHealth(), thePlayer.getEquipmentMass(), thePlayer.getEquipment(), getCurrentLocationItems(thePlayer, theGameMap));
+                    if(theGameData.getGrid()[thePlayer.getRowLocation()][thePlayer.getColLocation()].isTown()) {
+                        Intent intent = MarketActivity.getIntent(MainActivity.this, thePlayer.getRowLocation(), thePlayer.getColLocation(), thePlayer.getCash(), thePlayer.getPlayerHealth(), thePlayer.getEquipmentMass(), thePlayer.getEquipment(), getCurrentLocationItems(thePlayer, theGameData));
                         startActivityForResult(intent, REQUEST_CODE_MARKET);
                     }
                     else
                     {
-                        Intent intent = WildernessActivity.getIntent(MainActivity.this, thePlayer.getRowLocation(), thePlayer.getColLocation(), thePlayer.getCash(), thePlayer.getPlayerHealth(), thePlayer.getEquipmentMass(), thePlayer.getEquipment(), getCurrentLocationItems(thePlayer, theGameMap));
+                        Intent intent = WildernessActivity.getIntent(MainActivity.this, thePlayer.getRowLocation(), thePlayer.getColLocation(), thePlayer.getCash(), thePlayer.getPlayerHealth(), thePlayer.getEquipmentMass(), thePlayer.getEquipment(), getCurrentLocationItems(thePlayer, theGameData));
                         startActivityForResult(intent, REQUEST_CODE_WILDERNESS);
                     }
                 }
@@ -316,7 +316,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void updateUIElements(Player thePlayer, GameMap theGameMap)
+    public void updateUIElements(Player thePlayer, GameData theGameData)
     {
         //Text
         EditText descriptionDisplay = (EditText) findViewById(R.id.descriptionDisplay);
@@ -331,7 +331,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        if(theGameMap.grid[thePlayer.getRowLocation()][thePlayer.getColLocation()].isTown())
+        if(theGameData.grid[thePlayer.getRowLocation()][thePlayer.getColLocation()].isTown())
         {
             townDisplay.setText("Town");
         }
@@ -341,15 +341,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public ArrayList<Item> getCurrentLocationItems(Player thePlayer, GameMap theGameMap)
+    public ArrayList<Item> getCurrentLocationItems(Player thePlayer, GameData theGameData)
     {
-        ArrayList<Item> theLocationsItems = theGameMap.getGrid()[thePlayer.getRowLocation()][thePlayer.getColLocation()].getItems();
+        ArrayList<Item> theLocationsItems = theGameData.getGrid()[thePlayer.getRowLocation()][thePlayer.getColLocation()].getItems();
         return theLocationsItems;
     }
 
     public void updatePlayerHealth(Player thePlayer)
     {
-        thePlayer.setPlayerHealth(Math.max(0.0, thePlayer.getPlayerHealth() - 5.0 - (thePlayer.equipmentMass / 2.0)));
+        thePlayer.setPlayerHealth(Math.max(0.0, thePlayer.getPlayerHealth() - 5.0 - (thePlayer.getEquipmentMass() / 2.0)));
     }
 
     public Player createNewPlayer()

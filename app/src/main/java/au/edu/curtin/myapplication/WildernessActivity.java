@@ -146,7 +146,7 @@ public class WildernessActivity extends AppCompatActivity {
         dropActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                wAreaItems.add(wildernessPlayer.equipment.get(dropCurrentIndex));
+                wAreaItems.add(wildernessPlayer.getEquipment().get(dropCurrentIndex));
                 wildernessPlayer.removeEquipment(dropCurrentIndex);
                 //Reset the sell index back to 0
                 dropCurrentIndex = 0;

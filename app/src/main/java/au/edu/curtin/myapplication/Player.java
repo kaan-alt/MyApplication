@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
-    int rowLocation;
-    int colLocation;
-    int cash;
-    double playerHealth;
-    double equipmentMass;
-    ArrayList<Equipment> equipment;
+    private int rowLocation;
+    private int colLocation;
+    private int cash;
+    private double playerHealth;
+    private double equipmentMass;
+    private ArrayList<Equipment> equipment;
 
     public Player(int rowLocation, int colLocation, int cash, double playerHealth, double equipmentMass, ArrayList<Equipment> equipment) {
         this.rowLocation = rowLocation;

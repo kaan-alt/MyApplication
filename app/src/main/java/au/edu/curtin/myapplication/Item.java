@@ -3,8 +3,8 @@ package au.edu.curtin.myapplication;
 import java.io.Serializable;
 
 public abstract class Item implements Serializable{
-    String description;
-    int value;
+    private String description;
+    private int value;
 
     public String getDescription() {
         return description;

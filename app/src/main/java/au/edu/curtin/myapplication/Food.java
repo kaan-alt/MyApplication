@@ -1,7 +1,7 @@
 package au.edu.curtin.myapplication;
 
 public class Food extends Item {
-    double health;
+    private double health;
 
     public Food(int value, String description, double health) {
         super(value, description);
@@ -20,8 +20,6 @@ public class Food extends Item {
     public String toString() {
         return "Food{" +
                 "health=" + health +
-                ", description='" + description + '\'' +
-                ", value=" + value +
                 '}';
     }
 }

@@ -31,7 +31,7 @@ public class Navigation extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
 
-        GameMap theGameMap = new GameMap();
+        GameData theGameMap = new GameData();
 
         Player thePlayer = new Player(0, 0, 0, 100.0, 0, new List<Equipment>() {
             @Override

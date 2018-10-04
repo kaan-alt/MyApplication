@@ -146,11 +146,12 @@ public class MarketActivity extends AppCompatActivity {
             }
         });
 
+        //went from marketplayer.equipment.get() to marketplayer.getEquipment
         sellActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                marketPlayer.setCash(marketPlayer.getCash() + (int)(0.75 * (double)marketPlayer.equipment.get(sellCurrentIndex).getValue()));
-                mAreaItems.add(marketPlayer.equipment.get(sellCurrentIndex));
+                marketPlayer.setCash(marketPlayer.getCash() + (int)(0.75 * (double)marketPlayer.getEquipment().get(sellCurrentIndex).getValue()));
+                mAreaItems.add(marketPlayer.getEquipment().get(sellCurrentIndex));
                 marketPlayer.removeEquipment(sellCurrentIndex);
                 //Reset the sell index back to 0
                 sellCurrentIndex = 0;
