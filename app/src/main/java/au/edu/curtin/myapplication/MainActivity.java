@@ -321,12 +321,7 @@ public class MainActivity extends AppCompatActivity {
         //Text
         EditText descriptionDisplay = (EditText) findViewById(R.id.descriptionDisplay);
         EditText townDisplay = (EditText) findViewById(R.id.townDisplay);
-        EditText healthDisplay = (EditText) findViewById(R.id.healthDisplay);
-        EditText equipmentMassDisplay = (EditText) findViewById(R.id.equipmentMassDisplay);
-        EditText cashDisplay = (EditText) findViewById(R.id.cashDisplay);
-        healthDisplay.setText("Health: " + Double.toString(thePlayer.getPlayerHealth()));
-        cashDisplay.setText("Cash: " + Integer.toString(thePlayer.getCash()));
-        equipmentMassDisplay.setText("Mass: " + Double.toString(thePlayer.getEquipmentMass()));
+
         descriptionDisplay.setText("Col: "+ Integer.toString(thePlayer.getColLocation()) + ", "+ "Row: " + Integer.toString(thePlayer.getRowLocation()));
 
 
