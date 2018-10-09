@@ -1,6 +1,7 @@
 package au.edu.curtin.myapplication;
 
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,34 +15,56 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_MARKET = 1;
     private static final int REQUEST_CODE_WILDERNESS = 2;
 
+    private Button northButton;
+    private Button eastButton;
+    private Button southButton;
+    private Button westButton;
+    private Button optionButton;
+    private EditText descriptionDisplay;
+    private EditText townDisplay;
+
+    //THIS COULD BE ILLEGAL
+    StatusBarFragment statusFrag;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
 
+        FragmentManager fm = getSupportFragmentManager();
+        statusFrag = (StatusBarFragment) fm.findFragmentById(R.id.statBarFragNavigation);
+        if(statusFrag == null)
+        {
+            statusFrag = new StatusBarFragment();
+            fm.beginTransaction()
+                    .add(R.id.statBarFragNavigation, statusFrag)
+                    .commit();
+        }
+
         //Buttons
-        Button northButton = (Button) findViewById(R.id.northButton);
-        Button eastButton = (Button) findViewById(R.id.eastButton);
-        Button southButton = (Button) findViewById(R.id.southButton);
-        Button westButton = (Button) findViewById(R.id.westButton);
-        Button optionButton = (Button) findViewById(R.id.optionButton);
-        final Button restartButton = (Button) findViewById(R.id.restartButton);
+        northButton = (Button) findViewById(R.id.northButton);
+        eastButton = (Button) findViewById(R.id.eastButton);
+        southButton = (Button) findViewById(R.id.southButton);
+        westButton = (Button) findViewById(R.id.westButton);
+        optionButton = (Button) findViewById(R.id.optionButton);
+
+
 
         //Creating player and map
-        final Player thePlayer = createNewPlayer();
         final GameData theGameData = new GameData();
 
-        updateUIElements(thePlayer, theGameData);
+        updateUIElements(theGameData);
+
+
 
         eastButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if ((thePlayer.getColLocation() + 1) > theGameData.getMaxCol()) {
+                if ((theGameData.getInstance().getPlayer().getColLocation() + 1) > theGameData.getMaxCol()) {
                     throw new IllegalArgumentException("Cant go anymore east!");
                 } else {
-                    thePlayer.setColLocation(thePlayer.getColLocation() + 1);
-                    updatePlayerHealth(thePlayer);
-                    updateUIElements(thePlayer, theGameData);
+                    theGameData.getInstance().getPlayer().setColLocation(theGameData.getInstance().getPlayer().getColLocation() + 1);
+                    updatePlayerHealth(theGameData);
+                    updateUIElements(theGameData);
                 }
             }
         });
@@ -49,12 +72,12 @@ public class MainActivity extends AppCompatActivity {
         westButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if ((thePlayer.getColLocation() - 1) < 0) {
+                if ((theGameData.getInstance().getPlayer().getColLocation() - 1) < 0) {
                     throw new IllegalArgumentException("Cant go anymore west!");
                 } else {
-                    thePlayer.setColLocation(thePlayer.getColLocation() - 1);
-                    updatePlayerHealth(thePlayer);
-                    updateUIElements(thePlayer, theGameData);
+                    theGameData.getInstance().getPlayer().setColLocation(theGameData.getInstance().getPlayer().getColLocation() - 1);
+                    updatePlayerHealth(theGameData);
+                    updateUIElements(theGameData);
                 }
             }
         });
@@ -62,12 +85,12 @@ public class MainActivity extends AppCompatActivity {
         southButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if ((thePlayer.getRowLocation() + 1) > theGameData.getMaxRow()) {
+                if ((theGameData.getInstance().getPlayer().getRowLocation() + 1) > theGameData.getMaxRow()) {
                     throw new IllegalArgumentException("Cant go anymore south!");
                 } else {
-                    thePlayer.setRowLocation(thePlayer.getRowLocation() + 1);
-                    updatePlayerHealth(thePlayer);
-                    updateUIElements(thePlayer, theGameData);
+                    theGameData.getInstance().getPlayer().setRowLocation(theGameData.getInstance().getPlayer().getRowLocation() + 1);
+                    updatePlayerHealth(theGameData);
+                    updateUIElements(theGameData);
                 }
             }
         });
@@ -75,35 +98,28 @@ public class MainActivity extends AppCompatActivity {
         northButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if ((thePlayer.getRowLocation() - 1) < 0) {
+                if ((theGameData.getInstance().getPlayer().getRowLocation() - 1) < 0) {
                     throw new IllegalArgumentException("Cant go anymore north!");
                 } else {
-                    thePlayer.setRowLocation(thePlayer.getRowLocation() -1);
-                    updatePlayerHealth(thePlayer);
-                    updateUIElements(thePlayer, theGameData);
+                    theGameData.getInstance().getPlayer().setRowLocation(theGameData.getInstance().getPlayer().getRowLocation() -1);
+                    updatePlayerHealth(theGameData);
+                    updateUIElements(theGameData);
                 }
             }
         });
 
-        restartButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Player restartPlayer = createNewPlayer();
-                updateAllPlayerFeilds(thePlayer, restartPlayer);
-                updateUIElements(thePlayer, theGameData);
-            }
-        });
+
 
         optionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(theGameData.getGrid()[thePlayer.getRowLocation()][thePlayer.getColLocation()].isTown()) {
-                    Intent intent = MarketActivity.getIntent(MainActivity.this, thePlayer.getRowLocation(), thePlayer.getColLocation(), thePlayer.getCash(), thePlayer.getPlayerHealth(), thePlayer.getEquipmentMass(), thePlayer.getEquipment(), getCurrentLocationItems(thePlayer, theGameData));
+                if(theGameData.getGrid()[theGameData.getInstance().getPlayer().getRowLocation()][theGameData.getInstance().getPlayer().getColLocation()].isTown()) {
+                    Intent intent = MarketActivity.getIntent(MainActivity.this, theGameData.getInstance().getPlayer().getRowLocation(), theGameData.getInstance().getPlayer().getColLocation(), theGameData.getInstance().getPlayer().getCash(), theGameData.getInstance().getPlayer().getPlayerHealth(), theGameData.getInstance().getPlayer().getEquipmentMass(), theGameData.getInstance().getPlayer().getEquipment(), getCurrentLocationItems(theGameData.getInstance().getPlayer(), theGameData));
                     startActivityForResult(intent, REQUEST_CODE_MARKET);
                 }
                 else
                 {
-                    Intent intent = WildernessActivity.getIntent(MainActivity.this, thePlayer.getRowLocation(), thePlayer.getColLocation(), thePlayer.getCash(), thePlayer.getPlayerHealth(), thePlayer.getEquipmentMass(), thePlayer.getEquipment(), getCurrentLocationItems(thePlayer, theGameData));
+                    Intent intent = WildernessActivity.getIntent(MainActivity.this, theGameData.getInstance().getPlayer().getRowLocation(), theGameData.getInstance().getPlayer().getColLocation(), theGameData.getInstance().getPlayer().getCash(), theGameData.getInstance().getPlayer().getPlayerHealth(), theGameData.getInstance().getPlayer().getEquipmentMass(), theGameData.getInstance().getPlayer().getEquipment(), getCurrentLocationItems(theGameData.getInstance().getPlayer(), theGameData));
                     startActivityForResult(intent, REQUEST_CODE_WILDERNESS);
                 }
             }
@@ -117,35 +133,41 @@ public class MainActivity extends AppCompatActivity {
         if(resultCode == RESULT_OK &&
                 requestCode == REQUEST_CODE_MARKET)
         {
-            //Buttons
-            Button northButton = (Button) findViewById(R.id.northButton);
-            Button eastButton = (Button) findViewById(R.id.eastButton);
-            Button southButton = (Button) findViewById(R.id.southButton);
-            Button westButton = (Button) findViewById(R.id.westButton);
-            Button optionButton = (Button) findViewById(R.id.optionButton);
-            final Button restartButton = (Button) findViewById(R.id.restartButton);
+            FragmentManager fm = getSupportFragmentManager();
+            statusFrag = (StatusBarFragment) fm.findFragmentById(R.id.statBarFragNavigation);
+            if(statusFrag == null)
+            {
+                statusFrag = new StatusBarFragment();
+                fm.beginTransaction()
+                        .add(R.id.statBarFragNavigation, statusFrag)
+                        .commit();
+            }
 
+            //Buttons
+            northButton = (Button) findViewById(R.id.northButton);
+            eastButton = (Button) findViewById(R.id.eastButton);
+            southButton = (Button) findViewById(R.id.southButton);
+            westButton = (Button) findViewById(R.id.westButton);
+            optionButton = (Button) findViewById(R.id.optionButton);
+
+
+
+            //Creating player and map
             final GameData theGameData = new GameData();
-            final Player thePlayer = createNewPlayer();
-            thePlayer.setRowLocation(MarketActivity.getMPlayerRow(returnedData));
-            thePlayer.setColLocation(MarketActivity.getMPlayerCol(returnedData));
-            thePlayer.setCash(MarketActivity.getMPlayerCash(returnedData));
-            thePlayer.setPlayerHealth(MarketActivity.getMPlayerHealth(returnedData));
-            thePlayer.setEquipmentMass(MarketActivity.getMPlayerMass(returnedData));
-            thePlayer.setEquipment(MarketActivity.getMPlayerEquipment(returnedData));
-            //!!!Not sure if the area's items are actually persistent
-            theGameData.getGrid()[thePlayer.getRowLocation()][thePlayer.getColLocation()].setItems(MarketActivity.getMAreaEquipment(returnedData));
-            updateUIElements(thePlayer, theGameData);
+
+            updateUIElements(theGameData);
+
+
 
             eastButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if ((thePlayer.getColLocation() + 1) > theGameData.getMaxCol()) {
+                    if ((theGameData.getInstance().getPlayer().getColLocation() + 1) > theGameData.getMaxCol()) {
                         throw new IllegalArgumentException("Cant go anymore east!");
                     } else {
-                        thePlayer.setColLocation(thePlayer.getColLocation() + 1);
-                        updatePlayerHealth(thePlayer);
-                        updateUIElements(thePlayer, theGameData);
+                        theGameData.getInstance().getPlayer().setColLocation(theGameData.getInstance().getPlayer().getColLocation() + 1);
+                        updatePlayerHealth(theGameData);
+                        updateUIElements(theGameData);
                     }
                 }
             });
@@ -153,12 +175,12 @@ public class MainActivity extends AppCompatActivity {
             westButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if ((thePlayer.getColLocation() - 1) < 0) {
+                    if ((theGameData.getInstance().getPlayer().getColLocation() - 1) < 0) {
                         throw new IllegalArgumentException("Cant go anymore west!");
                     } else {
-                        thePlayer.setColLocation(thePlayer.getColLocation() - 1);
-                        updatePlayerHealth(thePlayer);
-                        updateUIElements(thePlayer, theGameData);
+                        theGameData.getInstance().getPlayer().setColLocation(theGameData.getInstance().getPlayer().getColLocation() - 1);
+                        updatePlayerHealth(theGameData);
+                        updateUIElements(theGameData);
                     }
                 }
             });
@@ -166,12 +188,12 @@ public class MainActivity extends AppCompatActivity {
             southButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if ((thePlayer.getRowLocation() + 1) > theGameData.getMaxRow()) {
+                    if ((theGameData.getInstance().getPlayer().getRowLocation() + 1) > theGameData.getMaxRow()) {
                         throw new IllegalArgumentException("Cant go anymore south!");
                     } else {
-                        thePlayer.setRowLocation(thePlayer.getRowLocation() + 1);
-                        updatePlayerHealth(thePlayer);
-                        updateUIElements(thePlayer, theGameData);
+                        theGameData.getInstance().getPlayer().setRowLocation(theGameData.getInstance().getPlayer().getRowLocation() + 1);
+                        updatePlayerHealth(theGameData);
+                        updateUIElements(theGameData);
                     }
                 }
             });
@@ -179,35 +201,28 @@ public class MainActivity extends AppCompatActivity {
             northButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if ((thePlayer.getRowLocation() - 1) < 0) {
+                    if ((theGameData.getInstance().getPlayer().getRowLocation() - 1) < 0) {
                         throw new IllegalArgumentException("Cant go anymore north!");
                     } else {
-                        thePlayer.setRowLocation(thePlayer.getRowLocation() -1);
-                        updatePlayerHealth(thePlayer);
-                        updateUIElements(thePlayer, theGameData);
+                        theGameData.getInstance().getPlayer().setRowLocation(theGameData.getInstance().getPlayer().getRowLocation() -1);
+                        updatePlayerHealth(theGameData);
+                        updateUIElements(theGameData);
                     }
                 }
             });
 
-            restartButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Player restartPlayer = createNewPlayer();
-                    updateAllPlayerFeilds(thePlayer, restartPlayer);
-                    updateUIElements(thePlayer, theGameData);
-                }
-            });
+
 
             optionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(theGameData.getGrid()[thePlayer.getRowLocation()][thePlayer.getColLocation()].isTown()) {
-                        Intent intent = MarketActivity.getIntent(MainActivity.this, thePlayer.getRowLocation(), thePlayer.getColLocation(), thePlayer.getCash(), thePlayer.getPlayerHealth(), thePlayer.getEquipmentMass(), thePlayer.getEquipment(), getCurrentLocationItems(thePlayer, theGameData));
+                    if(theGameData.getGrid()[theGameData.getInstance().getPlayer().getRowLocation()][theGameData.getInstance().getPlayer().getColLocation()].isTown()) {
+                        Intent intent = MarketActivity.getIntent(MainActivity.this, theGameData.getInstance().getPlayer().getRowLocation(), theGameData.getInstance().getPlayer().getColLocation(), theGameData.getInstance().getPlayer().getCash(), theGameData.getInstance().getPlayer().getPlayerHealth(), theGameData.getInstance().getPlayer().getEquipmentMass(), theGameData.getInstance().getPlayer().getEquipment(), getCurrentLocationItems(theGameData.getInstance().getPlayer(), theGameData));
                         startActivityForResult(intent, REQUEST_CODE_MARKET);
                     }
                     else
                     {
-                        Intent intent = WildernessActivity.getIntent(MainActivity.this, thePlayer.getRowLocation(), thePlayer.getColLocation(), thePlayer.getCash(), thePlayer.getPlayerHealth(), thePlayer.getEquipmentMass(), thePlayer.getEquipment(), getCurrentLocationItems(thePlayer, theGameData));
+                        Intent intent = WildernessActivity.getIntent(MainActivity.this, theGameData.getInstance().getPlayer().getRowLocation(), theGameData.getInstance().getPlayer().getColLocation(), theGameData.getInstance().getPlayer().getCash(), theGameData.getInstance().getPlayer().getPlayerHealth(), theGameData.getInstance().getPlayer().getEquipmentMass(), theGameData.getInstance().getPlayer().getEquipment(), getCurrentLocationItems(theGameData.getInstance().getPlayer(), theGameData));
                         startActivityForResult(intent, REQUEST_CODE_WILDERNESS);
                     }
                 }
@@ -217,35 +232,41 @@ public class MainActivity extends AppCompatActivity {
         else if(resultCode == RESULT_OK &&
                 requestCode == REQUEST_CODE_WILDERNESS)
         {
-            //Buttons
-            Button northButton = (Button) findViewById(R.id.northButton);
-            Button eastButton = (Button) findViewById(R.id.eastButton);
-            Button southButton = (Button) findViewById(R.id.southButton);
-            Button westButton = (Button) findViewById(R.id.westButton);
-            Button optionButton = (Button) findViewById(R.id.optionButton);
-            final Button restartButton = (Button) findViewById(R.id.restartButton);
+            FragmentManager fm = getSupportFragmentManager();
+            statusFrag = (StatusBarFragment) fm.findFragmentById(R.id.statBarFragNavigation);
+            if(statusFrag == null)
+            {
+                statusFrag = new StatusBarFragment();
+                fm.beginTransaction()
+                        .add(R.id.statBarFragNavigation, statusFrag)
+                        .commit();
+            }
 
+            //Buttons
+            northButton = (Button) findViewById(R.id.northButton);
+            eastButton = (Button) findViewById(R.id.eastButton);
+            southButton = (Button) findViewById(R.id.southButton);
+            westButton = (Button) findViewById(R.id.westButton);
+            optionButton = (Button) findViewById(R.id.optionButton);
+
+
+
+            //Creating player and map
             final GameData theGameData = new GameData();
-            final Player thePlayer = createNewPlayer();
-            thePlayer.setRowLocation(WildernessActivity.getWPlayerRow(returnedData));
-            thePlayer.setColLocation(WildernessActivity.getWPlayerCol(returnedData));
-            thePlayer.setCash(WildernessActivity.getWPlayerCash(returnedData));
-            thePlayer.setPlayerHealth(WildernessActivity.getWPlayerHealth(returnedData));
-            thePlayer.setEquipmentMass(WildernessActivity.getWPlayerMass(returnedData));
-            thePlayer.setEquipment(WildernessActivity.getWPlayerEquipment(returnedData));
-            //!!!Not sure if the area's items are actually persistent
-            theGameData.getGrid()[thePlayer.getRowLocation()][thePlayer.getColLocation()].setItems(WildernessActivity.getWAreaEquipment(returnedData));
-            updateUIElements(thePlayer, theGameData);
+
+            updateUIElements(theGameData);
+
+
 
             eastButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if ((thePlayer.getColLocation() + 1) > theGameData.getMaxCol()) {
+                    if ((theGameData.getInstance().getPlayer().getColLocation() + 1) > theGameData.getMaxCol()) {
                         throw new IllegalArgumentException("Cant go anymore east!");
                     } else {
-                        thePlayer.setColLocation(thePlayer.getColLocation() + 1);
-                        updatePlayerHealth(thePlayer);
-                        updateUIElements(thePlayer, theGameData);
+                        theGameData.getInstance().getPlayer().setColLocation(theGameData.getInstance().getPlayer().getColLocation() + 1);
+                        updatePlayerHealth(theGameData);
+                        updateUIElements(theGameData);
                     }
                 }
             });
@@ -253,12 +274,12 @@ public class MainActivity extends AppCompatActivity {
             westButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if ((thePlayer.getColLocation() - 1) < 0) {
+                    if ((theGameData.getInstance().getPlayer().getColLocation() - 1) < 0) {
                         throw new IllegalArgumentException("Cant go anymore west!");
                     } else {
-                        thePlayer.setColLocation(thePlayer.getColLocation() - 1);
-                        updatePlayerHealth(thePlayer);
-                        updateUIElements(thePlayer, theGameData);
+                        theGameData.getInstance().getPlayer().setColLocation(theGameData.getInstance().getPlayer().getColLocation() - 1);
+                        updatePlayerHealth(theGameData);
+                        updateUIElements(theGameData);
                     }
                 }
             });
@@ -266,12 +287,12 @@ public class MainActivity extends AppCompatActivity {
             southButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if ((thePlayer.getRowLocation() + 1) > theGameData.getMaxRow()) {
+                    if ((theGameData.getInstance().getPlayer().getRowLocation() + 1) > theGameData.getMaxRow()) {
                         throw new IllegalArgumentException("Cant go anymore south!");
                     } else {
-                        thePlayer.setRowLocation(thePlayer.getRowLocation() + 1);
-                        updatePlayerHealth(thePlayer);
-                        updateUIElements(thePlayer, theGameData);
+                        theGameData.getInstance().getPlayer().setRowLocation(theGameData.getInstance().getPlayer().getRowLocation() + 1);
+                        updatePlayerHealth(theGameData);
+                        updateUIElements(theGameData);
                     }
                 }
             });
@@ -279,35 +300,28 @@ public class MainActivity extends AppCompatActivity {
             northButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if ((thePlayer.getRowLocation() - 1) < 0) {
+                    if ((theGameData.getInstance().getPlayer().getRowLocation() - 1) < 0) {
                         throw new IllegalArgumentException("Cant go anymore north!");
                     } else {
-                        thePlayer.setRowLocation(thePlayer.getRowLocation() -1);
-                        updatePlayerHealth(thePlayer);
-                        updateUIElements(thePlayer, theGameData);
+                        theGameData.getInstance().getPlayer().setRowLocation(theGameData.getInstance().getPlayer().getRowLocation() -1);
+                        updatePlayerHealth(theGameData);
+                        updateUIElements(theGameData);
                     }
                 }
             });
 
-            restartButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Player restartPlayer = createNewPlayer();
-                    updateAllPlayerFeilds(thePlayer, restartPlayer);
-                    updateUIElements(thePlayer, theGameData);
-                }
-            });
+
 
             optionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(theGameData.getGrid()[thePlayer.getRowLocation()][thePlayer.getColLocation()].isTown()) {
-                        Intent intent = MarketActivity.getIntent(MainActivity.this, thePlayer.getRowLocation(), thePlayer.getColLocation(), thePlayer.getCash(), thePlayer.getPlayerHealth(), thePlayer.getEquipmentMass(), thePlayer.getEquipment(), getCurrentLocationItems(thePlayer, theGameData));
+                    if(theGameData.getGrid()[theGameData.getInstance().getPlayer().getRowLocation()][theGameData.getInstance().getPlayer().getColLocation()].isTown()) {
+                        Intent intent = MarketActivity.getIntent(MainActivity.this, theGameData.getInstance().getPlayer().getRowLocation(), theGameData.getInstance().getPlayer().getColLocation(), theGameData.getInstance().getPlayer().getCash(), theGameData.getInstance().getPlayer().getPlayerHealth(), theGameData.getInstance().getPlayer().getEquipmentMass(), theGameData.getInstance().getPlayer().getEquipment(), getCurrentLocationItems(theGameData.getInstance().getPlayer(), theGameData));
                         startActivityForResult(intent, REQUEST_CODE_MARKET);
                     }
                     else
                     {
-                        Intent intent = WildernessActivity.getIntent(MainActivity.this, thePlayer.getRowLocation(), thePlayer.getColLocation(), thePlayer.getCash(), thePlayer.getPlayerHealth(), thePlayer.getEquipmentMass(), thePlayer.getEquipment(), getCurrentLocationItems(thePlayer, theGameData));
+                        Intent intent = WildernessActivity.getIntent(MainActivity.this, theGameData.getInstance().getPlayer().getRowLocation(), theGameData.getInstance().getPlayer().getColLocation(), theGameData.getInstance().getPlayer().getCash(), theGameData.getInstance().getPlayer().getPlayerHealth(), theGameData.getInstance().getPlayer().getEquipmentMass(), theGameData.getInstance().getPlayer().getEquipment(), getCurrentLocationItems(theGameData.getInstance().getPlayer(), theGameData));
                         startActivityForResult(intent, REQUEST_CODE_WILDERNESS);
                     }
                 }
@@ -316,17 +330,17 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void updateUIElements(Player thePlayer, GameData theGameData)
+    public void updateUIElements(GameData theGameData)
     {
         //Text
-        EditText descriptionDisplay = (EditText) findViewById(R.id.descriptionDisplay);
-        EditText townDisplay = (EditText) findViewById(R.id.townDisplay);
+        descriptionDisplay = (EditText) findViewById(R.id.descriptionDisplay);
+        townDisplay = (EditText) findViewById(R.id.townDisplay);
 
-        descriptionDisplay.setText("Col: "+ Integer.toString(thePlayer.getColLocation()) + ", "+ "Row: " + Integer.toString(thePlayer.getRowLocation()));
+        //update location description
+        descriptionDisplay.setText("Col: "+ Integer.toString(theGameData.getInstance().getPlayer().getColLocation()) + ", "+ "Row: " + Integer.toString(theGameData.getInstance().getPlayer().getRowLocation()));
 
-
-
-        if(theGameData.grid[thePlayer.getRowLocation()][thePlayer.getColLocation()].isTown())
+        //update if 'town or wild' string
+        if(theGameData.grid[theGameData.getInstance().getPlayer().getRowLocation()][theGameData.getInstance().getPlayer().getColLocation()].isTown())
         {
             townDisplay.setText("Town");
         }
@@ -334,6 +348,8 @@ public class MainActivity extends AppCompatActivity {
         {
             townDisplay.setText("Wilderness");
         }
+
+        statusFrag.updateStatusBar(theGameData);
     }
 
     public ArrayList<Item> getCurrentLocationItems(Player thePlayer, GameData theGameData)
@@ -342,9 +358,10 @@ public class MainActivity extends AppCompatActivity {
         return theLocationsItems;
     }
 
-    public void updatePlayerHealth(Player thePlayer)
+    public void updatePlayerHealth(GameData theGameData)
     {
-        thePlayer.setPlayerHealth(Math.max(0.0, thePlayer.getPlayerHealth() - 5.0 - (thePlayer.getEquipmentMass() / 2.0)));
+        theGameData.getInstance().getPlayer().setPlayerHealth
+                (Math.max(0.0, theGameData.getInstance().getPlayer().getPlayerHealth() - 5.0 - (theGameData.getInstance().getPlayer().getEquipmentMass() / 2.0)));
     }
 
     public Player createNewPlayer()
@@ -354,12 +371,4 @@ public class MainActivity extends AppCompatActivity {
         return theNewPlayer;
     }
 
-    public void updateAllPlayerFeilds(Player thePlayer, Player restartPlayer)
-    {
-        thePlayer.setPlayerHealth(restartPlayer.getPlayerHealth());
-        thePlayer.setColLocation(restartPlayer.getColLocation());
-        thePlayer.setRowLocation(restartPlayer.getRowLocation());
-        thePlayer.setCash(restartPlayer.getCash());
-        thePlayer.setEquipmentMass(restartPlayer.getEquipmentMass());
-    }
 }

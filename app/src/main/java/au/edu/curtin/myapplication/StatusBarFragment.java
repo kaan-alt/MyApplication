@@ -3,13 +3,22 @@ package au.edu.curtin.myapplication;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.support.v4.app.Fragment;
+
+
+import java.util.ArrayList;
 
 public class StatusBarFragment extends Fragment {
+
+    private EditText healthDisplay;
+    private EditText equipmentMassDisplay;
+    private EditText cashDisplay;
+    private Button restartButt;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -21,12 +30,32 @@ public class StatusBarFragment extends Fragment {
     public View onCreateView(LayoutInflater li, ViewGroup parent, Bundle b) {
         View view = li.inflate(R.layout.fragment_status_bar, parent, false);
 
-        EditText healthDisplay = (EditText) view.findViewById(R.id.healthDisplay)
-        EditText equipmentMassDisplay = (EditText) view.findViewById(R.id.equipmentMassDisplay);
-        EditText cashDisplay = (EditText) view.findViewById(R.id.cashDisplay);
+        healthDisplay = (EditText) view.findViewById(R.id.healthDisplay);
+        equipmentMassDisplay = (EditText) view.findViewById(R.id.equipmentMassDisplay);
+        cashDisplay = (EditText) view.findViewById(R.id.cashDisplay);
+        restartButt = (Button) view.findViewById(R.id.restartButton);
+
+        restartButt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               //TODO: figure out how to send back to MainActivity
+            }
+        });
+        return view;
+    }
+
+    public void updateStatusBar(GameData theGameData)
+    {
+        healthDisplay.setText("Health: " + Double.toString(theGameData.getInstance().getPlayer().getPlayerHealth()));
+        cashDisplay.setText("Cash: " + Integer.toString(theGameData.getInstance().getPlayer().getCash()));
+        equipmentMassDisplay.setText("Mass: " + Double.toString(theGameData.getInstance().getPlayer().getEquipmentMass()));
+    }
+
+    public void updateStatusBarPlayer(Player thePlayer)
+    {
         healthDisplay.setText("Health: " + Double.toString(thePlayer.getPlayerHealth()));
         cashDisplay.setText("Cash: " + Integer.toString(thePlayer.getCash()));
         equipmentMassDisplay.setText("Mass: " + Double.toString(thePlayer.getEquipmentMass()));
-
     }
+
 }

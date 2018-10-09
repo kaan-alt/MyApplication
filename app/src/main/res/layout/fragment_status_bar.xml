@@ -24,14 +24,12 @@
         android:layout_width="80dp"
         android:layout_height="38dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="124dp"
+        android:layout_marginTop="80dp"
         android:ems="10"
-        android:textSize ="12dip"
         android:inputType="numberSigned|numberDecimal"
-        app:layout_constraintTop_toTopOf="@id/healthDisplay"
+        android:textSize="12dip"
         app:layout_constraintLeft_toLeftOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="@id/healthDisplay" />
 
     <EditText
         android:id="@+id/cashDisplay"
@@ -50,12 +48,11 @@
         android:id="@+id/restartButton"
         android:layout_width="70dp"
         android:layout_height="35dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="52dp"
         android:text="Restart!"
         android:textSize="8dip"
-        app:layout_constraintTop_toTopOf="@id/cashDisplay"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@id/cashDisplay" />
 
 </android.support.constraint.ConstraintLayout>

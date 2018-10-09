@@ -3,6 +3,7 @@ package au.edu.curtin.myapplication;
 import android.content.Context;
 import android.content.Intent;
 import android.media.audiofx.DynamicsProcessing;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,9 +22,21 @@ public class MarketActivity extends AppCompatActivity {
     private static final String PLAYER_ROW = "com.MainActivity.rowLocation";
     private static final String PLAYER_COL = "com.MainActivity.colLocation";
 
+    Button leaveButton;
+    Button buyNextButton;
+    Button buyPrevButton;
+    Button sellNextButton;
+    Button sellPrevButton;
+    Button buyActionButton;
+    Button sellActionButton;
+
     //VARIABLES TO TRACK WHICH ITEM INDEX OF THE ITEM LIST YOU ARE AT
     private int sellCurrentIndex = 0;
     private int buyCurrentIndex =  0;
+
+    //THIS COULD BE ILLEGAL
+    StatusBarFragment statusFrag;
+
 
     public static Intent getIntent(Context c, int rowLocation , int colLocation, int playerCash, double playerHealth, double playerEquipmentMass, ArrayList<Equipment> playerEquipment, ArrayList<Item> areaItems) {
         Intent i = new Intent(c, MarketActivity.class);
@@ -48,13 +61,13 @@ public class MarketActivity extends AppCompatActivity {
 
 
         //Buttons
-        Button leaveButton = (Button) findViewById(R.id.leaveButton);
-        Button buyNextButton = (Button) findViewById(R.id.buyNextButton);
-        Button buyPrevButton = (Button) findViewById(R.id.buyPrevButton);
-        Button sellNextButton = (Button) findViewById(R.id.sellNextButton);
-        Button sellPrevButton = (Button) findViewById(R.id.sellPrevButton);
-        Button buyActionButton = (Button) findViewById(R.id.buyActionButton);
-        Button sellActionButton = (Button) findViewById(R.id.sellActionButton);
+        leaveButton = (Button) findViewById(R.id.leaveButton);
+        buyNextButton = (Button) findViewById(R.id.buyNextButton);
+        buyPrevButton = (Button) findViewById(R.id.buyPrevButton);
+        sellNextButton = (Button) findViewById(R.id.sellNextButton);
+        sellPrevButton = (Button) findViewById(R.id.sellPrevButton);
+        buyActionButton = (Button) findViewById(R.id.buyActionButton);
+        sellActionButton = (Button) findViewById(R.id.sellActionButton);
 
         //Creating another player object from the intent
         Intent i = getIntent();
@@ -64,6 +77,16 @@ public class MarketActivity extends AppCompatActivity {
 
         final ArrayList<Item> mAreaItems = (ArrayList<Item>) i.getSerializableExtra(AREA_ITEMS);
 
+        //Fragment manager
+        FragmentManager fm = getSupportFragmentManager();
+        statusFrag = (StatusBarFragment) fm.findFragmentById(R.id.statBarFragNavigation);
+        if(statusFrag == null)
+        {
+            statusFrag = new StatusBarFragment();
+            fm.beginTransaction()
+                    .add(R.id.statBarFragNavigation, statusFrag)
+                    .commit();
+        }
         mUpdatePlayerUIElements(marketPlayer);
         mUpdateSellUI(marketPlayer, sellCurrentIndex);
         mUpdateBuyUI(mAreaItems,  buyCurrentIndex);
@@ -198,18 +221,22 @@ public class MarketActivity extends AppCompatActivity {
     {
         return intent.getDoubleExtra(PLAYER_HEALTH,0);
     }
+
     public static int getMPlayerCash(Intent intent)
     {
         return intent.getIntExtra(PLAYER_CASH, 0);
     }
+
     public static double getMPlayerMass(Intent intent)
     {
         return intent.getDoubleExtra(PLAYER_EQUIPMENTMASS, 0);
     }
+
     public static ArrayList<Equipment> getMPlayerEquipment(Intent intent)
     {
         return (ArrayList<Equipment>)intent.getSerializableExtra(PLAYER_EQUIPMENT);
     }
+
     public static ArrayList<Item> getMAreaEquipment(Intent intent)
     {
         return (ArrayList<Item>)intent.getSerializableExtra(AREA_ITEMS);
@@ -239,13 +266,8 @@ public class MarketActivity extends AppCompatActivity {
     }
 
 
-    public void mUpdatePlayerUIElements(Player marketPlayer) {
-        //Text
-        EditText healthDisplay = (EditText) findViewById(R.id.mHealthDisplay);
-        EditText equipmentMassDisplay = (EditText) findViewById(R.id.mEquipmentMassDisplay);
-        EditText cashDisplay = (EditText) findViewById(R.id.mCashDisplay);
-        healthDisplay.setText("Health: " + Double.toString(marketPlayer.getPlayerHealth()));
-        cashDisplay.setText("Cash: " + Integer.toString(marketPlayer.getCash()));
-        equipmentMassDisplay.setText("Mass: " + Double.toString(marketPlayer.getEquipmentMass()));
+    public void mUpdatePlayerUIElements(Player marketPlayer)
+    {
+        statusFrag.updateStatusBarPlayer(marketPlayer);
     }
 }

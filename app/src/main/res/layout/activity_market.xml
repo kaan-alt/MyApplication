@@ -6,44 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".MarketActivity">
 
-    <EditText
-        android:id="@+id/mHealthDisplay"
-        android:layout_width="80dp"
-        android:layout_height="38dp"
-        android:layout_marginLeft="16dp"
+    <FrameLayout
+        android:id="@+id/statBarFragMarket"
+        android:layout_width="142dp"
+        android:layout_height="138dp"
         android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:ems="10"
-        android:textSize ="12dip"
-        android:inputType="none|numberDecimal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/mEquipmentMassDisplay"
-        android:layout_width="80dp"
-        android:layout_height="38dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="124dp"
-        android:ems="10"
-        android:textSize ="12dip"
-        android:inputType="numberSigned|numberDecimal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/mCashDisplay"
-        android:layout_width="80dp"
-        android:layout_height="38dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="72dp"
-        android:ems="10"
-        android:textSize ="12dip"
-        android:inputType="numberSigned|numberDecimal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"></FrameLayout>
 
     <Button
         android:id="@+id/leaveButton"

@@ -9,7 +9,7 @@ public class GameData {
     private int maxCol;
     private int maxRow;
     private Player player;
-    private static GameData instance = new GameData();
+    private static GameData instance;
 
     public int getMaxCol() {
         return maxCol;
@@ -37,7 +37,12 @@ public class GameData {
         return player;
     }
 
-    public static GameData getInstance() {
+    public static GameData getInstance()
+    {
+        if(instance == null)
+        {
+             instance = new GameData();
+        }
         return instance;
     }
 
@@ -70,6 +75,7 @@ public class GameData {
 
         maxRow = 1;
         maxCol = 2;
+        player = new Player(0,0,200, 100, 15, new ArrayList<Equipment>());
     }
 
     public Area[][] getGrid() {
@@ -104,5 +110,12 @@ public class GameData {
     {
         Equipment sampleEquipment = new Equipment(20, "Sample Equipment2", 20.0);
         return sampleEquipment;
+    }
+
+    public Player createNewPlayer()
+    {
+        ArrayList<Equipment> emptyList = new ArrayList<>();
+        Player theNewPlayer = new Player(0,0,200,100.0,15.0, emptyList );
+        return theNewPlayer;
     }
 }

@@ -2,6 +2,7 @@ package au.edu.curtin.myapplication;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,9 +21,22 @@ public class WildernessActivity extends AppCompatActivity {
     private static final String PLAYER_ROW = "com.MainActivity.rowLocation";
     private static final String PLAYER_COL = "com.MainActivity.colLocation";
 
+    Button leaveButton;
+    Button pickNextButton;
+    Button pickPrevButton;
+    Button dropNextButton;
+    Button dropPrevButton;
+    Button pickActionButton;
+    Button dropActionButton;
+
+
+
     //VARIABLES TO TRACK WHICH ITEM INDEX OF THE ITEM LIST YOU ARE AT
     private int dropCurrentIndex = 0;
     private int pickCurrentIndex =  0;
+
+    //THIS COULD BE ILLEGAL
+    StatusBarFragment statusFrag;
 
     public static Intent getIntent(Context c, int rowLocation , int colLocation, int playerCash, double playerHealth, double playerEquipmentMass, ArrayList<Equipment> playerEquipment, ArrayList<Item> areaItems) {
         Intent i = new Intent(c, WildernessActivity.class);
@@ -47,13 +61,13 @@ public class WildernessActivity extends AppCompatActivity {
 
 
         //Buttons
-        Button leaveButton = (Button) findViewById(R.id.leaveButton);
-        Button pickNextButton = (Button) findViewById(R.id.pickNextButton);
-        Button pickPrevButton = (Button) findViewById(R.id.pickPrevButton);
-        Button dropNextButton = (Button) findViewById(R.id.dropNextButton);
-        Button dropPrevButton = (Button) findViewById(R.id.dropPrevButton);
-        Button pickActionButton = (Button) findViewById(R.id.pickActionButton);
-        Button dropActionButton = (Button) findViewById(R.id.dropActionButton);
+        leaveButton = (Button) findViewById(R.id.leaveButton);
+        pickNextButton = (Button) findViewById(R.id.pickNextButton);
+        pickPrevButton = (Button) findViewById(R.id.pickPrevButton);
+        dropNextButton = (Button) findViewById(R.id.dropNextButton);
+        dropPrevButton = (Button) findViewById(R.id.dropPrevButton);
+        pickActionButton = (Button) findViewById(R.id.pickActionButton);
+        dropActionButton = (Button) findViewById(R.id.dropActionButton);
 
         //Creating another player object from the intent
         Intent i = getIntent();
@@ -62,6 +76,17 @@ public class WildernessActivity extends AppCompatActivity {
                 , i.getDoubleExtra(PLAYER_EQUIPMENTMASS, 0), (ArrayList<Equipment>) i.getSerializableExtra(PLAYER_EQUIPMENT));
 
         final ArrayList<Item> wAreaItems = (ArrayList<Item>) i.getSerializableExtra(AREA_ITEMS);
+
+        //Fragment manager
+        FragmentManager fm = getSupportFragmentManager();
+        statusFrag = (StatusBarFragment) fm.findFragmentById(R.id.statBarFragNavigation);
+        if(statusFrag == null)
+        {
+            statusFrag = new StatusBarFragment();
+            fm.beginTransaction()
+                    .add(R.id.statBarFragNavigation, statusFrag)
+                    .commit();
+        }
 
         wUpdatePlayerUIElements(wildernessPlayer);
         wUpdateDropUI(wildernessPlayer, dropCurrentIndex);
@@ -234,14 +259,9 @@ public class WildernessActivity extends AppCompatActivity {
     }
 
 
-    public void wUpdatePlayerUIElements(Player marketPlayer) {
-        //Text
-        EditText healthDisplay = (EditText) findViewById(R.id.wHealthDisplay);
-        EditText equipmentMassDisplay = (EditText) findViewById(R.id.wEquipmentMassDisplay);
-        EditText cashDisplay = (EditText) findViewById(R.id.wCashDisplay);
-        healthDisplay.setText("Health: " + Double.toString(marketPlayer.getPlayerHealth()));
-        cashDisplay.setText("Cash: " + Integer.toString(marketPlayer.getCash()));
-        equipmentMassDisplay.setText("Mass: " + Double.toString(marketPlayer.getEquipmentMass()));
+    public void wUpdatePlayerUIElements(Player wildernessPlayer)
+    {
+        statusFrag.updateStatusBarPlayer(wildernessPlayer);
     }
 }
 
