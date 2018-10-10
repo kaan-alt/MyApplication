@@ -78,12 +78,12 @@ public class WildernessActivity extends AppCompatActivity {
 
         //Fragment manager
         FragmentManager fm = getSupportFragmentManager();
-        StatusBarFragment statusFrag = (StatusBarFragment) fm.findFragmentById(R.id.statBarFragNavigation);
+        StatusBarFragment statusFrag = (StatusBarFragment) fm.findFragmentById(R.id.statBarFragWilderness);
         if(statusFrag == null)
         {
             statusFrag = new StatusBarFragment();
             fm.beginTransaction()
-                    .add(R.id.statBarFragNavigation, statusFrag)
+                    .add(R.id.statBarFragWilderness, statusFrag)
                     .commit();
         }
 

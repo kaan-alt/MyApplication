@@ -36,22 +36,6 @@ public class MarketActivity extends AppCompatActivity {
 
 
 
-
-    public static Intent getIntent(Context c, int rowLocation , int colLocation, int playerCash, double playerHealth, double playerEquipmentMass, ArrayList<Equipment> playerEquipment, ArrayList<Item> areaItems) {
-        Intent i = new Intent(c, MarketActivity.class);
-        i.putExtra(PLAYER_ROW, rowLocation);
-        i.putExtra(PLAYER_COL, colLocation);
-        i.putExtra(PLAYER_CASH, playerCash);
-        i.putExtra(PLAYER_HEALTH, playerHealth);
-        i.putExtra(PLAYER_EQUIPMENTMASS, playerEquipmentMass);
-        i.putExtra(PLAYER_EQUIPMENT, playerEquipment);
-        i.putExtra(AREA_ITEMS, areaItems);
-
-
-
-        return i;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,38 +52,31 @@ public class MarketActivity extends AppCompatActivity {
         buyActionButton = (Button) findViewById(R.id.buyActionButton);
         sellActionButton = (Button) findViewById(R.id.sellActionButton);
 
-        //Creating another player object from the intent
-        Intent i = getIntent();
-        final Player marketPlayer = new Player(i.getIntExtra(PLAYER_ROW, 0), i.getIntExtra(PLAYER_COL,0)
-                , i.getIntExtra(PLAYER_CASH, 0),i.getDoubleExtra(PLAYER_HEALTH, 0)
-                , i.getDoubleExtra(PLAYER_EQUIPMENTMASS, 0), (ArrayList<Equipment>) i.getSerializableExtra(PLAYER_EQUIPMENT));
-
-        final ArrayList<Item> mAreaItems = (ArrayList<Item>) i.getSerializableExtra(AREA_ITEMS);
 
         //Fragment manager
         FragmentManager fm = getSupportFragmentManager();
-        StatusBarFragment statusFrag = (StatusBarFragment) fm.findFragmentById(R.id.statBarFragNavigation);
+        StatusBarFragment statusFrag = (StatusBarFragment) fm.findFragmentById(R.id.statBarFragMarket);
         if(statusFrag == null)
         {
             statusFrag = new StatusBarFragment();
             fm.beginTransaction()
-                    .add(R.id.statBarFragNavigation, statusFrag)
+                    .add(R.id.statBarFragMarket, statusFrag)
                     .commit();
         }
         //mUpdatePlayerUIElements(marketPlayer);
-        mUpdateSellUI(marketPlayer, sellCurrentIndex);
-        mUpdateBuyUI(mAreaItems,  buyCurrentIndex);
+        mUpdateSellUI(sellCurrentIndex);
+        mUpdateBuyUI(buyCurrentIndex);
 
         buyNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mAreaItems.size() == buyCurrentIndex + 1)
+                if(GameData.getInstance().grid[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].getItems().size() == buyCurrentIndex + 1)
                 {
                     buyCurrentIndex = 0;
                 } else {
                     buyCurrentIndex++;
                 }
-                mUpdateBuyUI(mAreaItems, buyCurrentIndex);
+                mUpdateBuyUI(buyCurrentIndex);
             }
         });
 
@@ -108,24 +85,24 @@ public class MarketActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(buyCurrentIndex == 0)
                 {
-                    buyCurrentIndex =  mAreaItems.size() - 1;
+                    buyCurrentIndex =  GameData.getInstance().grid[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].getItems().size() - 1;
                 } else {
                     buyCurrentIndex--;
                 }
-                mUpdateBuyUI(mAreaItems, buyCurrentIndex);
+                mUpdateBuyUI(buyCurrentIndex);
             }
         });
 
         sellNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(marketPlayer.getEquipment().size() == sellCurrentIndex + 1)
+                if(GameData.getInstance().getPlayer().getEquipment().size() == sellCurrentIndex + 1)
                 {
                     sellCurrentIndex = 0;
                 } else {
                     sellCurrentIndex++;
                 }
-                mUpdateSellUI(marketPlayer, sellCurrentIndex);
+                mUpdateSellUI(sellCurrentIndex);
             }
         });
 
@@ -134,36 +111,38 @@ public class MarketActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(sellCurrentIndex == 0)
                 {
-                    sellCurrentIndex =  marketPlayer.getEquipment().size() - 1;
+                    sellCurrentIndex =  GameData.getInstance().getPlayer().getEquipment().size() - 1;
                 } else {
                     sellCurrentIndex--;
                 }
-                mUpdateSellUI(marketPlayer, sellCurrentIndex);
+                mUpdateSellUI(sellCurrentIndex);
             }
         });
 
         buyActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mAreaItems.get(buyCurrentIndex) instanceof Food)
+                if(GameData.getInstance().grid[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].getItems().get(buyCurrentIndex) instanceof Food)
                 {
-                    marketPlayer.setCash(marketPlayer.getCash() - mAreaItems.get(buyCurrentIndex).getValue());
+                    GameData.getInstance().getPlayer().setCash(GameData.getInstance().getPlayer().getCash()
+                            - GameData.getInstance().grid[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].getItems().get(buyCurrentIndex).getValue());
                     //Can have validation so that health does not exceed 100 later :)
-                    marketPlayer.setPlayerHealth(marketPlayer.getPlayerHealth() + ((Food) mAreaItems.remove(buyCurrentIndex)).getHealth());
+                    GameData.getInstance().getPlayer().setPlayerHealth(GameData.getInstance().getPlayer().getPlayerHealth()
+                            + ((Food) GameData.getInstance().grid[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].getItems().remove(buyCurrentIndex)).getHealth());
                     //Reset the buy index back to 0
                     buyCurrentIndex = 0;
                     //mUpdatePlayerUIElements(marketPlayer);
-                    mUpdateBuyUI(mAreaItems, buyCurrentIndex);
+                    mUpdateBuyUI(buyCurrentIndex);
                 }
                 else
                 {
-                    marketPlayer.setCash(marketPlayer.getCash() - mAreaItems.get(buyCurrentIndex).getValue());
-                    marketPlayer.addEquipment((Equipment) mAreaItems.remove(buyCurrentIndex));
+                    GameData.getInstance().getPlayer().setCash(GameData.getInstance().getPlayer().getCash() - GameData.getInstance().grid[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].getItems().get(buyCurrentIndex).getValue());
+                    GameData.getInstance().getPlayer().addEquipment((Equipment) GameData.getInstance().grid[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].getItems().remove(buyCurrentIndex));
                     //Reset the buy index back to 0
                     buyCurrentIndex = 0;
                     //mUpdatePlayerUIElements(marketPlayer);
-                    mUpdateBuyUI(mAreaItems, buyCurrentIndex);
-                    mUpdateSellUI(marketPlayer,sellCurrentIndex);
+                    mUpdateBuyUI(buyCurrentIndex);
+                    mUpdateSellUI(sellCurrentIndex);
                 }
             }
         });
@@ -172,14 +151,14 @@ public class MarketActivity extends AppCompatActivity {
         sellActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                marketPlayer.setCash(marketPlayer.getCash() + (int)(0.75 * (double)marketPlayer.getEquipment().get(sellCurrentIndex).getValue()));
-                mAreaItems.add(marketPlayer.getEquipment().get(sellCurrentIndex));
-                marketPlayer.removeEquipment(sellCurrentIndex);
+                GameData.getInstance().getPlayer().setCash(GameData.getInstance().getPlayer().getCash() + (int)(0.75 * (double)GameData.getInstance().getPlayer().getEquipment().get(sellCurrentIndex).getValue()));
+                GameData.getInstance().grid[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].getItems().add(GameData.getInstance().getPlayer().getEquipment().get(sellCurrentIndex));
+                GameData.getInstance().getPlayer().removeEquipment(sellCurrentIndex);
                 //Reset the sell index back to 0
                 sellCurrentIndex = 0;
                 //mUpdatePlayerUIElements(marketPlayer);
-                mUpdateBuyUI(mAreaItems, buyCurrentIndex);
-                mUpdateSellUI(marketPlayer, sellCurrentIndex);
+                mUpdateBuyUI(buyCurrentIndex);
+                mUpdateSellUI(sellCurrentIndex);
             }
         });
 
@@ -188,17 +167,8 @@ public class MarketActivity extends AppCompatActivity {
         leaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent returnData = new Intent();
-                returnData.putExtra(PLAYER_ROW, marketPlayer.getRowLocation());
-                returnData.putExtra(PLAYER_COL, marketPlayer.getColLocation());
-                returnData.putExtra(PLAYER_HEALTH, marketPlayer.getPlayerHealth());
-                returnData.putExtra(PLAYER_CASH, marketPlayer.getCash());
-                returnData.putExtra(PLAYER_EQUIPMENTMASS, marketPlayer.getEquipmentMass());
-                returnData.putExtra(PLAYER_EQUIPMENT, marketPlayer.getEquipment());
-                returnData.putExtra(AREA_ITEMS, mAreaItems);
-
-                setResult(RESULT_OK, returnData);
-                finish();
+                Intent intent = new Intent(MarketActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -241,26 +211,26 @@ public class MarketActivity extends AppCompatActivity {
         return (ArrayList<Item>)intent.getSerializableExtra(AREA_ITEMS);
     }
 
-    public void mUpdateBuyUI(ArrayList<Item> mAreaItems, int currentIndex)
+    public void mUpdateBuyUI(int currentIndex)
     {
         //Text
         EditText buyBoxText = (EditText) findViewById(R.id.displayCurrentBuyItem);
-        if(mAreaItems.isEmpty())
+        if(GameData.getInstance().grid[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].getItems().isEmpty())
         {
             buyBoxText.setText("No Items");
         } else {
-            buyBoxText.setText(mAreaItems.get(currentIndex).getDescription());
+            buyBoxText.setText(GameData.getInstance().grid[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].getItems().get(currentIndex).getDescription());
         }
     }
-    public void mUpdateSellUI(Player marketPlayer, int currentIndex)
+    public void mUpdateSellUI(int currentIndex)
     {
         //Text
         EditText sellBoxText = (EditText) findViewById(R.id.displayCurrentSellItem);
-        if(marketPlayer.getEquipment().isEmpty())
+        if(GameData.getInstance().getPlayer().getEquipment().isEmpty())
         {
             sellBoxText.setText("No Items");
         } else {
-            sellBoxText.setText(marketPlayer.getEquipment().get(currentIndex).getDescription());
+            sellBoxText.setText(GameData.getInstance().getPlayer().getEquipment().get(currentIndex).getDescription());
         }
     }
 
