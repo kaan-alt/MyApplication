@@ -23,15 +23,14 @@ public class MainActivity extends AppCompatActivity {
     private EditText descriptionDisplay;
     private EditText townDisplay;
 
-    //THIS COULD BE ILLEGAL
-    StatusBarFragment statusFrag;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
 
         FragmentManager fm = getSupportFragmentManager();
-        statusFrag = (StatusBarFragment) fm.findFragmentById(R.id.statBarFragNavigation);
+        StatusBarFragment statusFrag = (StatusBarFragment) fm.findFragmentById(R.id.statBarFragNavigation);
         if(statusFrag == null)
         {
             statusFrag = new StatusBarFragment();
@@ -51,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Creating player and map
         final GameData theGameData = new GameData();
+        theGameData.setInstance(theGameData);
 
         updateUIElements(theGameData);
 
@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
                 requestCode == REQUEST_CODE_MARKET)
         {
             FragmentManager fm = getSupportFragmentManager();
-            statusFrag = (StatusBarFragment) fm.findFragmentById(R.id.statBarFragNavigation);
+            StatusBarFragment statusFrag = (StatusBarFragment) fm.findFragmentById(R.id.statBarFragNavigation);
             if(statusFrag == null)
             {
                 statusFrag = new StatusBarFragment();
@@ -233,7 +233,7 @@ public class MainActivity extends AppCompatActivity {
                 requestCode == REQUEST_CODE_WILDERNESS)
         {
             FragmentManager fm = getSupportFragmentManager();
-            statusFrag = (StatusBarFragment) fm.findFragmentById(R.id.statBarFragNavigation);
+            StatusBarFragment statusFrag = (StatusBarFragment) fm.findFragmentById(R.id.statBarFragNavigation);
             if(statusFrag == null)
             {
                 statusFrag = new StatusBarFragment();
@@ -348,8 +348,6 @@ public class MainActivity extends AppCompatActivity {
         {
             townDisplay.setText("Wilderness");
         }
-
-        statusFrag.updateStatusBar(theGameData);
     }
 
     public ArrayList<Item> getCurrentLocationItems(Player thePlayer, GameData theGameData)

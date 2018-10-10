@@ -30,10 +30,17 @@ public class StatusBarFragment extends Fragment {
     public View onCreateView(LayoutInflater li, ViewGroup parent, Bundle b) {
         View view = li.inflate(R.layout.fragment_status_bar, parent, false);
 
-        healthDisplay = (EditText) view.findViewById(R.id.healthDisplay);
-        equipmentMassDisplay = (EditText) view.findViewById(R.id.equipmentMassDisplay);
-        cashDisplay = (EditText) view.findViewById(R.id.cashDisplay);
+        healthDisplay = (EditText) view.findViewById(R.id.healthDisplayT);
+        equipmentMassDisplay = (EditText) view.findViewById(R.id.equipmentMassDisplayT);
+        cashDisplay = (EditText) view.findViewById(R.id.cashDisplayT);
         restartButt = (Button) view.findViewById(R.id.restartButton);
+
+        String health = ("Health: " + Double.toString(GameData.getInstance().getPlayer().getPlayerHealth()));
+        String cash = ("Cash: " + Integer.toString(GameData.getInstance().getPlayer().getCash()));
+        String mass = ("Mass: " + Double.toString(GameData.getInstance().getPlayer().getEquipmentMass()));
+        healthDisplay.setText(health);
+        cashDisplay.setText(cash);
+        equipmentMassDisplay.setText(mass);
 
         restartButt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,18 +51,16 @@ public class StatusBarFragment extends Fragment {
         return view;
     }
 
-    public void updateStatusBar(GameData theGameData)
+   /* public void updateStatusBar()
     {
-        healthDisplay.setText("Health: " + Double.toString(theGameData.getInstance().getPlayer().getPlayerHealth()));
-        cashDisplay.setText("Cash: " + Integer.toString(theGameData.getInstance().getPlayer().getCash()));
-        equipmentMassDisplay.setText("Mass: " + Double.toString(theGameData.getInstance().getPlayer().getEquipmentMass()));
-    }
+        String health1 = "Health:";
+        String health = ("Health: " + Double.toString(GameData.getInstance().getPlayer().getPlayerHealth()));
+        String cash = ("Cash: " + Integer.toString(GameData.getInstance().getPlayer().getCash()));
+        String mass = ("Mass: " + Double.toString(GameData.getInstance().getPlayer().getEquipmentMass()));
+        healthDisplay.setText(health);
+        cashDisplay.setText(cash);
+        equipmentMassDisplay.setText(mass);
+    }*/
 
-    public void updateStatusBarPlayer(Player thePlayer)
-    {
-        healthDisplay.setText("Health: " + Double.toString(thePlayer.getPlayerHealth()));
-        cashDisplay.setText("Cash: " + Integer.toString(thePlayer.getCash()));
-        equipmentMassDisplay.setText("Mass: " + Double.toString(thePlayer.getEquipmentMass()));
-    }
 
 }

@@ -34,8 +34,7 @@ public class MarketActivity extends AppCompatActivity {
     private int sellCurrentIndex = 0;
     private int buyCurrentIndex =  0;
 
-    //THIS COULD BE ILLEGAL
-    StatusBarFragment statusFrag;
+
 
 
     public static Intent getIntent(Context c, int rowLocation , int colLocation, int playerCash, double playerHealth, double playerEquipmentMass, ArrayList<Equipment> playerEquipment, ArrayList<Item> areaItems) {
@@ -79,7 +78,7 @@ public class MarketActivity extends AppCompatActivity {
 
         //Fragment manager
         FragmentManager fm = getSupportFragmentManager();
-        statusFrag = (StatusBarFragment) fm.findFragmentById(R.id.statBarFragNavigation);
+        StatusBarFragment statusFrag = (StatusBarFragment) fm.findFragmentById(R.id.statBarFragNavigation);
         if(statusFrag == null)
         {
             statusFrag = new StatusBarFragment();
@@ -87,7 +86,7 @@ public class MarketActivity extends AppCompatActivity {
                     .add(R.id.statBarFragNavigation, statusFrag)
                     .commit();
         }
-        mUpdatePlayerUIElements(marketPlayer);
+        //mUpdatePlayerUIElements(marketPlayer);
         mUpdateSellUI(marketPlayer, sellCurrentIndex);
         mUpdateBuyUI(mAreaItems,  buyCurrentIndex);
 
@@ -153,7 +152,7 @@ public class MarketActivity extends AppCompatActivity {
                     marketPlayer.setPlayerHealth(marketPlayer.getPlayerHealth() + ((Food) mAreaItems.remove(buyCurrentIndex)).getHealth());
                     //Reset the buy index back to 0
                     buyCurrentIndex = 0;
-                    mUpdatePlayerUIElements(marketPlayer);
+                    //mUpdatePlayerUIElements(marketPlayer);
                     mUpdateBuyUI(mAreaItems, buyCurrentIndex);
                 }
                 else
@@ -162,7 +161,7 @@ public class MarketActivity extends AppCompatActivity {
                     marketPlayer.addEquipment((Equipment) mAreaItems.remove(buyCurrentIndex));
                     //Reset the buy index back to 0
                     buyCurrentIndex = 0;
-                    mUpdatePlayerUIElements(marketPlayer);
+                    //mUpdatePlayerUIElements(marketPlayer);
                     mUpdateBuyUI(mAreaItems, buyCurrentIndex);
                     mUpdateSellUI(marketPlayer,sellCurrentIndex);
                 }
@@ -178,7 +177,7 @@ public class MarketActivity extends AppCompatActivity {
                 marketPlayer.removeEquipment(sellCurrentIndex);
                 //Reset the sell index back to 0
                 sellCurrentIndex = 0;
-                mUpdatePlayerUIElements(marketPlayer);
+                //mUpdatePlayerUIElements(marketPlayer);
                 mUpdateBuyUI(mAreaItems, buyCurrentIndex);
                 mUpdateSellUI(marketPlayer, sellCurrentIndex);
             }
@@ -266,8 +265,8 @@ public class MarketActivity extends AppCompatActivity {
     }
 
 
-    public void mUpdatePlayerUIElements(Player marketPlayer)
+  /*  public void mUpdatePlayerUIElements(Player marketPlayer)
     {
-        statusFrag.updateStatusBarPlayer(marketPlayer);
-    }
+        statusFrag.updateStatusBar();
+    }*/
 }

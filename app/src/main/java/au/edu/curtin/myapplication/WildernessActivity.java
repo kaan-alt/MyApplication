@@ -35,8 +35,7 @@ public class WildernessActivity extends AppCompatActivity {
     private int dropCurrentIndex = 0;
     private int pickCurrentIndex =  0;
 
-    //THIS COULD BE ILLEGAL
-    StatusBarFragment statusFrag;
+
 
     public static Intent getIntent(Context c, int rowLocation , int colLocation, int playerCash, double playerHealth, double playerEquipmentMass, ArrayList<Equipment> playerEquipment, ArrayList<Item> areaItems) {
         Intent i = new Intent(c, WildernessActivity.class);
@@ -79,7 +78,7 @@ public class WildernessActivity extends AppCompatActivity {
 
         //Fragment manager
         FragmentManager fm = getSupportFragmentManager();
-        statusFrag = (StatusBarFragment) fm.findFragmentById(R.id.statBarFragNavigation);
+        StatusBarFragment statusFrag = (StatusBarFragment) fm.findFragmentById(R.id.statBarFragNavigation);
         if(statusFrag == null)
         {
             statusFrag = new StatusBarFragment();
@@ -88,7 +87,7 @@ public class WildernessActivity extends AppCompatActivity {
                     .commit();
         }
 
-        wUpdatePlayerUIElements(wildernessPlayer);
+        //wUpdatePlayerUIElements(wildernessPlayer);
         wUpdateDropUI(wildernessPlayer, dropCurrentIndex);
         wUpdatePickUI(wAreaItems, pickCurrentIndex);
 
@@ -153,7 +152,7 @@ public class WildernessActivity extends AppCompatActivity {
                     wildernessPlayer.setPlayerHealth(wildernessPlayer.getPlayerHealth() + ((Food) wAreaItems.remove(pickCurrentIndex)).getHealth());
                     //Reset the buy index back to 0
                     pickCurrentIndex = 0;
-                    wUpdatePlayerUIElements(wildernessPlayer);
+                    //wUpdatePlayerUIElements(wildernessPlayer);
                     wUpdatePickUI(wAreaItems, pickCurrentIndex);
                 }
                 else
@@ -161,7 +160,7 @@ public class WildernessActivity extends AppCompatActivity {
                     wildernessPlayer.addEquipment((Equipment) wAreaItems.remove(pickCurrentIndex));
                     //Reset the buy index back to 0
                     pickCurrentIndex = 0;
-                    wUpdatePlayerUIElements(wildernessPlayer);
+                    //wUpdatePlayerUIElements(wildernessPlayer);
                     wUpdatePickUI(wAreaItems, pickCurrentIndex);
                     wUpdateDropUI(wildernessPlayer, dropCurrentIndex);
                 }
@@ -175,7 +174,7 @@ public class WildernessActivity extends AppCompatActivity {
                 wildernessPlayer.removeEquipment(dropCurrentIndex);
                 //Reset the sell index back to 0
                 dropCurrentIndex = 0;
-                wUpdatePlayerUIElements(wildernessPlayer);
+                //wUpdatePlayerUIElements(wildernessPlayer);
                 wUpdatePickUI(wAreaItems, pickCurrentIndex);
                 wUpdateDropUI(wildernessPlayer, dropCurrentIndex);
             }
@@ -259,10 +258,10 @@ public class WildernessActivity extends AppCompatActivity {
     }
 
 
-    public void wUpdatePlayerUIElements(Player wildernessPlayer)
+    /*public void wUpdatePlayerUIElements(Player wildernessPlayer)
     {
-        statusFrag.updateStatusBarPlayer(wildernessPlayer);
-    }
+        statusFrag.updateStatusBar();
+    }*/
 }
 
 

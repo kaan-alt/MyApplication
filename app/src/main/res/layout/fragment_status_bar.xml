@@ -7,7 +7,7 @@
     tools:context=".StatusBarFragment">
 
     <EditText
-        android:id="@+id/healthDisplay"
+        android:id="@+id/healthDisplayT"
         android:layout_width="80dp"
         android:layout_height="38dp"
         android:layout_marginLeft="16dp"
@@ -20,7 +20,7 @@
         app:layout_constraintLeft_toLeftOf="parent" />
 
     <EditText
-        android:id="@+id/equipmentMassDisplay"
+        android:id="@+id/equipmentMassDisplayT"
         android:layout_width="80dp"
         android:layout_height="38dp"
         android:layout_marginLeft="16dp"
@@ -29,10 +29,10 @@
         android:inputType="numberSigned|numberDecimal"
         android:textSize="12dip"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@id/healthDisplay" />
+        app:layout_constraintTop_toTopOf="@id/healthDisplayT" />
 
     <EditText
-        android:id="@+id/cashDisplay"
+        android:id="@+id/cashDisplayT"
         android:layout_width="80dp"
         android:layout_height="38dp"
         android:layout_marginLeft="16dp"
@@ -41,7 +41,7 @@
         android:ems="10"
         android:textSize ="12dip"
         android:inputType="numberSigned|numberDecimal"
-        app:layout_constraintTop_toTopOf="@id/equipmentMassDisplay"
+        app:layout_constraintTop_toTopOf="@id/equipmentMassDisplayT"
         app:layout_constraintLeft_toLeftOf="parent" />
 
     <Button
@@ -53,6 +53,6 @@
         android:text="Restart!"
         android:textSize="8dip"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@id/cashDisplay" />
+        app:layout_constraintTop_toTopOf="@id/cashDisplayT" />
 
 </android.support.constraint.ConstraintLayout>
