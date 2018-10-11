@@ -10,49 +10,46 @@
         android:id="@+id/healthDisplayT"
         android:layout_width="80dp"
         android:layout_height="38dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
-        android:textSize ="12dip"
         android:inputType="none|numberDecimal"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        android:textSize="12dip"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/equipmentMassDisplayT"
         android:layout_width="80dp"
         android:layout_height="38dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginLeft="8dp"
         android:ems="10"
         android:inputType="numberSigned|numberDecimal"
         android:textSize="12dip"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@id/healthDisplayT" />
+        app:layout_constraintTop_toBottomOf="@id/healthDisplayT" />
 
     <EditText
         android:id="@+id/cashDisplayT"
         android:layout_width="80dp"
         android:layout_height="38dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginLeft="8dp"
         android:ems="10"
-        android:textSize ="12dip"
         android:inputType="numberSigned|numberDecimal"
-        app:layout_constraintTop_toTopOf="@id/equipmentMassDisplayT"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        android:textSize="12dip"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/equipmentMassDisplayT" />
 
     <Button
         android:id="@+id/restartButton"
         android:layout_width="70dp"
         android:layout_height="35dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
         android:text="Restart!"
         android:textSize="8dip"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@id/cashDisplayT" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cashDisplayT" />
 
 </android.support.constraint.ConstraintLayout>

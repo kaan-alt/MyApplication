@@ -37,21 +37,6 @@ public class WildernessActivity extends AppCompatActivity {
 
 
 
-    public static Intent getIntent(Context c, int rowLocation , int colLocation, int playerCash, double playerHealth, double playerEquipmentMass, ArrayList<Equipment> playerEquipment, ArrayList<Item> areaItems) {
-        Intent i = new Intent(c, WildernessActivity.class);
-        i.putExtra(PLAYER_ROW, rowLocation);
-        i.putExtra(PLAYER_COL, colLocation);
-        i.putExtra(PLAYER_CASH, playerCash);
-        i.putExtra(PLAYER_HEALTH, playerHealth);
-        i.putExtra(PLAYER_EQUIPMENTMASS, playerEquipmentMass);
-        i.putExtra(PLAYER_EQUIPMENT, playerEquipment);
-        i.putExtra(AREA_ITEMS, areaItems);
-
-
-
-        return i;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,14 +53,6 @@ public class WildernessActivity extends AppCompatActivity {
         pickActionButton = (Button) findViewById(R.id.pickActionButton);
         dropActionButton = (Button) findViewById(R.id.dropActionButton);
 
-        //Creating another player object from the intent
-        Intent i = getIntent();
-        final Player wildernessPlayer = new Player(i.getIntExtra(PLAYER_ROW, 0), i.getIntExtra(PLAYER_COL,0)
-                , i.getIntExtra(PLAYER_CASH, 0),i.getDoubleExtra(PLAYER_HEALTH, 0)
-                , i.getDoubleExtra(PLAYER_EQUIPMENTMASS, 0), (ArrayList<Equipment>) i.getSerializableExtra(PLAYER_EQUIPMENT));
-
-        final ArrayList<Item> wAreaItems = (ArrayList<Item>) i.getSerializableExtra(AREA_ITEMS);
-
         //Fragment manager
         FragmentManager fm = getSupportFragmentManager();
         StatusBarFragment statusFrag = (StatusBarFragment) fm.findFragmentById(R.id.statBarFragWilderness);
@@ -88,19 +65,19 @@ public class WildernessActivity extends AppCompatActivity {
         }
 
         //wUpdatePlayerUIElements(wildernessPlayer);
-        wUpdateDropUI(wildernessPlayer, dropCurrentIndex);
-        wUpdatePickUI(wAreaItems, pickCurrentIndex);
+        wUpdateDropUI(dropCurrentIndex);
+        wUpdatePickUI(pickCurrentIndex);
 
         pickNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(wAreaItems.size() == pickCurrentIndex + 1)
+                if(GameData.getInstance().grid[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].getItems().size() == pickCurrentIndex + 1)
                 {
                     pickCurrentIndex = 0;
                 } else {
                     pickCurrentIndex++;
                 }
-                wUpdatePickUI(wAreaItems, pickCurrentIndex);
+                wUpdatePickUI(pickCurrentIndex);
             }
         });
 
@@ -109,24 +86,24 @@ public class WildernessActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(pickCurrentIndex == 0)
                 {
-                    pickCurrentIndex =  wAreaItems.size() - 1;
+                    pickCurrentIndex =  GameData.getInstance().grid[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].getItems().size() - 1;
                 } else {
                     pickCurrentIndex--;
                 }
-                wUpdatePickUI(wAreaItems, pickCurrentIndex);
+                wUpdatePickUI(pickCurrentIndex);
             }
         });
 
         dropNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(wildernessPlayer.getEquipment().size() == dropCurrentIndex + 1)
+                if(GameData.getInstance().getPlayer().getEquipment().size() == dropCurrentIndex + 1)
                 {
                     dropCurrentIndex = 0;
                 } else {
                     dropCurrentIndex++;
                 }
-                wUpdateDropUI(wildernessPlayer, dropCurrentIndex);
+                wUpdateDropUI(dropCurrentIndex);
             }
         });
 
@@ -135,34 +112,35 @@ public class WildernessActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(dropCurrentIndex == 0)
                 {
-                    dropCurrentIndex =  wildernessPlayer.getEquipment().size() - 1;
+                    dropCurrentIndex =  GameData.getInstance().getPlayer().getEquipment().size() - 1;
                 } else {
                     dropCurrentIndex--;
                 }
-                wUpdateDropUI(wildernessPlayer, dropCurrentIndex);
+                wUpdateDropUI(dropCurrentIndex);
             }
         });
 
         pickActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(wAreaItems.get(pickCurrentIndex) instanceof Food)
+                if(GameData.getInstance().grid[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].getItems().get(pickCurrentIndex) instanceof Food)
                 {
                     //Can have validation so that health does not exceed 100 later :)
-                    wildernessPlayer.setPlayerHealth(wildernessPlayer.getPlayerHealth() + ((Food) wAreaItems.remove(pickCurrentIndex)).getHealth());
+                    GameData.getInstance().getPlayer().setPlayerHealth(GameData.getInstance().getPlayer().getPlayerHealth()
+                            + ((Food) GameData.getInstance().grid[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].getItems().remove(pickCurrentIndex)).getHealth());
                     //Reset the buy index back to 0
                     pickCurrentIndex = 0;
                     //wUpdatePlayerUIElements(wildernessPlayer);
-                    wUpdatePickUI(wAreaItems, pickCurrentIndex);
+                    wUpdatePickUI(pickCurrentIndex);
                 }
                 else
                 {
-                    wildernessPlayer.addEquipment((Equipment) wAreaItems.remove(pickCurrentIndex));
+                    GameData.getInstance().getPlayer().addEquipment((Equipment) GameData.getInstance().grid[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].getItems().remove(pickCurrentIndex));
                     //Reset the buy index back to 0
                     pickCurrentIndex = 0;
                     //wUpdatePlayerUIElements(wildernessPlayer);
-                    wUpdatePickUI(wAreaItems, pickCurrentIndex);
-                    wUpdateDropUI(wildernessPlayer, dropCurrentIndex);
+                    wUpdatePickUI(pickCurrentIndex);
+                    wUpdateDropUI(dropCurrentIndex);
                 }
             }
         });
@@ -170,13 +148,13 @@ public class WildernessActivity extends AppCompatActivity {
         dropActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                wAreaItems.add(wildernessPlayer.getEquipment().get(dropCurrentIndex));
-                wildernessPlayer.removeEquipment(dropCurrentIndex);
+                GameData.getInstance().grid[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].getItems().add(GameData.getInstance().getPlayer().getEquipment().get(dropCurrentIndex));
+                GameData.getInstance().getPlayer().removeEquipment(dropCurrentIndex);
                 //Reset the sell index back to 0
                 dropCurrentIndex = 0;
                 //wUpdatePlayerUIElements(wildernessPlayer);
-                wUpdatePickUI(wAreaItems, pickCurrentIndex);
-                wUpdateDropUI(wildernessPlayer, dropCurrentIndex);
+                wUpdatePickUI(pickCurrentIndex);
+                wUpdateDropUI(dropCurrentIndex);
             }
         });
 
@@ -185,17 +163,8 @@ public class WildernessActivity extends AppCompatActivity {
         leaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent returnData = new Intent();
-                returnData.putExtra(PLAYER_ROW, wildernessPlayer.getRowLocation());
-                returnData.putExtra(PLAYER_COL, wildernessPlayer.getColLocation());
-                returnData.putExtra(PLAYER_HEALTH, wildernessPlayer.getPlayerHealth());
-                returnData.putExtra(PLAYER_CASH, wildernessPlayer.getCash());
-                returnData.putExtra(PLAYER_EQUIPMENTMASS, wildernessPlayer.getEquipmentMass());
-                returnData.putExtra(PLAYER_EQUIPMENT, wildernessPlayer.getEquipment());
-                returnData.putExtra(AREA_ITEMS, wAreaItems);
-
-                setResult(RESULT_OK, returnData);
-                finish();
+                Intent intent = new Intent(WildernessActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -234,26 +203,26 @@ public class WildernessActivity extends AppCompatActivity {
         return (ArrayList<Item>)intent.getSerializableExtra(AREA_ITEMS);
     }
 //COPY AND PASTE SO THEY DIFFERENT
-    public void wUpdatePickUI(ArrayList<Item> mAreaItems, int currentIndex)
+    public void wUpdatePickUI(int currentIndex)
     {
         //Text
         EditText buyBoxText = (EditText) findViewById(R.id.displayCurrentPickItem);
-        if(mAreaItems.isEmpty())
+        if(GameData.getInstance().grid[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].getItems().isEmpty())
         {
             buyBoxText.setText("No Items");
         } else {
-            buyBoxText.setText(mAreaItems.get(currentIndex).getDescription());
+            buyBoxText.setText(GameData.getInstance().grid[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].getItems().get(currentIndex).getDescription());
         }
     }
-    public void wUpdateDropUI(Player marketPlayer, int currentIndex)
+    public void wUpdateDropUI(int currentIndex)
     {
         //Text
         EditText sellBoxText = (EditText) findViewById(R.id.displayCurrentDropItem);
-        if(marketPlayer.getEquipment().isEmpty())
+        if(GameData.getInstance().getPlayer().getEquipment().isEmpty())
         {
             sellBoxText.setText("No Items");
         } else {
-            sellBoxText.setText(marketPlayer.getEquipment().get(currentIndex).getDescription());
+            sellBoxText.setText(GameData.getInstance().getPlayer().getEquipment().get(currentIndex).getDescription());
         }
     }
 

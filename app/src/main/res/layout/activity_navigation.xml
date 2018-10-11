@@ -9,12 +9,19 @@
     <FrameLayout
         android:id="@+id/statBarFragNavigation"
         android:layout_width="142dp"
-        android:layout_height="138dp"
+        android:layout_height="167dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/areaInfoFragNavigation"
+        android:layout_width="0dp"
+        android:layout_height="202dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/optionButton"></FrameLayout>
 
     <Button
         android:id="@+id/northButton"
@@ -63,27 +70,15 @@
     <EditText
         android:id="@+id/descriptionDisplay"
         android:layout_width="168dp"
-        android:layout_height="62dp"
-        android:layout_marginEnd="108dp"
-        android:layout_marginRight="108dp"
-        android:layout_marginTop="100dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="104dp"
+        android:layout_marginRight="104dp"
+        android:layout_marginBottom="12dp"
         android:ems="10"
-        android:textSize ="24dip"
         android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/townDisplay"
-        android:layout_width="124dp"
-        android:layout_height="42dp"
-        android:layout_marginEnd="130dp"
-        android:layout_marginRight="130dp"
-        android:layout_marginTop="184dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="24dip"
+        app:layout_constraintBottom_toTopOf="@+id/optionButton"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/optionButton"

@@ -56,16 +56,12 @@ public class GameData {
 
     public GameData() {
         this.grid = new Area[2][3];
-        ArrayList<Item> equipmentList = new ArrayList<>();
-        equipmentList.add(createSampleEquipment());
-        equipmentList.add(createSampleFood());
-        equipmentList.add(createSampleEquipment2());
-        Area town1 = new Area(false, equipmentList);
-        Area town2 = new Area(true, equipmentList);
-        Area town3 = new Area(true, equipmentList);
-        Area town4 = new Area(false, equipmentList);
-        Area town5 = new Area(true, equipmentList);
-        Area town6 = new Area(true, equipmentList);
+        Area town1 = new Area(false, createEquipmentListForArea());
+        Area town2 = new Area(true, createEquipmentListForArea());
+        Area town3 = new Area(true, createEquipmentListForArea());
+        Area town4 = new Area(false, createEquipmentListForArea());
+        Area town5 = new Area(true, createEquipmentListForArea());
+        Area town6 = new Area(true, createEquipmentListForArea());
         grid[0][0] = town1;
         grid[0][1] = town2;
         grid[0][2] = town3;
@@ -117,5 +113,14 @@ public class GameData {
         ArrayList<Equipment> emptyList = new ArrayList<>();
         Player theNewPlayer = new Player(0,0,200,100.0,15.0, emptyList );
         return theNewPlayer;
+    }
+
+    public ArrayList<Item> createEquipmentListForArea()
+    {
+        ArrayList<Item> equipmentList = new ArrayList<>();
+        equipmentList.add(createSampleEquipment());
+        equipmentList.add(createSampleFood());
+        equipmentList.add(createSampleEquipment2());
+        return equipmentList;
     }
 }

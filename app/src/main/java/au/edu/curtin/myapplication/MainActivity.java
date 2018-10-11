@@ -34,11 +34,19 @@ public class MainActivity extends AppCompatActivity {
 
         FragmentManager fm = getSupportFragmentManager();
         StatusBarFragment statusFrag = (StatusBarFragment) fm.findFragmentById(R.id.statBarFragNavigation);
+        AreaInfoFragment infoFrag = (AreaInfoFragment) fm.findFragmentById(R.id.areaInfoFragNavigation);
         if(statusFrag == null)
         {
             statusFrag = new StatusBarFragment();
             fm.beginTransaction()
                     .add(R.id.statBarFragNavigation, statusFrag)
+                    .commit();
+        }
+        if(infoFrag == null)
+        {
+            infoFrag = new AreaInfoFragment();
+            fm.beginTransaction()
+                    .add(R.id.areaInfoFragNavigation, infoFrag)
                     .commit();
         }
 
@@ -68,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     GameData.getInstance().getPlayer().setColLocation(GameData.getInstance().getPlayer().getColLocation() + 1);
                     updatePlayerHealth();
+                    GameData.getInstance().getGrid()[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].setExplored(true);
                     updateUIElements();
                 }
             }
@@ -81,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     GameData.getInstance().getPlayer().setColLocation(GameData.getInstance().getPlayer().getColLocation() - 1);
                     updatePlayerHealth();
+                    GameData.getInstance().getGrid()[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].setExplored(true);
                     updateUIElements();
                 }
             }
@@ -94,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     GameData.getInstance().getPlayer().setRowLocation(GameData.getInstance().getPlayer().getRowLocation() + 1);
                     updatePlayerHealth();
+                    GameData.getInstance().getGrid()[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].setExplored(true);
                     updateUIElements();
                 }
             }
@@ -107,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     GameData.getInstance().getPlayer().setRowLocation(GameData.getInstance().getPlayer().getRowLocation() -1);
                     updatePlayerHealth();
+                    GameData.getInstance().getGrid()[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].setExplored(true);
                     updateUIElements();
                 }
             }
@@ -137,20 +149,12 @@ public class MainActivity extends AppCompatActivity {
     {
         //Text
         descriptionDisplay = (EditText) findViewById(R.id.descriptionDisplay);
-        townDisplay = (EditText) findViewById(R.id.townDisplay);
+
 
         //update location description
         descriptionDisplay.setText("Col: "+ Integer.toString(GameData.getInstance().getPlayer().getColLocation()) + ", "+ "Row: " + Integer.toString(GameData.getInstance().getPlayer().getRowLocation()));
 
-        //update if 'town or wild' string
-        if(GameData.getInstance().grid[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].isTown())
-        {
-            townDisplay.setText("Town");
-        }
-        else
-        {
-            townDisplay.setText("Wilderness");
-        }
+
     }
 
     public ArrayList<Item> getCurrentLocationItems(Player thePlayer, GameData theGameData)
