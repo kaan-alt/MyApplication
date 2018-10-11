@@ -133,6 +133,7 @@ public class MarketActivity extends AppCompatActivity {
                     buyCurrentIndex = 0;
                     //mUpdatePlayerUIElements(marketPlayer);
                     mUpdateBuyUI(buyCurrentIndex);
+                    refreshStatFrag();
                 }
                 else
                 {
@@ -143,6 +144,7 @@ public class MarketActivity extends AppCompatActivity {
                     //mUpdatePlayerUIElements(marketPlayer);
                     mUpdateBuyUI(buyCurrentIndex);
                     mUpdateSellUI(sellCurrentIndex);
+                    refreshStatFrag();
                 }
             }
         });
@@ -159,6 +161,7 @@ public class MarketActivity extends AppCompatActivity {
                 //mUpdatePlayerUIElements(marketPlayer);
                 mUpdateBuyUI(buyCurrentIndex);
                 mUpdateSellUI(sellCurrentIndex);
+                refreshStatFrag();
             }
         });
 
@@ -232,6 +235,16 @@ public class MarketActivity extends AppCompatActivity {
         } else {
             sellBoxText.setText(GameData.getInstance().getPlayer().getEquipment().get(currentIndex).getDescription());
         }
+    }
+
+    public void refreshStatFrag()
+    {
+        FragmentManager fm = getSupportFragmentManager();
+        StatusBarFragment statusFrag = (StatusBarFragment) fm.findFragmentById(R.id.statBarFragMarket);
+        statusFrag = new StatusBarFragment();
+        fm.beginTransaction()
+                .replace(R.id.statBarFragMarket, statusFrag)
+                .commit();
     }
 
 

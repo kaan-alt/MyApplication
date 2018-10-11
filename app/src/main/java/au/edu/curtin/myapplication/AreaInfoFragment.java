@@ -46,6 +46,7 @@ public class AreaInfoFragment extends Fragment {
             townDisplay.setText("Wilderness");
         }
 
+        //update if "starred" or not
         if(GameData.getInstance().grid[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].isStarred())
         {
             starDisplay.setText("STARRED");
@@ -54,6 +55,11 @@ public class AreaInfoFragment extends Fragment {
         {
             starDisplay.setText("NOT STARRED");
         }
+
+        //display what the play put into descrption
+        playerDescriptionDisplay.setText(GameData.getInstance().grid[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].getAreaDescription());
+
+
 
         starButt.setOnClickListener(new View.OnClickListener() {
             @Override

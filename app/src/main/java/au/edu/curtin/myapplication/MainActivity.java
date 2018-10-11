@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
     private Button westButton;
     private Button optionButton;
     private EditText descriptionDisplay;
-    private EditText townDisplay;
 
     //Creating player and map
     final GameData theGameData = new GameData();
@@ -78,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
                     updatePlayerHealth();
                     GameData.getInstance().getGrid()[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].setExplored(true);
                     updateUIElements();
+                    refreshStatusFrag();
+                    refreshInfoFrag();
                 }
             }
         });
@@ -92,6 +93,8 @@ public class MainActivity extends AppCompatActivity {
                     updatePlayerHealth();
                     GameData.getInstance().getGrid()[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].setExplored(true);
                     updateUIElements();
+                    refreshStatusFrag();
+                    refreshInfoFrag();
                 }
             }
         });
@@ -106,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
                     updatePlayerHealth();
                     GameData.getInstance().getGrid()[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].setExplored(true);
                     updateUIElements();
+                    refreshStatusFrag();
+                    refreshInfoFrag();
                 }
             }
         });
@@ -120,6 +125,8 @@ public class MainActivity extends AppCompatActivity {
                     updatePlayerHealth();
                     GameData.getInstance().getGrid()[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].setExplored(true);
                     updateUIElements();
+                    refreshStatusFrag();
+                    refreshInfoFrag();
                 }
             }
         });
@@ -174,6 +181,26 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Equipment> emptyList = new ArrayList<>();
         Player theNewPlayer = new Player(0,0,200,100.0,15.0, emptyList );
         return theNewPlayer;
+    }
+
+    public void refreshStatusFrag()
+    {
+        FragmentManager fm = getSupportFragmentManager();
+        StatusBarFragment statusFrag = (StatusBarFragment) fm.findFragmentById(R.id.statBarFragNavigation);
+        statusFrag = new StatusBarFragment();
+        fm.beginTransaction()
+                .replace(R.id.statBarFragNavigation, statusFrag)
+                .commit();
+    }
+
+    public void refreshInfoFrag()
+    {
+        FragmentManager fm = getSupportFragmentManager();
+        AreaInfoFragment infoFrag = (AreaInfoFragment) fm.findFragmentById(R.id.areaInfoFragNavigation);
+        infoFrag = new AreaInfoFragment();
+        fm.beginTransaction()
+                .replace(R.id.areaInfoFragNavigation, infoFrag)
+                .commit();
     }
 
 }

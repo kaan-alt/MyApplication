@@ -132,6 +132,7 @@ public class WildernessActivity extends AppCompatActivity {
                     pickCurrentIndex = 0;
                     //wUpdatePlayerUIElements(wildernessPlayer);
                     wUpdatePickUI(pickCurrentIndex);
+                    refreshStatFrag();
                 }
                 else
                 {
@@ -141,6 +142,7 @@ public class WildernessActivity extends AppCompatActivity {
                     //wUpdatePlayerUIElements(wildernessPlayer);
                     wUpdatePickUI(pickCurrentIndex);
                     wUpdateDropUI(dropCurrentIndex);
+                    refreshStatFrag();
                 }
             }
         });
@@ -155,6 +157,7 @@ public class WildernessActivity extends AppCompatActivity {
                 //wUpdatePlayerUIElements(wildernessPlayer);
                 wUpdatePickUI(pickCurrentIndex);
                 wUpdateDropUI(dropCurrentIndex);
+                refreshStatFrag();
             }
         });
 
@@ -226,6 +229,15 @@ public class WildernessActivity extends AppCompatActivity {
         }
     }
 
+    public void refreshStatFrag()
+    {
+        FragmentManager fm = getSupportFragmentManager();
+        StatusBarFragment statusFrag = (StatusBarFragment) fm.findFragmentById(R.id.statBarFragWilderness);
+        statusFrag = new StatusBarFragment();
+        fm.beginTransaction()
+                .replace(R.id.statBarFragWilderness, statusFrag)
+                .commit();
+    }
 
     /*public void wUpdatePlayerUIElements(Player wildernessPlayer)
     {
