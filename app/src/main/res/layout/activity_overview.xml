@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OverviewActivity">
+
+    <FrameLayout
+        android:id="@+id/areaInfoFragOverview"
+        android:layout_width="0dp"
+        android:layout_height="202dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"></FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/graphicViewFrag"
+        android:layout_width="0dp"
+        android:layout_height="360dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/statBarFragOverview"
+        android:layout_width="130dp"
+        android:layout_height="202dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"></FrameLayout>
+
+    <Button
+        android:id="@+id/leaveButton"
+        android:layout_width="255dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="128dp"
+        android:layout_marginLeft="128dp"
+        android:layout_marginBottom="4dp"
+        android:text="LEAVE..."
+        android:textSize="24dip"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</android.support.constraint.ConstraintLayout>

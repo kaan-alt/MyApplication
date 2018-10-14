@@ -8,7 +8,7 @@
 
     <FrameLayout
         android:id="@+id/statBarFragNavigation"
-        android:layout_width="142dp"
+        android:layout_width="130dp"
         android:layout_height="167dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
@@ -73,7 +73,7 @@
         android:layout_height="0dp"
         android:layout_marginEnd="104dp"
         android:layout_marginRight="104dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="8dp"
         android:ems="10"
         android:inputType="text"
         android:textSize="24dip"
@@ -82,14 +82,21 @@
 
     <Button
         android:id="@+id/optionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="260dp"
-        android:layout_marginEnd="144dp"
-        android:layout_marginRight="144dp"
+        android:layout_width="83dp"
+        android:layout_height="42dp"
+        android:layout_marginBottom="272dp"
         android:text="Options..."
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/westButton" />
+
+    <Button
+        android:id="@+id/overviewButton"
+        android:layout_width="83dp"
+        android:layout_height="42dp"
+        android:layout_marginBottom="272dp"
+        android:text="overview..."
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/eastButton" />
 
 
 </android.support.constraint.ConstraintLayout>

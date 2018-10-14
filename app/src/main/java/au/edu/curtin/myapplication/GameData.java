@@ -3,11 +3,14 @@ package au.edu.curtin.myapplication;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class GameData {
     Area[][] grid;
     private int maxCol;
     private int maxRow;
+    public static final int WIDTH = 30;
+    public static final int HEIGHT = 10;
     private Player player;
     private static GameData instance;
 
@@ -55,23 +58,24 @@ public class GameData {
     }
 
     public GameData() {
-        this.grid = new Area[2][3];
-        Area town1 = new Area(false, createEquipmentListForArea());
-        Area town2 = new Area(true, createEquipmentListForArea());
-        Area town3 = new Area(true, createEquipmentListForArea());
-        Area town4 = new Area(false, createEquipmentListForArea());
-        Area town5 = new Area(true, createEquipmentListForArea());
-        Area town6 = new Area(true, createEquipmentListForArea());
-        grid[0][0] = town1;
-        grid[0][1] = town2;
-        grid[0][2] = town3;
-        grid[1][0] = town4;
-        grid[1][1] = town5;
-        grid[1][2] = town6;
+        this.grid = new Area[HEIGHT][WIDTH];
+        Random random = new Random();
+        for(int i = 0; i < HEIGHT; i++) {
+            for (int j = 0; j < WIDTH; j++) {
+                int randomGenNum = random.nextInt(11);
+                if (randomGenNum < 5) {
+                    Area wild = new Area(false, createEquipmentListForArea());
+                    grid[i][j] = wild;
+                } else {
+                    Area town = new Area(true, createEquipmentListForArea());
+                    grid[i][j] = town;
+                }
+            }
+        }
 
-        maxRow = 1;
-        maxCol = 2;
-        player = new Player(0,0,200, 100, 15, new ArrayList<Equipment>());
+        maxRow = 9;
+        maxCol = 29;
+        player = new Player(0,0,200, 100, 5, new ArrayList<Equipment>());
     }
 
     public Area[][] getGrid() {
@@ -122,5 +126,10 @@ public class GameData {
         equipmentList.add(createSampleFood());
         equipmentList.add(createSampleEquipment2());
         return equipmentList;
+    }
+
+    public Area get(int i, int j)
+    {
+        return grid[i][j];
     }
 }

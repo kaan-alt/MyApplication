@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private Button southButton;
     private Button westButton;
     private Button optionButton;
+    private Button overviewButton;
     private EditText descriptionDisplay;
 
     //Creating player and map
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         southButton = (Button) findViewById(R.id.southButton);
         westButton = (Button) findViewById(R.id.westButton);
         optionButton = (Button) findViewById(R.id.optionButton);
+        overviewButton = (Button) findViewById(R.id.overviewButton);
 
         if(theGameData == null)
         {
@@ -145,6 +147,14 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this, WildernessActivity.class);
                     startActivity(intent);
                 }
+            }
+        });
+
+        overviewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, OverviewActivity.class);
+                startActivity(intent);
             }
         });
 

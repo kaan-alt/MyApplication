@@ -26,7 +26,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".MarketActivity" />
-        <activity android:name=".WildernessActivity"></activity>
+        <activity android:name=".WildernessActivity" />
+        <activity
+            android:name=".OverviewActivity"
+            android:label="@string/title_activity_overview"></activity>
     </application>
 
 </manifest>
