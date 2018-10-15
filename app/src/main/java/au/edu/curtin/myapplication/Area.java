@@ -9,6 +9,33 @@ public class Area {
     private String areaDescription;
     private boolean starred;
     private boolean explored;
+    private boolean currentOccupied;
+    private int areaRow;
+    private int areaCol;
+
+    public int getAreaRow() {
+        return areaRow;
+    }
+
+    public void setAreaRow(int areaRow) {
+        this.areaRow = areaRow;
+    }
+
+    public int getAreaCol() {
+        return areaCol;
+    }
+
+    public void setAreaCol(int areaCol) {
+        this.areaCol = areaCol;
+    }
+
+    public void setCurrentOccupied(boolean currentOccupied) {
+        this.currentOccupied = currentOccupied;
+    }
+
+    public boolean isCurrentOccupied() {
+        return currentOccupied;
+    }
 
     public void setAreaDescription(String areaDescription) {
         this.areaDescription = areaDescription;
@@ -34,9 +61,11 @@ public class Area {
         return explored;
     }
 
-    public Area(boolean town, ArrayList<Item> items) {
+    public Area(boolean town, ArrayList<Item> items, int row, int col) {
         this.town = town;
         this.items = items;
+        this.areaRow = row;
+        this.areaCol = col;
     }
 
     public boolean isTown() {

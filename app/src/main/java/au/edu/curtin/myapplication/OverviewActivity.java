@@ -7,11 +7,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-public class OverviewActivity extends AppCompatActivity {
+public class OverviewActivity extends AppCompatActivity implements GraphicalViewFragment.OnGraphicalViewFragmentLis{
 
 
 
-    Button leaveButton;
+    private Button leaveButton;
+
+    private int originalPlayerRow = -1;
+    private int originalPlayerCol = -1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +56,28 @@ public class OverviewActivity extends AppCompatActivity {
         leaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(originalPlayerRow != -1)
+                {
+                    GameData.getInstance().getPlayer().setRowLocation(originalPlayerRow);
+                    GameData.getInstance().getPlayer().setColLocation(originalPlayerCol);
+                }
                 Intent intent = new Intent(OverviewActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });
+    }
+
+
+    public void replaceAreaInfoFrag(int playerRow, int playerCol)
+    {
+        originalPlayerRow = playerRow;
+        originalPlayerCol = playerCol;
+        FragmentManager fm = getSupportFragmentManager();
+        AreaInfoFragment infoFrag = (AreaInfoFragment) fm.findFragmentById(R.id.areaInfoFragOverview);
+        infoFrag = new AreaInfoFragment();
+        fm.beginTransaction()
+                .replace(R.id.areaInfoFragOverview, infoFrag)
+                .commit();
     }
 
 }

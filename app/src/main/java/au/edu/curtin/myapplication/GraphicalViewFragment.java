@@ -1,6 +1,7 @@
 package au.edu.curtin.myapplication;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -20,6 +21,32 @@ public class GraphicalViewFragment extends Fragment
     private RecyclerView rv;
     private MapAdapter adapter;
     private GridLayoutManager rvLayout;
+
+    private OnGraphicalViewFragmentLis mCallback;
+
+
+    public interface OnGraphicalViewFragmentLis
+    {
+        void replaceAreaInfoFrag(int playerRow, int playerCol);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnGraphicalViewFragmentLis) {
+            mCallback = (OnGraphicalViewFragmentLis) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnGraphical view listener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallback = null;
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,6 +78,7 @@ public class GraphicalViewFragment extends Fragment
     private class MapViewHolder extends RecyclerView.ViewHolder
     {
         private ImageView gridImage;
+        private Area areaRef;
 
 
         public MapViewHolder(LayoutInflater li, ViewGroup parent)
@@ -67,6 +95,19 @@ public class GraphicalViewFragment extends Fragment
             lp.width = size;
             lp.height = size;
 
+            gridImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int playerRow, playerCol;
+                    playerRow = GameData.getInstance().getPlayer().getRowLocation();
+                    playerCol = GameData.getInstance().getPlayer().getColLocation();
+                    GameData.getInstance().getPlayer().setRowLocation(areaRef.getAreaRow());
+                    GameData.getInstance().getPlayer().setColLocation(areaRef.getAreaCol());
+                    //Update area info frag, then revert the player location
+                    mCallback.replaceAreaInfoFrag(playerRow, playerCol);
+                }
+            });
+
 
 
 
@@ -75,28 +116,26 @@ public class GraphicalViewFragment extends Fragment
 
         public void bind(Area importedAreaElemenet)
         {
-            if(importedAreaElemenet.isExplored())
+            if(importedAreaElemenet.isCurrentOccupied())
             {
-                if (importedAreaElemenet.isStarred())
-                {
-                    gridImage.setImageResource(R.drawable.ic_tree1);
-                }
-                else
-                {
-                    if(importedAreaElemenet.isTown())
-                    {
-                        gridImage.setImageResource(R.drawable.ic_building4);
+                gridImage.setImageResource(R.drawable.ic_tree1);
+            }
+            else {
+                if (importedAreaElemenet.isExplored()) {
+                    if (importedAreaElemenet.isStarred()) {
+                        gridImage.setImageResource(R.drawable.ic_tree1);
+                    } else {
+                        if (importedAreaElemenet.isTown()) {
+                            gridImage.setImageResource(R.drawable.ic_building4);
+                        } else {
+                            gridImage.setImageResource(R.drawable.ic_grass3);
+                        }
                     }
-                    else
-                    {
-                        gridImage.setImageResource(R.drawable.ic_grass3);
-                    }
+                } else {
+                    gridImage.setImageResource(R.drawable.ic_water);
                 }
             }
-            else
-            {
-                gridImage.setImageResource(R.drawable.ic_water);
-            }
+            areaRef = importedAreaElemenet;
         }
 
     }

@@ -75,9 +75,11 @@ public class MainActivity extends AppCompatActivity {
                 if ((GameData.getInstance().getPlayer().getColLocation() + 1) > GameData.getInstance().getMaxCol()) {
                     throw new IllegalArgumentException("Cant go anymore east!");
                 } else {
+                    GameData.getInstance().getGrid()[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].setCurrentOccupied(false);
                     GameData.getInstance().getPlayer().setColLocation(GameData.getInstance().getPlayer().getColLocation() + 1);
                     updatePlayerHealth();
                     GameData.getInstance().getGrid()[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].setExplored(true);
+                    GameData.getInstance().getGrid()[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].setCurrentOccupied(true);
                     updateUIElements();
                     refreshStatusFrag();
                     refreshInfoFrag();
@@ -91,9 +93,11 @@ public class MainActivity extends AppCompatActivity {
                 if ((GameData.getInstance().getPlayer().getColLocation() - 1) < 0) {
                     throw new IllegalArgumentException("Cant go anymore west!");
                 } else {
+                    GameData.getInstance().getGrid()[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].setCurrentOccupied(false);
                     GameData.getInstance().getPlayer().setColLocation(GameData.getInstance().getPlayer().getColLocation() - 1);
                     updatePlayerHealth();
                     GameData.getInstance().getGrid()[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].setExplored(true);
+                    GameData.getInstance().getGrid()[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].setCurrentOccupied(true);
                     updateUIElements();
                     refreshStatusFrag();
                     refreshInfoFrag();
@@ -107,9 +111,11 @@ public class MainActivity extends AppCompatActivity {
                 if ((GameData.getInstance().getPlayer().getRowLocation() + 1) > GameData.getInstance().getMaxRow()) {
                     throw new IllegalArgumentException("Cant go anymore south!");
                 } else {
+                    GameData.getInstance().getGrid()[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].setCurrentOccupied(false);
                     GameData.getInstance().getPlayer().setRowLocation(GameData.getInstance().getPlayer().getRowLocation() + 1);
                     updatePlayerHealth();
                     GameData.getInstance().getGrid()[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].setExplored(true);
+                    GameData.getInstance().getGrid()[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].setCurrentOccupied(true);
                     updateUIElements();
                     refreshStatusFrag();
                     refreshInfoFrag();
@@ -123,9 +129,11 @@ public class MainActivity extends AppCompatActivity {
                 if ((GameData.getInstance().getPlayer().getRowLocation() - 1) < 0) {
                     throw new IllegalArgumentException("Cant go anymore north!");
                 } else {
+                    GameData.getInstance().getGrid()[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].setCurrentOccupied(false);
                     GameData.getInstance().getPlayer().setRowLocation(GameData.getInstance().getPlayer().getRowLocation() -1);
                     updatePlayerHealth();
                     GameData.getInstance().getGrid()[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].setExplored(true);
+                    GameData.getInstance().getGrid()[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].setCurrentOccupied(true);
                     updateUIElements();
                     refreshStatusFrag();
                     refreshInfoFrag();

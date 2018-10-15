@@ -64,10 +64,10 @@ public class GameData {
             for (int j = 0; j < WIDTH; j++) {
                 int randomGenNum = random.nextInt(11);
                 if (randomGenNum < 5) {
-                    Area wild = new Area(false, createEquipmentListForArea());
+                    Area wild = new Area(false, createEquipmentListForArea(), i ,j);
                     grid[i][j] = wild;
                 } else {
-                    Area town = new Area(true, createEquipmentListForArea());
+                    Area town = new Area(true, createEquipmentListForArea(),i , j);
                     grid[i][j] = town;
                 }
             }
