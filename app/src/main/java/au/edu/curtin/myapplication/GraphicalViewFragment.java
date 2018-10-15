@@ -62,6 +62,10 @@ public class GraphicalViewFragment extends Fragment
             gridImage = (ImageView) itemView.findViewById(R.id.gridImage);
 
 
+            int size = parent.getMeasuredHeight() / GameData.getInstance().HEIGHT + 1;
+            ViewGroup.LayoutParams lp = itemView.getLayoutParams();
+            lp.width = size;
+            lp.height = size;
 
 
 
