@@ -12,7 +12,7 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 
-public class MarketActivity extends AppCompatActivity implements BuyMarketFragment.OnBuyMarketViewFragmentLis{
+public class MarketActivity extends AppCompatActivity implements BuyMarketFragment.OnBuyMarketViewFragmentLis, UserMarketFragment.OnUserMarketViewFragmentLis{
 
     private static final String PLAYER_HEALTH = "com.MainActivity.playerHealth";
     private static final String PLAYER_CASH = "com.MainActivity.playerCash";
@@ -55,24 +55,19 @@ public class MarketActivity extends AppCompatActivity implements BuyMarketFragme
                     .add(R.id.buyMarketFrag, buyFrag)
                     .commit();
         }
+        UserMarketFragment userMarketFrag = (UserMarketFragment) fm.findFragmentById(R.id.userInventMarketFrag);
+        if(userMarketFrag == null)
+        {
+            userMarketFrag = new UserMarketFragment();
+            fm.beginTransaction()
+                    .add(R.id.userInventMarketFrag, userMarketFrag)
+                    .commit();
+        }
 
 
 
         //went from marketplayer.equipment.get() to marketplayer.getEquipment
-        /*sellActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                GameData.getInstance().getPlayer().setCash(GameData.getInstance().getPlayer().getCash() + (int)(0.75 * (double)GameData.getInstance().getPlayer().getEquipment().get(sellCurrentIndex).getValue()));
-                GameData.getInstance().grid[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].getItems().add(GameData.getInstance().getPlayer().getEquipment().get(sellCurrentIndex));
-                GameData.getInstance().getPlayer().removeEquipment(sellCurrentIndex);
-                //Reset the sell index back to 0
-                sellCurrentIndex = 0;
-                //mUpdatePlayerUIElements(marketPlayer);
-                mUpdateBuyUI(buyCurrentIndex);
-                mUpdateSellUI(sellCurrentIndex);
-                refreshStatFrag();
-            }
-        });*/
+        /**/
 
 
 
@@ -137,6 +132,12 @@ public class MarketActivity extends AppCompatActivity implements BuyMarketFragme
         buyFrag = new BuyMarketFragment();
         fm.beginTransaction()
                     .replace(R.id.buyMarketFrag, buyFrag)
+                    .commit();
+
+        UserMarketFragment userMarketFrag = (UserMarketFragment) fm.findFragmentById(R.id.userInventMarketFrag);
+        userMarketFrag = new UserMarketFragment();
+        fm.beginTransaction()
+                    .add(R.id.userInventMarketFrag, userMarketFrag)
                     .commit();
 
     }

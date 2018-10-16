@@ -1,5 +1,7 @@
 package au.edu.curtin.myapplication;
 
+import android.media.audiofx.DynamicsProcessing;
+
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
@@ -112,6 +114,13 @@ public class GameData {
         return sampleEquipment;
     }
 
+    public Equipment createSampleUsable()
+    {
+        Equipment sampleEquipment = new Equipment(20, "Usable example", 20.0);
+        sampleEquipment.setUsable(true);
+        return sampleEquipment;
+    }
+
     public Player createNewPlayer()
     {
         ArrayList<Equipment> emptyList = new ArrayList<>();
@@ -119,12 +128,14 @@ public class GameData {
         return theNewPlayer;
     }
 
+
     public ArrayList<Item> createEquipmentListForArea()
     {
         ArrayList<Item> equipmentList = new ArrayList<>();
         equipmentList.add(createSampleEquipment());
         equipmentList.add(createSampleFood());
         equipmentList.add(createSampleEquipment2());
+        equipmentList.add(createSampleUsable());
         return equipmentList;
     }
 

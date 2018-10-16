@@ -7,8 +7,8 @@
 
     <EditText
         android:id="@+id/marketUserItemName"
-        android:layout_width="wrap_content"
-        android:layout_height="38dp"
+        android:layout_width="181dp"
+        android:layout_height="50dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:ems="10"
@@ -19,17 +19,18 @@
 
     <Button
         android:id="@+id/marketSellButton"
-        android:layout_width="wrap_content"
-        android:layout_height="38dp"
-        android:text="Button"
+        android:layout_width="73dp"
+        android:layout_height="50dp"
+        android:text="SELL"
         app:layout_constraintStart_toEndOf="@+id/marketUserItemName"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/marketUseButton"
-        android:layout_width="wrap_content"
-        android:layout_height="38dp"
-        android:text="Button"
+        android:layout_width="73dp"
+        android:layout_height="50dp"
+        android:text="USE"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toEndOf="@+id/marketSellButton"
         app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

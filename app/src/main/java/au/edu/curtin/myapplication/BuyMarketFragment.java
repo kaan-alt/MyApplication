@@ -79,7 +79,7 @@ public class BuyMarketFragment extends Fragment {
         private EditText buyItemName;
         private Button buyButton;
 
-        private Item itemRef;
+
 
 
         public BuyMarketViewHolder(LayoutInflater li, ViewGroup parent)
@@ -132,7 +132,6 @@ public class BuyMarketFragment extends Fragment {
         public void bind(Item importedItemElement)
         {
             buyItemName.setText(importedItemElement.getDescription());
-            itemRef = importedItemElement;
         }
 
     }

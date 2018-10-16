@@ -5,6 +5,15 @@ import java.io.Serializable;
 public abstract class Item implements Serializable{
     private String description;
     private int value;
+    private boolean usable;
+
+    public boolean isUsable() {
+        return usable;
+    }
+
+    public void setUsable(boolean usable) {
+        this.usable = usable;
+    }
 
     public String getDescription() {
         return description;
