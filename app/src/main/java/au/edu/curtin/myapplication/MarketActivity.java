@@ -1,18 +1,15 @@
 package au.edu.curtin.myapplication;
 
-import android.content.Context;
 import android.content.Intent;
-import android.media.audiofx.DynamicsProcessing;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
 import java.util.ArrayList;
 
-public class MarketActivity extends AppCompatActivity implements BuyMarketFragment.OnBuyMarketViewFragmentLis, UserMarketFragment.OnUserMarketViewFragmentLis{
+public class MarketActivity extends AppCompatActivity implements SmellOListFragment.OnBuyMarketViewFragmentLis, UserMarketFragment.OnUserMarketViewFragmentLis{
 
     private static final String PLAYER_HEALTH = "com.MainActivity.playerHealth";
     private static final String PLAYER_CASH = "com.MainActivity.playerCash";
@@ -47,10 +44,10 @@ public class MarketActivity extends AppCompatActivity implements BuyMarketFragme
                     .add(R.id.statBarFragMarket, statusFrag)
                     .commit();
         }
-        BuyMarketFragment buyFrag = (BuyMarketFragment) fm.findFragmentById(R.id.buyMarketFrag);
+        SmellOListFragment buyFrag = (SmellOListFragment) fm.findFragmentById(R.id.buyMarketFrag);
         if(buyFrag == null)
         {
-            buyFrag = new BuyMarketFragment();
+            buyFrag = new SmellOListFragment();
             fm.beginTransaction()
                     .add(R.id.buyMarketFrag, buyFrag)
                     .commit();
@@ -128,8 +125,8 @@ public class MarketActivity extends AppCompatActivity implements BuyMarketFragme
                     .replace(R.id.statBarFragMarket, statusFrag)
                     .commit();
 
-        BuyMarketFragment buyFrag = (BuyMarketFragment) fm.findFragmentById(R.id.buyMarketFrag);
-        buyFrag = new BuyMarketFragment();
+        SmellOListFragment buyFrag = (SmellOListFragment) fm.findFragmentById(R.id.buyMarketFrag);
+        buyFrag = new SmellOListFragment();
         fm.beginTransaction()
                     .replace(R.id.buyMarketFrag, buyFrag)
                     .commit();

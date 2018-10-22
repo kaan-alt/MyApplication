@@ -61,7 +61,7 @@ public class BuyMarketFragment extends Fragment {
         rv = (RecyclerView) view.findViewById(R.id.marketBuyRecyclerView);
 
         // Set up the RecyclerView
-        adapter = new BuyMarketFragment.BuyMarketAdaptor();
+        adapter = new SmellOListFragment.SmellOListAdaptor();
         rvLayout = new LinearLayoutManager(getActivity());
         rv.setAdapter(adapter);
         rv.setLayoutManager(rvLayout);
@@ -137,7 +137,7 @@ public class BuyMarketFragment extends Fragment {
     }
 
 
-    public class BuyMarketAdaptor extends RecyclerView.Adapter<BuyMarketFragment.BuyMarketViewHolder>
+    public class BuyMarketAdaptor extends RecyclerView.Adapter<SmellOListFragment.BuyMarketViewHolder>
     {
 
         @Override
@@ -147,13 +147,13 @@ public class BuyMarketFragment extends Fragment {
         }
 
         @Override
-        public BuyMarketFragment.BuyMarketViewHolder onCreateViewHolder(ViewGroup container, int viewType)
+        public SmellOListFragment.BuyMarketViewHolder onCreateViewHolder(ViewGroup container, int viewType)
         {
-            return new BuyMarketFragment.BuyMarketViewHolder(LayoutInflater.from(getActivity()), container);
+            return new SmellOListFragment.BuyMarketViewHolder(LayoutInflater.from(getActivity()), container);
         }
 
         @Override
-        public void onBindViewHolder(@NonNull BuyMarketFragment.BuyMarketViewHolder buyMarketViewHolder, int i) {
+        public void onBindViewHolder(@NonNull SmellOListFragment.BuyMarketViewHolder buyMarketViewHolder, int i) {
             buyMarketViewHolder.bind(GameData.getInstance().grid[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].getItems().get(i));
         }
     }

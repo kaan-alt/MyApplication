@@ -29,7 +29,10 @@
         <activity android:name=".WildernessActivity" />
         <activity
             android:name=".OverviewActivity"
-            android:label="@string/title_activity_overview"></activity>
+            android:label="@string/title_activity_overview" />
+        <activity
+            android:name=".SmellOActivity"
+            android:label="@string/title_activity_smell_o"></activity>
     </application>
 
 </manifest>

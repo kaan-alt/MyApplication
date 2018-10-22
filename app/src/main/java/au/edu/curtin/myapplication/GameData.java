@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static java.lang.Math.PI;
+
 public class GameData {
     Area[][] grid;
     private int maxCol;
@@ -64,13 +66,27 @@ public class GameData {
         Random random = new Random();
         for(int i = 0; i < HEIGHT; i++) {
             for (int j = 0; j < WIDTH; j++) {
-                int randomGenNum = random.nextInt(11);
-                if (randomGenNum < 5) {
-                    Area wild = new Area(false, createEquipmentListForArea(), i ,j);
-                    grid[i][j] = wild;
-                } else {
-                    Area town = new Area(true, createEquipmentListForArea(),i , j);
-                    grid[i][j] = town;
+                if(i == 0 && j == 0)
+                {
+                    int randomGenNum = random.nextInt(11);
+                    if (randomGenNum < 5) {
+                        Area area = new Area(false, createAllUsableForArea(), i, j);
+                        grid[i][j] = area;
+                    } else {
+                        Area area = new Area(true, createAllUsableForArea(), i, j);
+                        grid[i][j] = area;
+                    }
+                }
+                else
+                {
+                    int randomGenNum = random.nextInt(11);
+                    if (randomGenNum < 5) {
+                        Area area = new Area(false, createEquipmentListForArea(), i ,j);
+                        grid[i][j] = area;
+                    } else {
+                        Area area = new Area(true, createEquipmentListForArea(),i , j);
+                        grid[i][j] = area;
+                    }
                 }
             }
         }
@@ -128,6 +144,35 @@ public class GameData {
         return theNewPlayer;
     }
 
+    public Equipment createSmellO()
+    {
+        Equipment sampleEquipment = new Equipment(20, "Smell-O", 5.0);
+        sampleEquipment.setUsable(true);
+        return sampleEquipment;
+    }
+
+    public Equipment createiDrive()
+    {
+        Equipment sampleEquipment = new Equipment(20, "iDrive", PI);
+        sampleEquipment.setUsable(true);
+        return sampleEquipment;
+    }
+
+    public Equipment createBen()
+    {
+        Equipment sampleEquipment = new Equipment(20, "Ben", 0.0);
+        sampleEquipment.setUsable(true);
+        return sampleEquipment;
+    }
+
+    public ArrayList<Item> createAllUsableForArea()
+    {
+        ArrayList<Item> equipmentList = new ArrayList<>();
+        equipmentList.add(createSmellO());
+        equipmentList.add(createiDrive());
+        equipmentList.add(createBen());
+        return equipmentList;
+    }
 
     public ArrayList<Item> createEquipmentListForArea()
     {

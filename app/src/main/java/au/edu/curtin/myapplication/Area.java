@@ -84,6 +84,11 @@ public class Area {
         this.items = items;
     }
 
+    public void addItemToArea(Item item)
+    {
+        items.add(item);
+    }
+
     @Override
     public String toString() {
         return "Area{" +

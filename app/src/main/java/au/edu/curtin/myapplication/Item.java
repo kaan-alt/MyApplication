@@ -6,6 +6,7 @@ public abstract class Item implements Serializable{
     private String description;
     private int value;
     private boolean usable;
+    //TODO add rowLocation and colLocation to every Item for smellO activty, need to change GameData map creation
 
     public boolean isUsable() {
         return usable;

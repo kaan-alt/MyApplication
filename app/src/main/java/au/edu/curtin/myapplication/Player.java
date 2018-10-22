@@ -80,6 +80,17 @@ public class Player {
         this.equipment.remove(indexOfTheRemovedItem);
     }
 
+    //ADD ALL THE ITEMS IN AREA TO PLAYER
+    public void addEquipmentListToExist(ArrayList<Item> addedList)
+    {
+        for (Item selectedItem : addedList) {
+            if (selectedItem instanceof Food) {
+                setPlayerHealth(getPlayerHealth() + ((Food) selectedItem).getHealth());
+            } else {
+                addEquipment((Equipment) selectedItem);
+            }
+        }
+    }
 
     @Override
     public String toString() {
