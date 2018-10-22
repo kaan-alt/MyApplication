@@ -11,7 +11,7 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 
-public class WildernessActivity extends AppCompatActivity {
+public class WildernessActivity extends AppCompatActivity implements PickWildernessFragment.OnPickWildernessViewFragmentLis, UserWildernessFragment.OnUserWildernessViewFragmentLis {
 
     private static final String PLAYER_HEALTH = "com.MainActivity.playerHealth";
     private static final String PLAYER_CASH = "com.MainActivity.playerCash";
@@ -22,18 +22,8 @@ public class WildernessActivity extends AppCompatActivity {
     private static final String PLAYER_COL = "com.MainActivity.colLocation";
 
     Button leaveButton;
-    Button pickNextButton;
-    Button pickPrevButton;
-    Button dropNextButton;
-    Button dropPrevButton;
-    Button pickActionButton;
-    Button dropActionButton;
 
 
-
-    //VARIABLES TO TRACK WHICH ITEM INDEX OF THE ITEM LIST YOU ARE AT
-    private int dropCurrentIndex = 0;
-    private int pickCurrentIndex =  0;
 
 
 
@@ -46,12 +36,7 @@ public class WildernessActivity extends AppCompatActivity {
 
         //Buttons
         leaveButton = (Button) findViewById(R.id.leaveButton);
-        pickNextButton = (Button) findViewById(R.id.pickNextButton);
-        pickPrevButton = (Button) findViewById(R.id.pickPrevButton);
-        dropNextButton = (Button) findViewById(R.id.dropNextButton);
-        dropPrevButton = (Button) findViewById(R.id.dropPrevButton);
-        pickActionButton = (Button) findViewById(R.id.pickActionButton);
-        dropActionButton = (Button) findViewById(R.id.dropActionButton);
+
 
         //Fragment manager
         FragmentManager fm = getSupportFragmentManager();
@@ -63,103 +48,24 @@ public class WildernessActivity extends AppCompatActivity {
                     .add(R.id.statBarFragWilderness, statusFrag)
                     .commit();
         }
+        PickWildernessFragment pickFrag = (PickWildernessFragment) fm.findFragmentById(R.id.pickWildernessFrag);
+        if(pickFrag == null)
+        {
+            pickFrag = new PickWildernessFragment();
+            fm.beginTransaction()
+                    .add(R.id.pickWildernessFrag, pickFrag)
+                    .commit();
+        }
+        UserWildernessFragment userWildernessFrag = (UserWildernessFragment) fm.findFragmentById(R.id.userInventWildernessFrag);
+        if(userWildernessFrag == null)
+        {
+            userWildernessFrag = new UserWildernessFragment();
+            fm.beginTransaction()
+                    .add(R.id.userInventWildernessFrag, userWildernessFrag)
+                    .commit();
+        }
 
-        //wUpdatePlayerUIElements(wildernessPlayer);
-        wUpdateDropUI(dropCurrentIndex);
-        wUpdatePickUI(pickCurrentIndex);
 
-        pickNextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(GameData.getInstance().grid[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].getItems().size() == pickCurrentIndex + 1)
-                {
-                    pickCurrentIndex = 0;
-                } else {
-                    pickCurrentIndex++;
-                }
-                wUpdatePickUI(pickCurrentIndex);
-            }
-        });
-
-        pickPrevButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(pickCurrentIndex == 0)
-                {
-                    pickCurrentIndex =  GameData.getInstance().grid[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].getItems().size() - 1;
-                } else {
-                    pickCurrentIndex--;
-                }
-                wUpdatePickUI(pickCurrentIndex);
-            }
-        });
-
-        dropNextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(GameData.getInstance().getPlayer().getEquipment().size() == dropCurrentIndex + 1)
-                {
-                    dropCurrentIndex = 0;
-                } else {
-                    dropCurrentIndex++;
-                }
-                wUpdateDropUI(dropCurrentIndex);
-            }
-        });
-
-        dropPrevButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(dropCurrentIndex == 0)
-                {
-                    dropCurrentIndex =  GameData.getInstance().getPlayer().getEquipment().size() - 1;
-                } else {
-                    dropCurrentIndex--;
-                }
-                wUpdateDropUI(dropCurrentIndex);
-            }
-        });
-
-        pickActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(GameData.getInstance().grid[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].getItems().get(pickCurrentIndex) instanceof Food)
-                {
-                    //Can have validation so that health does not exceed 100 later :)
-                    GameData.getInstance().getPlayer().setPlayerHealth(GameData.getInstance().getPlayer().getPlayerHealth()
-                            + ((Food) GameData.getInstance().grid[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].getItems().remove(pickCurrentIndex)).getHealth());
-                    //Reset the buy index back to 0
-                    pickCurrentIndex = 0;
-                    //wUpdatePlayerUIElements(wildernessPlayer);
-                    wUpdatePickUI(pickCurrentIndex);
-                    refreshStatFrag();
-                }
-                else
-                {
-                    GameData.getInstance().getPlayer().addEquipment((Equipment) GameData.getInstance().grid[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].getItems().remove(pickCurrentIndex));
-                    //Reset the buy index back to 0
-                    pickCurrentIndex = 0;
-                    //wUpdatePlayerUIElements(wildernessPlayer);
-                    wUpdatePickUI(pickCurrentIndex);
-                    wUpdateDropUI(dropCurrentIndex);
-                    refreshStatFrag();
-                }
-            }
-        });
-
-        dropActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                GameData.getInstance().grid[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].getItems().add(GameData.getInstance().getPlayer().getEquipment().get(dropCurrentIndex));
-                GameData.getInstance().getPlayer().removeEquipment(dropCurrentIndex);
-                //Reset the sell index back to 0
-                dropCurrentIndex = 0;
-                //wUpdatePlayerUIElements(wildernessPlayer);
-                wUpdatePickUI(pickCurrentIndex);
-                wUpdateDropUI(dropCurrentIndex);
-                refreshStatFrag();
-            }
-        });
 
 
 
@@ -205,44 +111,36 @@ public class WildernessActivity extends AppCompatActivity {
     {
         return (ArrayList<Item>)intent.getSerializableExtra(AREA_ITEMS);
     }
-//COPY AND PASTE SO THEY DIFFERENT
-    public void wUpdatePickUI(int currentIndex)
-    {
-        //Text
-        EditText buyBoxText = (EditText) findViewById(R.id.displayCurrentPickItem);
-        if(GameData.getInstance().grid[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].getItems().isEmpty())
-        {
-            buyBoxText.setText("No Items");
-        } else {
-            buyBoxText.setText(GameData.getInstance().grid[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].getItems().get(currentIndex).getDescription());
-        }
-    }
-    public void wUpdateDropUI(int currentIndex)
-    {
-        //Text
-        EditText sellBoxText = (EditText) findViewById(R.id.displayCurrentDropItem);
-        if(GameData.getInstance().getPlayer().getEquipment().isEmpty())
-        {
-            sellBoxText.setText("No Items");
-        } else {
-            sellBoxText.setText(GameData.getInstance().getPlayer().getEquipment().get(currentIndex).getDescription());
-        }
-    }
 
-    public void refreshStatFrag()
-    {
-        FragmentManager fm = getSupportFragmentManager();
-        StatusBarFragment statusFrag = (StatusBarFragment) fm.findFragmentById(R.id.statBarFragWilderness);
-        statusFrag = new StatusBarFragment();
-        fm.beginTransaction()
-                .replace(R.id.statBarFragWilderness, statusFrag)
-                .commit();
-    }
+
 
     /*public void wUpdatePlayerUIElements(Player wildernessPlayer)
     {
         statusFrag.updateStatusBar();
     }*/
+
+    public void wildernessReplaceAllFragments()
+    {
+        //Fragment manager
+        FragmentManager fm = getSupportFragmentManager();
+        StatusBarFragment statusFrag = (StatusBarFragment) fm.findFragmentById(R.id.statBarFragWilderness);
+        statusFrag = new StatusBarFragment();
+        fm.beginTransaction()
+                    .replace(R.id.statBarFragWilderness, statusFrag)
+                    .commit();
+
+        PickWildernessFragment pickFrag = (PickWildernessFragment) fm.findFragmentById(R.id.pickWildernessFrag);
+        pickFrag = new PickWildernessFragment();
+        fm.beginTransaction()
+                    .replace(R.id.pickWildernessFrag, pickFrag)
+                    .commit();
+
+        UserWildernessFragment userWildernessFrag = (UserWildernessFragment) fm.findFragmentById(R.id.userInventWildernessFrag);
+        userWildernessFrag = new UserWildernessFragment();
+        fm.beginTransaction()
+                    .replace(R.id.userInventWildernessFrag, userWildernessFrag)
+                    .commit();
+    }
 }
 
 

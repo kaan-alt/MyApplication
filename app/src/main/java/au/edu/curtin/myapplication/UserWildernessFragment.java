@@ -3,7 +3,7 @@ package au.edu.curtin.myapplication;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -56,9 +56,9 @@ public class UserWildernessFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater li, ViewGroup parent, Bundle b) {
         // Inflate the layout for this fragment
-        View view = li.inflate(R.layout.fragment_buy_market, parent, false);
+        View view = li.inflate(R.layout.fragment_user_wilderness, parent, false);
 
-        rv = (RecyclerView) view.findViewById(R.id.marketBuyRecyclerView);
+        rv = (RecyclerView) view.findViewById(R.id.wildernessUserRecyclerView);
 
         // Set up the RecyclerView
         adapter = new UserWildernessAdaptor();

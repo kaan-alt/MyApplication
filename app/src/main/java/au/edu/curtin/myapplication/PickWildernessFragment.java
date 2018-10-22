@@ -3,7 +3,7 @@ package au.edu.curtin.myapplication;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -85,7 +85,7 @@ public class PickWildernessFragment extends Fragment {
         public PickWildernessViewHolder(LayoutInflater li, ViewGroup parent)
         {
             //DOUBLE CHECK grid_cell
-            super(li.inflate(R.layout.buy_market_entry, parent, false));
+            super(li.inflate(R.layout.pick_wilderness_entry, parent, false));
 
 
             pickItemName = (EditText) itemView.findViewById(R.id.pickItemName);
