@@ -9,7 +9,7 @@ import android.widget.Button;
 
 import java.util.ArrayList;
 
-public class MarketActivity extends AppCompatActivity implements SmellOListFragment.OnBuyMarketViewFragmentLis, UserMarketFragment.OnUserMarketViewFragmentLis{
+public class MarketActivity extends AppCompatActivity implements BuyMarketFragment.OnBuyMarketViewFragmentLis, UserMarketFragment.OnUserMarketViewFragmentLis{
 
     private static final String PLAYER_HEALTH = "com.MainActivity.playerHealth";
     private static final String PLAYER_CASH = "com.MainActivity.playerCash";
@@ -44,10 +44,10 @@ public class MarketActivity extends AppCompatActivity implements SmellOListFragm
                     .add(R.id.statBarFragMarket, statusFrag)
                     .commit();
         }
-        SmellOListFragment buyFrag = (SmellOListFragment) fm.findFragmentById(R.id.buyMarketFrag);
+        BuyMarketFragment buyFrag = (BuyMarketFragment) fm.findFragmentById(R.id.buyMarketFrag);
         if(buyFrag == null)
         {
-            buyFrag = new SmellOListFragment();
+            buyFrag = new BuyMarketFragment();
             fm.beginTransaction()
                     .add(R.id.buyMarketFrag, buyFrag)
                     .commit();
@@ -125,8 +125,8 @@ public class MarketActivity extends AppCompatActivity implements SmellOListFragm
                     .replace(R.id.statBarFragMarket, statusFrag)
                     .commit();
 
-        SmellOListFragment buyFrag = (SmellOListFragment) fm.findFragmentById(R.id.buyMarketFrag);
-        buyFrag = new SmellOListFragment();
+        BuyMarketFragment buyFrag = (BuyMarketFragment) fm.findFragmentById(R.id.buyMarketFrag);
+        buyFrag = new BuyMarketFragment();
         fm.beginTransaction()
                     .replace(R.id.buyMarketFrag, buyFrag)
                     .commit();

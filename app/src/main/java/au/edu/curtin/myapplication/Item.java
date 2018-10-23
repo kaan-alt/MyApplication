@@ -6,7 +6,24 @@ public abstract class Item implements Serializable{
     private String description;
     private int value;
     private boolean usable;
-    //TODO add rowLocation and colLocation to every Item for smellO activty, need to change GameData map creation
+    private int itemRowLocation;
+    private int itemColLocation;
+
+    public int getItemRowLocation() {
+        return itemRowLocation;
+    }
+
+    public void setItemRowLocation(int itemRowLocation) {
+        this.itemRowLocation = itemRowLocation;
+    }
+
+    public int getItemColLocation() {
+        return itemColLocation;
+    }
+
+    public void setItemColLocation(int itemColLocation) {
+        this.itemColLocation = itemColLocation;
+    }
 
     public boolean isUsable() {
         return usable;
@@ -32,10 +49,12 @@ public abstract class Item implements Serializable{
         this.value = value;
     }
 
-    public Item(int value, String description) {
+    public Item(int value, String description, int importedRow, int importedCol) {
 
         this.value = value;
         this.description = description;
+        this.itemRowLocation = importedRow;
+        this.itemColLocation = importedCol;
     }
 
     @Override

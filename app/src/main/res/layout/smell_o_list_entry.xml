@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="60dp">
 
     <TextView
         android:id="@+id/smellOListItemName"
@@ -11,7 +11,6 @@
         android:layout_height="50dp"
         android:layout_marginTop="4dp"
         android:ems="9"
-        android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,7 +20,6 @@
         android:layout_height="50dp"
         android:layout_marginTop="4dp"
         android:ems="10"
-        android:inputType="textPersonName"
         app:layout_constraintLeft_toRightOf="@+id/smellOListItemName"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,9 +29,8 @@
         android:layout_height="50dp"
         android:layout_marginTop="4dp"
         android:ems="10"
-        android:inputType="textPersonName"
         app:layout_constraintLeft_toRightOf="@+id/smellOLeftRight"
         app:layout_constraintTop_toTopOf="parent" />
 
 
-</>
+</android.support.constraint.ConstraintLayout>

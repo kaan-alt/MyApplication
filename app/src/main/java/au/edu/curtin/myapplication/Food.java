@@ -3,8 +3,8 @@ package au.edu.curtin.myapplication;
 public class Food extends Item {
     private double health;
 
-    public Food(int value, String description, double health) {
-        super(value, description);
+    public Food(int value, String description, int itemRowLocation, int itemColLocation, double health) {
+        super(value, description, itemRowLocation, itemColLocation);
         this.health = health;
     }
 

@@ -53,7 +53,7 @@ public class SmellOListFragment extends Fragment {
     private class SmellOListViewHolder extends RecyclerView.ViewHolder
     {
         private TextView itemName;
-        private TextView LeftRight;
+        private TextView leftRight;
         private TextView upDown;
 
 
@@ -66,7 +66,7 @@ public class SmellOListFragment extends Fragment {
 
 
             itemName = (TextView) itemView.findViewById(R.id.smellOListItemName);
-            LeftRight = (TextView) itemView.findViewById(R.id.smellOLeftRight);
+            leftRight = (TextView) itemView.findViewById(R.id.smellOLeftRight);
             upDown = (TextView) itemView.findViewById(R.id.smellOUpDown);
 
 
@@ -77,9 +77,33 @@ public class SmellOListFragment extends Fragment {
 
         public void bind(Item importedItemElement)
         {
-            buyItemName.setText(importedItemElement.getDescription());
-
-
+            itemName.setText(importedItemElement.getDescription());
+            int colDifference = GameData.getInstance().getPlayer().getColLocation() - importedItemElement.getItemColLocation();
+            if(colDifference == 0)
+            {
+                leftRight.setText("0");
+            }
+            else if(colDifference < 0)
+            {
+                leftRight.setText(Integer.toString(Math.abs(colDifference)) + " east");
+            }
+            else if(colDifference > 0)
+            {
+                leftRight.setText(Integer.toString(Math.abs(colDifference)) + " west");
+            }
+            int rowDifference = GameData.getInstance().getPlayer().getRowLocation() - importedItemElement.getItemRowLocation();
+            if(rowDifference == 0)
+            {
+                upDown.setText("0");
+            }
+            else if(rowDifference < 0)
+            {
+                upDown.setText(Integer.toString(Math.abs(rowDifference)) + " south");
+            }
+            else if(rowDifference > 0)
+            {
+                upDown.setText(Integer.toString(Math.abs(rowDifference)) + " north");
+            }
         }
 
     }
@@ -113,8 +137,9 @@ public class SmellOListFragment extends Fragment {
         ArrayList<Item> bigList = new ArrayList<Item>();
         int playerRow = GameData.getInstance().getPlayer().getRowLocation();
         int playerCol = GameData.getInstance().getPlayer().getColLocation();
-        for(int i = -2; i < 2; i++) {
-            for (int j = -2; j < 2; j++) {
+        for(int i = -2; i <= 2; i++) {
+            for (int j = -2; j <= 2; j++) {
+                //Validation it within the map size
                 if(playerRow + i > 0 && playerRow + i < GameData.HEIGHT)
                 {
                     if(playerCol + j > 0 && playerCol + j < GameData.WIDTH) {

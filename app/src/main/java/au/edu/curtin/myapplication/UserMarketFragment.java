@@ -118,6 +118,7 @@ public class UserMarketFragment extends Fragment {
                         //TODO randomise map again here
                     } else if (usableItemName.equals("Ben")) {
                         GameData.getInstance().getPlayer().addEquipmentListToExist(GameData.getInstance().grid[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].getItems());
+                        //TODO remove items from this area
                         adapter.notifyDataSetChanged();
                         mCallback.marketReplaceAllFragments();
                     }

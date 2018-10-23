@@ -70,10 +70,10 @@ public class GameData {
                 {
                     int randomGenNum = random.nextInt(11);
                     if (randomGenNum < 5) {
-                        Area area = new Area(false, createAllUsableForArea(), i, j);
+                        Area area = new Area(false, createAllUsableForArea(i, j), i, j);
                         grid[i][j] = area;
                     } else {
-                        Area area = new Area(true, createAllUsableForArea(), i, j);
+                        Area area = new Area(true, createAllUsableForArea(i, j), i, j);
                         grid[i][j] = area;
                     }
                 }
@@ -81,10 +81,10 @@ public class GameData {
                 {
                     int randomGenNum = random.nextInt(11);
                     if (randomGenNum < 5) {
-                        Area area = new Area(false, createEquipmentListForArea(), i ,j);
+                        Area area = new Area(false, createEquipmentListForArea(i, j), i ,j);
                         grid[i][j] = area;
                     } else {
-                        Area area = new Area(true, createEquipmentListForArea(),i , j);
+                        Area area = new Area(true, createEquipmentListForArea(i, j),i , j);
                         grid[i][j] = area;
                     }
                 }
@@ -112,27 +112,27 @@ public class GameData {
                 '}';
     }
 
-    public Food createSampleFood()
+    public Food createSampleFood(int itemRowLocation, int itemColLocation)
     {
-        Food sampleFood = new Food(15,"Sample Food", 10.0);
+        Food sampleFood = new Food(15,"Sample Food", itemRowLocation, itemColLocation,10.0);
         return sampleFood;
     }
 
-    public Equipment createSampleEquipment()
+    public Equipment createSampleEquipment(int itemRowLocation, int itemColLocation)
     {
-        Equipment sampleEquipment = new Equipment(20, "Sample Equipment", 20.0);
+        Equipment sampleEquipment = new Equipment(20, "Sample Equipment", itemRowLocation, itemColLocation,20.0);
         return sampleEquipment;
     }
 
-    public Equipment createSampleEquipment2()
+    public Equipment createSampleEquipment2(int itemRowLocation, int itemColLocation)
     {
-        Equipment sampleEquipment = new Equipment(20, "Sample Equipment2", 20.0);
+        Equipment sampleEquipment = new Equipment(20, "Sample Equipment2", itemRowLocation, itemColLocation,20.0);
         return sampleEquipment;
     }
 
-    public Equipment createSampleUsable()
+    public Equipment createSampleUsable(int itemRowLocation, int itemColLocation)
     {
-        Equipment sampleEquipment = new Equipment(20, "Usable example", 20.0);
+        Equipment sampleEquipment = new Equipment(20, "Usable example", itemRowLocation, itemColLocation,20.0);
         sampleEquipment.setUsable(true);
         return sampleEquipment;
     }
@@ -144,43 +144,43 @@ public class GameData {
         return theNewPlayer;
     }
 
-    public Equipment createSmellO()
+    public Equipment createSmellO(int itemRowLocation, int itemColLocation)
     {
-        Equipment sampleEquipment = new Equipment(20, "Smell-O", 5.0);
+        Equipment sampleEquipment = new Equipment(20, "Smell-O", itemRowLocation, itemColLocation,5.0);
         sampleEquipment.setUsable(true);
         return sampleEquipment;
     }
 
-    public Equipment createiDrive()
+    public Equipment createiDrive(int itemRowLocation, int itemColLocation)
     {
-        Equipment sampleEquipment = new Equipment(20, "iDrive", PI);
+        Equipment sampleEquipment = new Equipment(20, "iDrive", itemRowLocation, itemColLocation, PI);
         sampleEquipment.setUsable(true);
         return sampleEquipment;
     }
 
-    public Equipment createBen()
+    public Equipment createBen(int itemRowLocation, int itemColLocation)
     {
-        Equipment sampleEquipment = new Equipment(20, "Ben", 0.0);
+        Equipment sampleEquipment = new Equipment(20, "Ben", itemRowLocation, itemColLocation, 0.0);
         sampleEquipment.setUsable(true);
         return sampleEquipment;
     }
 
-    public ArrayList<Item> createAllUsableForArea()
+    public ArrayList<Item> createAllUsableForArea(int itemRowLocation, int itemColLocation)
     {
         ArrayList<Item> equipmentList = new ArrayList<>();
-        equipmentList.add(createSmellO());
-        equipmentList.add(createiDrive());
-        equipmentList.add(createBen());
+        equipmentList.add(createSmellO(itemRowLocation, itemColLocation));
+        equipmentList.add(createiDrive(itemRowLocation, itemColLocation));
+        equipmentList.add(createBen(itemRowLocation, itemColLocation));
         return equipmentList;
     }
 
-    public ArrayList<Item> createEquipmentListForArea()
+    public ArrayList<Item> createEquipmentListForArea(int itemRowLocation, int itemColLocation)
     {
         ArrayList<Item> equipmentList = new ArrayList<>();
-        equipmentList.add(createSampleEquipment());
-        equipmentList.add(createSampleFood());
-        equipmentList.add(createSampleEquipment2());
-        equipmentList.add(createSampleUsable());
+        equipmentList.add(createSampleEquipment(itemRowLocation, itemColLocation));
+        equipmentList.add(createSampleFood(itemRowLocation, itemColLocation));
+        equipmentList.add(createSampleEquipment2(itemRowLocation, itemColLocation));
+        equipmentList.add(createSampleUsable(itemRowLocation, itemColLocation));
         return equipmentList;
     }
 
