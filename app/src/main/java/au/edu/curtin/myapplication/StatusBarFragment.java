@@ -1,6 +1,7 @@
 package au.edu.curtin.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -45,7 +46,9 @@ public class StatusBarFragment extends Fragment {
         restartButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               //TODO: figure out how to send back to MainActivity
+                GameData.getInstance().reset();
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
             }
         });
         return view;

@@ -113,12 +113,13 @@ public class UserMarketFragment extends Fragment {
                         Intent intent = new Intent(getActivity(), SmellOActivity.class);
                         startActivity(intent);
                     } else if (usableItemName.equals("iDrive")) {
+                        GameData.getInstance().randomiseAreaAgain();
                         Intent intent = new Intent(getActivity(), MainActivity.class);
                         startActivity(intent);
-                        //TODO randomise map again here
                     } else if (usableItemName.equals("Ben")) {
                         GameData.getInstance().getPlayer().addEquipmentListToExist(GameData.getInstance().grid[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].getItems());
-                        //TODO remove items from this area
+                        //removeAllItemsFromArea
+                        GameData.getInstance().grid[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].getItems().clear();
                         adapter.notifyDataSetChanged();
                         mCallback.marketReplaceAllFragments();
                     }
@@ -163,6 +164,7 @@ public class UserMarketFragment extends Fragment {
             userMarketViewHolder.bind(GameData.getInstance().getPlayer().getEquipment().get(i));
         }
     }
+
 
 
 }

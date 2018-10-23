@@ -1,5 +1,7 @@
 package au.edu.curtin.myapplication;
 
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,8 +60,21 @@ public class Player {
         return playerHealth;
     }
 
-    public void setPlayerHealth(double playerHealth) {
-        this.playerHealth = playerHealth;
+    public void setPlayerHealth(double importedPlayerHealth)
+    {
+        if(validateHealth(importedPlayerHealth)) {
+            if(importedPlayerHealth > 100)
+            {
+                this.playerHealth = 100.0;
+            }
+            else {
+                this.playerHealth = importedPlayerHealth;
+            }
+        }
+        else
+        {
+
+        }
     }
 
     public double getEquipmentMass() {

@@ -2,6 +2,7 @@ package au.edu.curtin.myapplication;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.annotation.NonNull;
@@ -107,7 +108,21 @@ public class UserWildernessFragment extends Fragment {
             useButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //TODO: onclick listerner for usable items
+                    String usableItemName = GameData.getInstance().getPlayer().getEquipment().get(getAdapterPosition()).getDescription();
+                    if (usableItemName.equals("Smell-O")) {
+                        Intent intent = new Intent(getActivity(), SmellOActivity.class);
+                        startActivity(intent);
+                    } else if (usableItemName.equals("iDrive")) {
+                        GameData.getInstance().randomiseAreaAgain();
+                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        startActivity(intent);
+                    } else if (usableItemName.equals("Ben")) {
+                        GameData.getInstance().getPlayer().addEquipmentListToExist(GameData.getInstance().grid[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].getItems());
+                        //removeAllItemsFromArea
+                        GameData.getInstance().grid[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].getItems().clear();
+                        adapter.notifyDataSetChanged();
+                        mCallback.wildernessReplaceAllFragments();
+                    }
                 }
             });
 

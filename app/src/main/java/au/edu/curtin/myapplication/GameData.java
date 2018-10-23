@@ -93,7 +93,7 @@ public class GameData {
 
         maxRow = 9;
         maxCol = 29;
-        player = new Player(0,0,200, 100, 5, new ArrayList<Equipment>());
+        player = new Player(0,0,200, 100.0, 0.0, new ArrayList<Equipment>());
     }
 
     public Area[][] getGrid() {
@@ -137,12 +137,6 @@ public class GameData {
         return sampleEquipment;
     }
 
-    public Player createNewPlayer()
-    {
-        ArrayList<Equipment> emptyList = new ArrayList<>();
-        Player theNewPlayer = new Player(0,0,200,100.0,15.0, emptyList );
-        return theNewPlayer;
-    }
 
     public Equipment createSmellO(int itemRowLocation, int itemColLocation)
     {
@@ -184,8 +178,47 @@ public class GameData {
         return equipmentList;
     }
 
+    public void reset()
+    {
+        instance = new GameData();
+    }
+
     public Area get(int i, int j)
     {
         return grid[i][j];
     }
+
+    //TODO once area randomisation is implimented update this aswell ;)
+    public void randomiseAreaAgain()
+    {
+        this.grid = new Area[HEIGHT][WIDTH];
+        Random random = new Random();
+        for (int i = 0; i < HEIGHT; i++) {
+            for (int j = 0; j < WIDTH; j++) {
+                if (i == 0 && j == 0) {
+                    int randomGenNum = random.nextInt(11);
+                    if (randomGenNum < 5) {
+                        Area area = new Area(false, createAllUsableForArea(i, j), i, j);
+                        grid[i][j] = area;
+                    } else {
+                        Area area = new Area(true, createAllUsableForArea(i, j), i, j);
+                        grid[i][j] = area;
+                    }
+                } else {
+                    int randomGenNum = random.nextInt(11);
+                    if (randomGenNum < 5) {
+                        Area area = new Area(false, createEquipmentListForArea(i, j), i, j);
+                        grid[i][j] = area;
+                    } else {
+                        Area area = new Area(true, createEquipmentListForArea(i, j), i, j);
+                        grid[i][j] = area;
+                    }
+                }
+            }
+        }
+
+        maxRow = 9;
+        maxCol = 29;
+    }
+
 }

@@ -140,9 +140,9 @@ public class SmellOListFragment extends Fragment {
         for(int i = -2; i <= 2; i++) {
             for (int j = -2; j <= 2; j++) {
                 //Validation it within the map size
-                if(playerRow + i > 0 && playerRow + i < GameData.HEIGHT)
+                if(playerRow + i >= 0 && playerRow + i <= GameData.HEIGHT)
                 {
-                    if(playerCol + j > 0 && playerCol + j < GameData.WIDTH) {
+                    if(playerCol + j >= 0 && playerCol + j <= GameData.WIDTH) {
                         bigList.addAll(GameData.getInstance().grid[playerRow + i][playerCol + j].getItems());
                     }
                 }

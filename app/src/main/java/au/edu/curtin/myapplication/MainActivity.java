@@ -67,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
 
         updateUIElements();
 
+        //Starting location
+        GameData.getInstance().getGrid()[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].setExplored(true);
+        GameData.getInstance().getGrid()[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].setCurrentOccupied(true);
 
 
         eastButton.setOnClickListener(new View.OnClickListener() {
