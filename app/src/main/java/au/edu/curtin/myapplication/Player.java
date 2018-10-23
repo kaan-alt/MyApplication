@@ -62,18 +62,12 @@ public class Player {
 
     public void setPlayerHealth(double importedPlayerHealth)
     {
-        if(validateHealth(importedPlayerHealth)) {
-            if(importedPlayerHealth > 100)
-            {
-                this.playerHealth = 100.0;
-            }
-            else {
-                this.playerHealth = importedPlayerHealth;
-            }
-        }
-        else
+        if(importedPlayerHealth > 100)
         {
-
+            this.playerHealth = 100.0;
+        }
+        else {
+            this.playerHealth = importedPlayerHealth;
         }
     }
 

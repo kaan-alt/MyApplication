@@ -118,9 +118,31 @@ public class GameData {
         return sampleFood;
     }
 
+    public Food createSamplePoisonFood(int itemRowLocation, int itemColLocation)
+    {
+        Food sampleFood = new Food(15,"Sample Poison Food", itemRowLocation, itemColLocation,-100.0);
+        return sampleFood;
+    }
+
     public Equipment createSampleEquipment(int itemRowLocation, int itemColLocation)
     {
         Equipment sampleEquipment = new Equipment(20, "Sample Equipment", itemRowLocation, itemColLocation,20.0);
+        return sampleEquipment;
+    }
+
+    public Equipment createJadeMonkey(int itemRowLocation, int itemColLocation)
+    {
+        Equipment sampleEquipment = new Equipment(20, "jade monkey", itemRowLocation, itemColLocation,20.0);
+        return sampleEquipment;
+    }
+    public Equipment createRoadMap(int itemRowLocation, int itemColLocation)
+    {
+        Equipment sampleEquipment = new Equipment(20, "the roadmap", itemRowLocation, itemColLocation,20.0);
+        return sampleEquipment;
+    }
+    public Equipment createIceScraper(int itemRowLocation, int itemColLocation)
+    {
+        Equipment sampleEquipment = new Equipment(20, "the ice scraper", itemRowLocation, itemColLocation,20.0);
         return sampleEquipment;
     }
 
@@ -165,6 +187,10 @@ public class GameData {
         equipmentList.add(createSmellO(itemRowLocation, itemColLocation));
         equipmentList.add(createiDrive(itemRowLocation, itemColLocation));
         equipmentList.add(createBen(itemRowLocation, itemColLocation));
+        equipmentList.add(createJadeMonkey(itemRowLocation, itemColLocation));
+        equipmentList.add(createRoadMap(itemRowLocation, itemColLocation));
+        equipmentList.add(createIceScraper(itemRowLocation, itemColLocation));
+        equipmentList.add(createSamplePoisonFood(itemRowLocation, itemColLocation));
         return equipmentList;
     }
 
@@ -175,6 +201,7 @@ public class GameData {
         equipmentList.add(createSampleFood(itemRowLocation, itemColLocation));
         equipmentList.add(createSampleEquipment2(itemRowLocation, itemColLocation));
         equipmentList.add(createSampleUsable(itemRowLocation, itemColLocation));
+        equipmentList.add(createSamplePoisonFood(itemRowLocation, itemColLocation));
         return equipmentList;
     }
 

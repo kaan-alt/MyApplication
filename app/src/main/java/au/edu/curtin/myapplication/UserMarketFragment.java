@@ -122,6 +122,8 @@ public class UserMarketFragment extends Fragment {
                         GameData.getInstance().grid[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].getItems().clear();
                         adapter.notifyDataSetChanged();
                         mCallback.marketReplaceAllFragments();
+                        validateWinCon();
+                        validateLoseCon();
                     }
                 }
             });
@@ -165,6 +167,45 @@ public class UserMarketFragment extends Fragment {
         }
     }
 
+    public void validateWinCon()
+    {
+        boolean con1 = false, con2 = false, con3 = false, winCon = false;
+        for(Equipment e : GameData.getInstance().getPlayer().getEquipment())
+        {
+            if(e.getDescription().equals("jade monkey"))
+            {
+                con1 = true;
+            }
+            if(e.getDescription().equals("the roadmap"))
+            {
+                con2 = true;
+            }
+            if(e.getDescription().equals("the ice scraper"))
+            {
+                con3 = true;
+            }
+        }
+        if(con1 && con2 && con3) {
+            winCon = true;
+        }
+        if (winCon) {
+            Intent intent = new Intent(getActivity(), MainActivity.class);
+            startActivity(intent);
+        }
+    }
 
+    public void validateLoseCon()
+    {
+        boolean loseCon = false;
+        if(GameData.getInstance().getPlayer().getPlayerHealth() == 0.0)
+        {
+            loseCon = true;
+        }
+        if(loseCon)
+        {
+            Intent intent = new Intent(getActivity(), MainActivity.class);
+            startActivity(intent);
+        }
+    }
 
 }
