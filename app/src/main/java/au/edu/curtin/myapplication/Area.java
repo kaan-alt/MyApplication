@@ -13,6 +13,13 @@ public class Area {
     private int areaRow;
     private int areaCol;
 
+    public final int id;
+    private static int nextId = 0;
+
+    public int getId() {
+        return id;
+    }
+
     public int getAreaRow() {
         return areaRow;
     }
@@ -66,6 +73,20 @@ public class Area {
         this.items = items;
         this.areaRow = row;
         this.areaCol = col;
+        this.id = nextId;
+        nextId++;
+    }
+
+    public Area(boolean town, ArrayList<Item> items, String areaDescription, boolean starred, boolean explored, boolean currentOccupied, int areaRow, int areaCol, int id) {
+        this.town = town;
+        this.items = items;
+        this.areaDescription = areaDescription;
+        this.starred = starred;
+        this.explored = explored;
+        this.currentOccupied = currentOccupied;
+        this.areaRow = areaRow;
+        this.areaCol = areaCol;
+        this.id = id;
     }
 
     public boolean isTown() {
