@@ -197,11 +197,29 @@ public class GameData {
     public ArrayList<Item> createEquipmentListForArea(int itemRowLocation, int itemColLocation)
     {
         ArrayList<Item> equipmentList = new ArrayList<>();
-        equipmentList.add(createSampleEquipment(itemRowLocation, itemColLocation));
-        equipmentList.add(createSampleFood(itemRowLocation, itemColLocation));
-        equipmentList.add(createSampleEquipment2(itemRowLocation, itemColLocation));
-        equipmentList.add(createSampleUsable(itemRowLocation, itemColLocation));
-        equipmentList.add(createSamplePoisonFood(itemRowLocation, itemColLocation));
+        Random random = new Random();
+        int randomGenNum;
+
+        randomGenNum= random.nextInt(11);
+        if (randomGenNum < 3) {
+            equipmentList.add(createSampleEquipment(itemRowLocation, itemColLocation));
+        }
+        randomGenNum = random.nextInt(11);
+        if (randomGenNum < 3) {
+            equipmentList.add(createSampleFood(itemRowLocation, itemColLocation));
+        }
+        randomGenNum= random.nextInt(11);
+        if (randomGenNum < 3) {
+            equipmentList.add(createSampleEquipment2(itemRowLocation, itemColLocation));
+        }
+        randomGenNum = random.nextInt(11);
+        if (randomGenNum < 3) {
+            equipmentList.add(createSampleUsable(itemRowLocation, itemColLocation));
+        }
+        randomGenNum= random.nextInt(11);
+        if (randomGenNum < 3) {
+            equipmentList.add(createSamplePoisonFood(itemRowLocation, itemColLocation));
+        }
         return equipmentList;
     }
 
