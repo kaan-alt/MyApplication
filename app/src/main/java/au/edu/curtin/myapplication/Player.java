@@ -12,6 +12,11 @@ public class Player {
     private double playerHealth;
     private double equipmentMass;
     private ArrayList<Equipment> equipment;
+    private int playerId = 0;
+
+    public int getPlayerId() {
+        return playerId;
+    }
 
     public Player(int rowLocation, int colLocation, int cash, double playerHealth, double equipmentMass, ArrayList<Equipment> equipment) {
         this.rowLocation = rowLocation;

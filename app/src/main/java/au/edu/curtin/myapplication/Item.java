@@ -8,6 +8,15 @@ public abstract class Item implements Serializable{
     private boolean usable;
     private int itemRowLocation;
     private int itemColLocation;
+    private boolean playerOwned;
+
+    public boolean isPlayerOwned() {
+        return playerOwned;
+    }
+
+    public void setPlayerOwned(boolean playerOwned) {
+        this.playerOwned = playerOwned;
+    }
 
     public int getItemRowLocation() {
         return itemRowLocation;

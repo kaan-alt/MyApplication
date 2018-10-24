@@ -15,6 +15,8 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_MARKET = 1;
     private static final int REQUEST_CODE_WILDERNESS = 2;
 
+    private PlayerList playerList;
+
     private Button northButton;
     private Button eastButton;
     private Button southButton;
@@ -30,6 +32,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        playerList = new PlayerList(getApplicationContext());
+        //TODO might be NOT NULL
+        playerList.load();
+
+        //Database to memory
+        playerList.add(new Player(2,2,2,2,2,new ArrayList<Equipment>()));
+        updatePlayerInMemory();
+
         setContentView(R.layout.activity_navigation);
 
         FragmentManager fm = getSupportFragmentManager();
@@ -72,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
         GameData.getInstance().getGrid()[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].setCurrentOccupied(true);
 
 
+
+
         eastButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
                     updateUIElements();
                     refreshStatusFrag();
                     refreshInfoFrag();
+
+                    playerList.edit(GameData.getInstance().getPlayer());
                 }
             }
         });
@@ -104,6 +119,8 @@ public class MainActivity extends AppCompatActivity {
                     updateUIElements();
                     refreshStatusFrag();
                     refreshInfoFrag();
+
+                    playerList.edit(GameData.getInstance().getPlayer());
                 }
             }
         });
@@ -122,6 +139,8 @@ public class MainActivity extends AppCompatActivity {
                     updateUIElements();
                     refreshStatusFrag();
                     refreshInfoFrag();
+
+                    playerList.edit(GameData.getInstance().getPlayer());
                 }
             }
         });
@@ -140,6 +159,8 @@ public class MainActivity extends AppCompatActivity {
                     updateUIElements();
                     refreshStatusFrag();
                     refreshInfoFrag();
+
+                    playerList.edit(GameData.getInstance().getPlayer());
                 }
             }
         });
@@ -222,6 +243,15 @@ public class MainActivity extends AppCompatActivity {
         fm.beginTransaction()
                 .replace(R.id.areaInfoFragNavigation, infoFrag)
                 .commit();
+    }
+
+    public void updatePlayerInMemory()
+    {
+        GameData.getInstance().getPlayer().setRowLocation(playerList.get(0).getRowLocation());
+        GameData.getInstance().getPlayer().setColLocation(playerList.get(0).getColLocation());
+        GameData.getInstance().getPlayer().setCash(playerList.get(0).getCash());
+        GameData.getInstance().getPlayer().setPlayerHealth(playerList.get(0).getPlayerHealth());
+        GameData.getInstance().getPlayer().setEquipmentMass(playerList.get(0).getEquipmentMass());
     }
 
 }

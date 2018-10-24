@@ -93,7 +93,7 @@ public class BuyMarketFragment extends Fragment {
             buyButton = (Button) itemView.findViewById(R.id.buyButton);
 
 
-
+            //TODO set item boolen to true and false where needed
             buyButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
