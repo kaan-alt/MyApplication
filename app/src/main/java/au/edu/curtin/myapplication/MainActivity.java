@@ -12,9 +12,6 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int REQUEST_CODE_MARKET = 1;
-    private static final int REQUEST_CODE_WILDERNESS = 2;
-
     private PlayerList playerList;
 
     private Button northButton;
@@ -32,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
         //Load in database
         playerList = new PlayerList(getApplicationContext());
@@ -54,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
             GameData.getInstance().getPlayer().setPlayerId(0);
             playerList.add(GameData.getInstance().getPlayer());
         }
-
 
 
         setContentView(R.layout.activity_navigation);
@@ -94,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
         updateUIElements();
 
-        //Starting location
+        //Starting location booleans updated
         GameData.getInstance().getGrid()[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].setExplored(true);
         GameData.getInstance().getGrid()[GameData.getInstance().getPlayer().getRowLocation()][GameData.getInstance().getPlayer().getColLocation()].setCurrentOccupied(true);
 
@@ -116,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
                     refreshStatusFrag();
                     refreshInfoFrag();
 
+                    //Update player database
                     GameData.getInstance().getPlayer().setPlayerId(0);
                     playerList.edit(GameData.getInstance().getPlayer());
                 }
@@ -137,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
                     refreshStatusFrag();
                     refreshInfoFrag();
 
+                    //Update player database
                     GameData.getInstance().getPlayer().setPlayerId(0);
                     playerList.edit(GameData.getInstance().getPlayer());
                 }
@@ -158,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
                     refreshStatusFrag();
                     refreshInfoFrag();
 
+                    //Update player database
                     GameData.getInstance().getPlayer().setPlayerId(0);
                     playerList.edit(GameData.getInstance().getPlayer());
                 }
@@ -179,6 +177,7 @@ public class MainActivity extends AppCompatActivity {
                     refreshStatusFrag();
                     refreshInfoFrag();
 
+                    //Update player database
                     GameData.getInstance().getPlayer().setPlayerId(0);
                     playerList.edit(GameData.getInstance().getPlayer());
                 }
@@ -226,25 +225,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public ArrayList<Item> getCurrentLocationItems(Player thePlayer, GameData theGameData)
-    {
-        ArrayList<Item> theLocationsItems = theGameData.getGrid()[thePlayer.getRowLocation()][thePlayer.getColLocation()].getItems();
-        return theLocationsItems;
-    }
 
+    //Formula to update player health
     public void updatePlayerHealth()
     {
         GameData.getInstance().getPlayer().setPlayerHealth
                 (Math.max(0.0, GameData.getInstance().getPlayer().getPlayerHealth() - 5.0 - (GameData.getInstance().getPlayer().getEquipmentMass() / 2.0)));
     }
 
-    public Player createNewPlayer()
-    {
-        ArrayList<Equipment> emptyList = new ArrayList<>();
-        Player theNewPlayer = new Player(0,0,200,100.0,15.0, emptyList );
-        return theNewPlayer;
-    }
-
+    //Refreshes the status fragment
     public void refreshStatusFrag()
     {
         FragmentManager fm = getSupportFragmentManager();
@@ -265,6 +254,7 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
+    //When player loaded from database, need to be placed into memory
     public void updatePlayerInMemory()
     {
         GameData.getInstance().getPlayer().setRowLocation(playerList.get(0).getRowLocation());
