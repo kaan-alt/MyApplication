@@ -8,6 +8,11 @@ public class Food extends Item {
         this.health = health;
     }
 
+    public Food(String description, int value, boolean usable, int itemRowLocation, int itemColLocation, boolean playerOwned, int id, double health) {
+        super(description, value, usable, itemRowLocation, itemColLocation, playerOwned, id);
+        this.health = health;
+    }
+
     public double getHealth() {
         return health;
     }

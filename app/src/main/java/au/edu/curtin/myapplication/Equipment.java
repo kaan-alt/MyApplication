@@ -8,6 +8,11 @@ public class Equipment extends Item{
         this.mass = mass;
     }
 
+    public Equipment(String description, int value, boolean usable, int itemRowLocation, int itemColLocation, boolean playerOwned, int id, double mass) {
+        super(description, value, usable, itemRowLocation, itemColLocation, playerOwned, id);
+        this.mass = mass;
+    }
+
     public double getMass() {
         return mass;
     }
@@ -22,5 +27,6 @@ public class Equipment extends Item{
                 "mass=" + mass +
                 '}';
     }
+
 }
 

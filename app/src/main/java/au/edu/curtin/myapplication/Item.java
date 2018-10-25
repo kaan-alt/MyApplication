@@ -10,6 +10,17 @@ public abstract class Item implements Serializable{
     private int itemColLocation;
     private boolean playerOwned;
 
+    public final int id;
+    private static int nextId = 0;
+
+    public static int getNextId() {
+        return nextId;
+    }
+
+    public int getId() {
+        return id;
+    }
+
     public boolean isPlayerOwned() {
         return playerOwned;
     }
@@ -64,6 +75,19 @@ public abstract class Item implements Serializable{
         this.description = description;
         this.itemRowLocation = importedRow;
         this.itemColLocation = importedCol;
+
+        this.id = nextId;
+        nextId++;
+    }
+
+    public Item(String description, int value, boolean usable, int itemRowLocation, int itemColLocation, boolean playerOwned, int id) {
+        this.description = description;
+        this.value = value;
+        this.usable = usable;
+        this.itemRowLocation = itemRowLocation;
+        this.itemColLocation = itemColLocation;
+        this.playerOwned = playerOwned;
+        this.id = id;
     }
 
     @Override
