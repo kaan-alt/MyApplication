@@ -30,7 +30,6 @@ public class StatusBarFragment extends Fragment {
     {
         super.onCreate(savedInstanceState);
         playerList = new PlayerList(getContext());
-        //TODO might be NOT NULL
         playerList.load();
     }
 
