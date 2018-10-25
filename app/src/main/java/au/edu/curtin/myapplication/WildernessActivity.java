@@ -13,18 +13,7 @@ import java.util.ArrayList;
 
 public class WildernessActivity extends AppCompatActivity implements PickWildernessFragment.OnPickWildernessViewFragmentLis, UserWildernessFragment.OnUserWildernessViewFragmentLis {
 
-    private static final String PLAYER_HEALTH = "com.MainActivity.playerHealth";
-    private static final String PLAYER_CASH = "com.MainActivity.playerCash";
-    private static final String PLAYER_EQUIPMENTMASS = "com.MainActivity.playerEquipmentMass";
-    private static final String PLAYER_EQUIPMENT = "com.MainActivity.playerEquipment";
-    private static final String AREA_ITEMS = "com.MainActivity.areaItems";
-    private static final String PLAYER_ROW = "com.MainActivity.rowLocation";
-    private static final String PLAYER_COL = "com.MainActivity.colLocation";
-
     Button leaveButton;
-
-
-
 
 
     @Override
@@ -80,44 +69,6 @@ public class WildernessActivity extends AppCompatActivity implements PickWildern
 
 
     }
-
-    public static int getWPlayerRow(Intent intent)
-    {
-        return intent.getIntExtra(PLAYER_ROW,0);
-    }
-
-    public static int getWPlayerCol(Intent intent)
-    {
-        return intent.getIntExtra(PLAYER_COL,0);
-    }
-
-    public static double getWPlayerHealth(Intent intent)
-    {
-        return intent.getDoubleExtra(PLAYER_HEALTH,0);
-    }
-    public static int getWPlayerCash(Intent intent)
-    {
-        return intent.getIntExtra(PLAYER_CASH, 0);
-    }
-    public static double getWPlayerMass(Intent intent)
-    {
-        return intent.getDoubleExtra(PLAYER_EQUIPMENTMASS, 0);
-    }
-    public static ArrayList<Equipment> getWPlayerEquipment(Intent intent)
-    {
-        return (ArrayList<Equipment>)intent.getSerializableExtra(PLAYER_EQUIPMENT);
-    }
-    public static ArrayList<Item> getWAreaEquipment(Intent intent)
-    {
-        return (ArrayList<Item>)intent.getSerializableExtra(AREA_ITEMS);
-    }
-
-
-
-    /*public void wUpdatePlayerUIElements(Player wildernessPlayer)
-    {
-        statusFrag.updateStatusBar();
-    }*/
 
     public void wildernessReplaceAllFragments()
     {

@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_navigation);
 
+        //Fragments
         FragmentManager fm = getSupportFragmentManager();
         StatusBarFragment statusFrag = (StatusBarFragment) fm.findFragmentById(R.id.statBarFragNavigation);
         AreaInfoFragment infoFrag = (AreaInfoFragment) fm.findFragmentById(R.id.areaInfoFragNavigation);
