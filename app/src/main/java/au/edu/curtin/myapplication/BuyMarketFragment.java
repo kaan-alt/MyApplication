@@ -54,7 +54,6 @@ public class BuyMarketFragment extends Fragment {
     {
         super.onCreate(savedInstanceState);
         playerList = new PlayerList(getContext());
-        //TODO might be NOT NULL
         playerList.load();
     }
 
@@ -98,7 +97,7 @@ public class BuyMarketFragment extends Fragment {
             buyButton = (Button) itemView.findViewById(R.id.buyButton);
 
 
-            //TODO set item boolen to true and false where needed
+            //TODO set item boolen to true and false where needed when implementing item database
             buyButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -197,7 +196,7 @@ public class BuyMarketFragment extends Fragment {
     public void validateLoseCon()
     {
         boolean loseCon = false;
-        if(GameData.getInstance().getPlayer().getPlayerHealth() == 0.0)
+        if(GameData.getInstance().getPlayer().getPlayerHealth() <= 0.0)
         {
             loseCon = true;
         }

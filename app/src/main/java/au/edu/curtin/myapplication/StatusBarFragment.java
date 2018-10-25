@@ -84,16 +84,6 @@ public class StatusBarFragment extends Fragment {
         return view;
     }
 
-   /* public void updateStatusBar()
-    {
-        String health1 = "Health:";
-        String health = ("Health: " + Double.toString(GameData.getInstance().getPlayer().getPlayerHealth()));
-        String cash = ("Cash: " + Integer.toString(GameData.getInstance().getPlayer().getCash()));
-        String mass = ("Mass: " + Double.toString(GameData.getInstance().getPlayer().getEquipmentMass()));
-        healthDisplay.setText(health);
-        cashDisplay.setText(cash);
-        equipmentMassDisplay.setText(mass);
-    }*/
 
    public boolean validateWinCon()
    {
@@ -122,7 +112,7 @@ public class StatusBarFragment extends Fragment {
    public boolean validateLoseCon()
    {
        boolean loseCon = false;
-       if(GameData.getInstance().getPlayer().getPlayerHealth() == 0.0)
+       if(GameData.getInstance().getPlayer().getPlayerHealth() <= 0.0)
        {
            loseCon = true;
        }

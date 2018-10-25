@@ -54,7 +54,6 @@ public class PickWildernessFragment extends Fragment {
     {
         super.onCreate(savedInstanceState);
         playerList = new PlayerList(getContext());
-        //TODO might be NOT NULL
         playerList.load();
     }
 
@@ -190,7 +189,7 @@ public class PickWildernessFragment extends Fragment {
     public void validateLoseCon()
     {
         boolean loseCon = false;
-        if(GameData.getInstance().getPlayer().getPlayerHealth() == 0.0)
+        if(GameData.getInstance().getPlayer().getPlayerHealth() <= 0.0)
         {
             loseCon = true;
         }
