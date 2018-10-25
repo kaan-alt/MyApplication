@@ -93,7 +93,7 @@ public class GameData {
 
         maxRow = 9;
         maxCol = 29;
-        player = new Player(0,0,200, 100.0, 0.0, new ArrayList<Equipment>());
+        player = new Player(0,0,200, 100.0, 0.0, new ArrayList<Equipment>(), 0);
     }
 
     public Area[][] getGrid() {

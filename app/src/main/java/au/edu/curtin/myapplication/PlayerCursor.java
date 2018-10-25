@@ -22,6 +22,6 @@ public class PlayerCursor extends CursorWrapper {
         double health = getDouble(getColumnIndex(PlayerTable.Cols.PLAYERHEALTH));
         double equipMass = getDouble(getColumnIndex(PlayerTable.Cols.EQUIPMENTMASS));
         //TODO make sure you load player before items as they have a empty equipmentList
-        return new Player(row, col, cash, health, equipMass, new ArrayList<Equipment>());
+        return new Player(row, col, cash, health, equipMass, new ArrayList<Equipment>(), 0);
     }
 }

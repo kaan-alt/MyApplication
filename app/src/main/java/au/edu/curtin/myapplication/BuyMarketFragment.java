@@ -17,6 +17,7 @@ import android.widget.EditText;
 
 public class BuyMarketFragment extends Fragment {
 
+    private PlayerList playerList;
 
     private RecyclerView rv;
     private BuyMarketAdaptor adapter;
@@ -49,8 +50,12 @@ public class BuyMarketFragment extends Fragment {
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
+        playerList = new PlayerList(getContext());
+        //TODO might be NOT NULL
+        playerList.load();
     }
 
 
@@ -122,6 +127,7 @@ public class BuyMarketFragment extends Fragment {
                         mCallback.marketReplaceAllFragments();
                         validateWinCon();
                     }
+                    playerList.edit(GameData.getInstance().getPlayer());
 
                 }
             });

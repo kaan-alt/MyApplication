@@ -17,6 +17,7 @@ import android.widget.EditText;
 
 public class UserMarketFragment extends Fragment {
 
+    private PlayerList playerList;
 
     private RecyclerView rv;
     private UserMarketAdaptor adapter;
@@ -49,8 +50,12 @@ public class UserMarketFragment extends Fragment {
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
+        playerList = new PlayerList(getContext());
+        //TODO might be NOT NULL
+        playerList.load();
     }
 
 
@@ -102,6 +107,7 @@ public class UserMarketFragment extends Fragment {
                     GameData.getInstance().getPlayer().removeEquipment(getAdapterPosition());
                     adapter.notifyDataSetChanged();
                     mCallback.marketReplaceAllFragments();
+                    playerList.edit(GameData.getInstance().getPlayer());
                 }
             });
 
@@ -124,6 +130,7 @@ public class UserMarketFragment extends Fragment {
                         mCallback.marketReplaceAllFragments();
                         validateWinCon();
                         validateLoseCon();
+                        playerList.edit(GameData.getInstance().getPlayer());
                     }
                 }
             });

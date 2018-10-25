@@ -12,10 +12,15 @@ public class Player {
     private double playerHealth;
     private double equipmentMass;
     private ArrayList<Equipment> equipment;
-    private int playerId = 0;
+    private int playerId;
+    private int nextInt = 0;
 
     public int getPlayerId() {
         return playerId;
+    }
+
+    public void setPlayerId(int playerId) {
+        this.playerId = playerId;
     }
 
     public Player(int rowLocation, int colLocation, int cash, double playerHealth, double equipmentMass, ArrayList<Equipment> equipment) {
@@ -25,8 +30,19 @@ public class Player {
         this.playerHealth = playerHealth;
         this.equipmentMass = equipmentMass;
         this.equipment = equipment;
+        this.playerId = nextInt;
+        nextInt++;
     }
 
+    public Player(int rowLocation, int colLocation, int cash, double playerHealth, double equipmentMass, ArrayList<Equipment> equipment, int playerId) {
+        this.rowLocation = rowLocation;
+        this.colLocation = colLocation;
+        this.cash = cash;
+        this.playerHealth = playerHealth;
+        this.equipmentMass = equipmentMass;
+        this.equipment = equipment;
+        this.playerId = playerId;
+    }
 
     public ArrayList<Equipment> getEquipment() {
         return equipment;

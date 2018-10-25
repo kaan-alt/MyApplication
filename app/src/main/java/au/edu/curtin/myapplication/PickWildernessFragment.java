@@ -17,6 +17,7 @@ import android.widget.EditText;
 
 public class PickWildernessFragment extends Fragment {
 
+    private PlayerList playerList;
 
     private RecyclerView rv;
     private PickWildernessAdaptor adapter;
@@ -49,8 +50,12 @@ public class PickWildernessFragment extends Fragment {
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
+        playerList = new PlayerList(getContext());
+        //TODO might be NOT NULL
+        playerList.load();
     }
 
 
@@ -116,6 +121,7 @@ public class PickWildernessFragment extends Fragment {
                         validateWinCon();
                     }
 
+                    playerList.edit(GameData.getInstance().getPlayer());
                 }
             });
 

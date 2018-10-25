@@ -47,7 +47,7 @@ public class PlayerList {
         return players.get(i);
     }
 
-    public int add(Player newPlayer)
+    public void add(Player newPlayer)
     {
         players.add(newPlayer);
         ContentValues cv = new ContentValues();
@@ -58,13 +58,13 @@ public class PlayerList {
         cv.put(PlayerTable.Cols.PLAYERHEALTH, newPlayer.getPlayerHealth());
         cv.put(PlayerTable.Cols.EQUIPMENTMASS, newPlayer.getEquipmentMass());
         db.insert(PlayerTable.TABLE_NAME, null, cv);
-        return players.size() - 1; // Return insertion point
     }
 
     public void edit(Player newPlayer)
     {
         ContentValues cv = new ContentValues();
-        cv.put(PlayerTable.Cols.PLAYERID, newPlayer.getPlayerId());
+        cv.put(PlayerTable.Cols.PLAYERID, 0);
+        //cv.put(PlayerTable.Cols.PLAYERID, newPlayer.getPlayerId());
         cv.put(PlayerTable.Cols.ROWLOCATION, newPlayer.getRowLocation());
         cv.put(PlayerTable.Cols.COLLOCATION, newPlayer.getColLocation());
         cv.put(PlayerTable.Cols.CASH, newPlayer.getCash());
@@ -72,14 +72,14 @@ public class PlayerList {
         cv.put(PlayerTable.Cols.EQUIPMENTMASS, newPlayer.getEquipmentMass());
         //ONLY ONE ENTRY IN DB FOR PLAYER THEREFORE DONT NEED A PRIMARY KEY
         String[] whereValue = { String.valueOf(newPlayer.getPlayerId()) };
-        db.update(PlayerTable.TABLE_NAME, cv, PlayerTable.Cols.PLAYERID + " = ?", whereValue);
+        db.update(PlayerTable.TABLE_NAME, cv, PlayerTable.Cols.PLAYERID + " =CAST(? AS int)", whereValue);
     }
 
     public void remove(Player rmPlayer)
     {
         players.remove(rmPlayer);
         String[] whereValue = { String.valueOf(rmPlayer.getPlayerId()) };
-        db.delete(PlayerTable.TABLE_NAME, PlayerTable.Cols.PLAYERID + " = ?" , whereValue);
+        db.delete(PlayerTable.TABLE_NAME, PlayerTable.Cols.PLAYERID + " =CAST(? AS int)" , whereValue);
     }
 
     public SQLiteDatabase getDb() {

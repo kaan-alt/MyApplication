@@ -18,13 +18,19 @@ public class PlayerDbHelper extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("create table " + PlayerTable.TABLE_NAME + "(" + " _id integer primary key autoincrement, " +
-                PlayerTable.Cols.PLAYERID + ", " +
-                PlayerTable.Cols.ROWLOCATION + ", " +
-                PlayerTable.Cols.COLLOCATION + ", " +
-                PlayerTable.Cols.CASH + ", " +
-                PlayerTable.Cols.PLAYERHEALTH + ", " +
-                PlayerTable.Cols.EQUIPMENTMASS + ")");
+        sqLiteDatabase.execSQL("create table " + PlayerTable.TABLE_NAME + "(" +
+                PlayerTable.Cols.PLAYERID +
+                " INTEGER PRIMARY KEY" + ", " +
+                PlayerTable.Cols.ROWLOCATION +
+                " INTEGER" + ", " +
+                PlayerTable.Cols.COLLOCATION +
+                " INTEGER" + ", " +
+                PlayerTable.Cols.CASH +
+                " INTEGER" + ", " +
+                PlayerTable.Cols.PLAYERHEALTH +
+                " DOUBLE" + ", " +
+                PlayerTable.Cols.EQUIPMENTMASS +
+                " DOUBLE" + ")");
     }
 
     @Override

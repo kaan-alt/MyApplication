@@ -17,6 +17,8 @@ import java.util.ArrayList;
 
 public class StatusBarFragment extends Fragment {
 
+    private PlayerList playerList;
+
     private EditText healthDisplay;
     private EditText equipmentMassDisplay;
     private EditText cashDisplay;
@@ -24,8 +26,12 @@ public class StatusBarFragment extends Fragment {
     private TextView winLoseTextView;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
+        playerList = new PlayerList(getContext());
+        //TODO might be NOT NULL
+        playerList.load();
     }
 
 
@@ -69,6 +75,8 @@ public class StatusBarFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 GameData.getInstance().reset();
+
+                playerList.edit(GameData.getInstance().getPlayer());
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
             }

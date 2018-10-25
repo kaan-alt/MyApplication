@@ -33,13 +33,29 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+        //Load in database
         playerList = new PlayerList(getApplicationContext());
-        //TODO might be NOT NULL
         playerList.load();
 
-        //Database to memory
-        playerList.add(new Player(2,2,2,2,2,new ArrayList<Equipment>()));
-        updatePlayerInMemory();
+        //Check if its the first time opening the app
+        try {
+            //If there is a Player in database already updaptePlayer in memory
+            //When main activity is call from another activty, check to see if playerInstance was altered. If so update database
+            playerList.get(0);
+            if(!playerList.get(0).equals(GameData.getInstance().getPlayer()))
+            {
+                GameData.getInstance().getPlayer().setPlayerId(0);
+                playerList.edit(GameData.getInstance().getPlayer());
+            }
+            updatePlayerInMemory();
+        }
+        catch(IndexOutOfBoundsException e){
+            GameData.getInstance().getPlayer().setPlayerId(0);
+            playerList.add(GameData.getInstance().getPlayer());
+        }
+
+
 
         setContentView(R.layout.activity_navigation);
 
@@ -100,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
                     refreshStatusFrag();
                     refreshInfoFrag();
 
+                    GameData.getInstance().getPlayer().setPlayerId(0);
                     playerList.edit(GameData.getInstance().getPlayer());
                 }
             }
@@ -120,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
                     refreshStatusFrag();
                     refreshInfoFrag();
 
+                    GameData.getInstance().getPlayer().setPlayerId(0);
                     playerList.edit(GameData.getInstance().getPlayer());
                 }
             }
@@ -140,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
                     refreshStatusFrag();
                     refreshInfoFrag();
 
+                    GameData.getInstance().getPlayer().setPlayerId(0);
                     playerList.edit(GameData.getInstance().getPlayer());
                 }
             }
@@ -160,6 +179,7 @@ public class MainActivity extends AppCompatActivity {
                     refreshStatusFrag();
                     refreshInfoFrag();
 
+                    GameData.getInstance().getPlayer().setPlayerId(0);
                     playerList.edit(GameData.getInstance().getPlayer());
                 }
             }
